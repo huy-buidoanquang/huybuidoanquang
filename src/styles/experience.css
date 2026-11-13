@@ -1,0 +1,251 @@
+.home {
+    --acid: #dcf08f;
+    --warm: #ffc28a;
+    background: #0b1320;
+}
+
+.journey-backdrop {
+    background:
+        radial-gradient(ellipse at 58% 43%, #284c59 0%, transparent 35%),
+        radial-gradient(ellipse at 30% 110%, #442d42 0%, transparent 48%),
+        #0b1320;
+}
+
+.hero-chapter {
+    min-height: 112svh;
+    isolation: isolate;
+}
+
+.hero-chapter::before,
+.hero-chapter::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+.hero-chapter::before {
+    width: 52vw;
+    height: 52vw;
+    top: 9vh;
+    left: 24vw;
+    border: 1px solid #ffffff23;
+    border-radius: 50%;
+    box-shadow: 0 0 0 8vw #ffffff04, 0 0 0 17vw #ffffff03;
+    transform: rotate(-17deg) skew(10deg);
+}
+
+.hero-chapter::after {
+    inset: auto 0 0;
+    height: 35vh;
+    background: linear-gradient(transparent, #0b1320aa);
+    z-index: -1;
+}
+
+.hero-topline,
+.hero-bottomline {
+    border-color: #e7e8dc78;
+}
+
+.hero-kicker {
+    color: var(--acid);
+    max-width: 260px;
+    line-height: 1.8;
+}
+
+.hero-chapter h1 {
+    font-size: clamp(86px, 17vw, 320px);
+    line-height: .79;
+    margin-bottom: 7vh;
+    text-shadow: 0 15px 70px #0006;
+}
+
+.hero-chapter h1 span:last-child {
+    margin-left: 4vw;
+    -webkit-text-stroke: 1.5px #f0f0e4;
+}
+
+.hero-bottomline p {
+    font-size: clamp(17px, 1.9vw, 29px);
+    font-weight: 600;
+}
+
+.hero-bottomline > span {
+    color: #c4c9c8;
+    line-height: 1.5;
+}
+
+.about-chapter {
+    min-height: 130svh;
+    background: linear-gradient(#0b1320ee 0%, #0c1d2a55 55%, #151e2a99);
+}
+
+.about-inner h2 {
+    transform: rotate(-3deg);
+}
+
+.about-inner h2 em {
+    color: var(--warm);
+}
+
+.about-inner p {
+    font-size: clamp(20px, 2.3vw, 32px);
+    border-left: 2px solid var(--warm);
+    padding-left: 24px;
+}
+
+.projects-chapter {
+    min-height: 140svh;
+    background: linear-gradient(#151e2a99, #0d1120bd);
+}
+
+.chapter-heading h2 {
+    font-size: clamp(55px, 8.2vw, 145px);
+}
+
+.chapter-heading h2 em {
+    color: #9fd3d4;
+}
+
+.project-list {
+    margin-top: 18vh;
+}
+
+.project-row {
+    position: relative;
+    padding-top: 42px;
+    padding-bottom: 42px;
+}
+
+.project-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 0;
+    height: 2px;
+    background: var(--acid);
+    transition: width .45s cubic-bezier(.2,.8,.2,1);
+}
+
+.project-row:hover::before,
+.project-row:focus-visible::before {
+    width: 100%;
+}
+
+.project-row:nth-child(2) {
+    margin-left: 7vw;
+}
+
+.project-row:nth-child(3) {
+    margin-left: 3vw;
+}
+
+.project-order {
+    color: var(--acid);
+}
+
+.journeys-chapter {
+    min-height: 170svh;
+    background: linear-gradient(#0d1120bd, #11282a88 45%, #0a2323db);
+}
+
+.journeys-chapter h2 {
+    font-size: clamp(60px, 10vw, 175px);
+    margin-top: 28vh;
+}
+
+.journeys-chapter h2 em {
+    color: var(--warm);
+}
+
+.destination-list {
+    gap: 15vh;
+    margin-top: 18vh;
+}
+
+.destination-link {
+    width: min(58vw, 820px);
+    min-height: 510px;
+    box-shadow: 0 40px 90px #06101288;
+    transform: rotate(-2deg);
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+}
+
+.destination-link:nth-child(even) {
+    width: min(48vw, 680px);
+    transform: rotate(3deg);
+}
+
+.destination-link:hover,
+.destination-link:nth-child(even):hover {
+    transform: rotate(0deg) translateY(-10px);
+}
+
+.destination-link img {
+    filter: saturate(.8) contrast(1.08);
+}
+
+.destination-link > span {
+    align-items: baseline;
+}
+
+.destination-link strong {
+    text-shadow: 0 8px 25px #0009;
+}
+
+.journal-chapter {
+    background: #e9e3d7;
+}
+
+.journal-chapter h2 em {
+    color: #a45b43;
+}
+
+.journal-list a:hover strong {
+    color: #a45b43;
+}
+
+@media (max-width: 800px) {
+    .hero-chapter h1 {
+        font-size: 16vw;
+    }
+
+    .hero-chapter::before {
+        width: 95vw;
+        height: 95vw;
+        left: 5vw;
+        top: 22vh;
+    }
+
+    .about-chapter,
+    .projects-chapter {
+        min-height: 100svh;
+    }
+
+    .about-inner h2 {
+        transform: none;
+    }
+
+    .project-row:nth-child(2),
+    .project-row:nth-child(3) {
+        margin-left: 0;
+    }
+
+    .journeys-chapter {
+        min-height: 125svh;
+    }
+
+    .destination-link,
+    .destination-link:nth-child(even) {
+        width: 100%;
+        min-height: 350px;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-row::before,
+    .destination-link {
+        transition: none;
+    }
+}
