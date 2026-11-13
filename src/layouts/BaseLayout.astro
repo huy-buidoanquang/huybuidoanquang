@@ -27,7 +27,11 @@ const { title, description = profile.intro, theme = 'night' } = Astro.props;
         <footer class="site-footer">
             <p>Một câu chuyện vẫn đang tiếp tục.</p>
             <a class="footer-mail" href={'mailto:' + profile.email}>Let's talk ↗</a>
-            <div class="footer-bottom"><span>© {new Date().getFullYear()} {profile.name}</span><a href="/">Về đầu trang ↑</a></div>
+        <div class="footer-bottom">
+            <span>© {new Date().getFullYear()} {profile.name}</span>
+            <div class="footer-socials">{profile.socials.map((social) => <a href={social.url}>{social.label} ↗</a>)}</div>
+            <a href="/">Về đầu trang ↑</a>
+        </div>
         </footer>
     </body>
 </html>
