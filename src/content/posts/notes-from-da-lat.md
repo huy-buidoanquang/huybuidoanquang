@@ -4,8 +4,8 @@ summary: "Những điều nhỏ bé tôi muốn giữ lại từ một chuyến 
 date: 2026-11-14
 category: "du-lich"
 destination: "da-lat"
-cover: "../../assets/dalat.svg"
-coverAlt: "Minh họa rừng thông trên đồi trong làn sương xanh"
+cover: "../../assets/forest-dawn.webp"
+coverAlt: "Ảnh minh họa rừng thông và thung lũng phủ sương lúc bình minh"
 theme: "forest"
 ---
 

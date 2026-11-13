@@ -36,6 +36,8 @@ theme: "sand"
 
 Tải ảnh lên `src/assets/` bằng **Add file → Upload files** trên GitHub. Nên dùng JPEG/WebP cho ảnh chụp; đặt tên chữ thường, không dấu, ví dụ `hoi-an-dem.webp`. Sửa `cover` trong tệp bài viết để trỏ tới ảnh đó. Luôn viết `coverAlt` mô tả nội dung ảnh. Ảnh mẫu trong `src/assets/` chỉ để thử giao diện; hãy thay trước khi xuất bản công khai.
 
+Ảnh nền trang chủ là `src/assets/forest-dawn.webp`; ảnh nền phần chuyến đi là `src/assets/mountain-valley.webp`. Để đổi chúng, tải ảnh WebP mới vào `src/assets/`, rồi mở `src/styles/experience.css` và thay tên trong hai dòng `url('../assets/...')`. Giữ ảnh ở chiều ngang, khoảng 1600 pixel rộng và nén trước khi tải lên để trang mở nhanh.
+
 ## Xem trước và xuất bản
 
 Commit thay đổi vào nhánh mới, mở pull request và dùng đường dẫn preview của Cloudflare Pages để xem bài, ảnh, điện thoại và chính tả. Khi đúng ý, merge vào nhánh chính để Pages tự build lại. Nếu chưa kết nối GitHub với Pages, chạy `npm install` và `npm run dev` trên máy có Node.js tương thích để xem tại địa chỉ Astro in ra.

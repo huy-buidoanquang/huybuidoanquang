@@ -14,7 +14,7 @@ export function mountJourney(canvas: HTMLCanvasElement | null) {
     }
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x111725, 0.018);
+    scene.fog = new THREE.FogExp2(0x17352f, 0.026);
     const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
     const route = new THREE.CatmullRomCurve3([
         new THREE.Vector3(0, 0, 13),
@@ -27,19 +27,33 @@ export function mountJourney(canvas: HTMLCanvasElement | null) {
     camera.position.copy(route.getPointAt(0));
     const objects: THREE.Object3D[] = [];
     const add = (object: THREE.Object3D) => { scene.add(object); objects.push(object); };
-    const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xa9debf, transparent: true, opacity: 0.36 });
-    for (let i = 0; i < 19; i++) {
-        const ring = new THREE.Mesh(new THREE.TorusGeometry(3.7 + Math.sin(i * 1.3) * 0.7, 0.018, 3, 80), ringMaterial);
-        ring.position.set(Math.sin(i * 0.62) * 1.2, Math.cos(i * 0.47) * 0.7, 3 - i * 1.8);
-        ring.rotation.set(0.22 + Math.sin(i) * 0.12, Math.cos(i * 0.7) * 0.2, i * 0.37);
-        add(ring);
-    }
-    const core = new THREE.Mesh(
-        new THREE.IcosahedronGeometry(1.9, 1),
-        new THREE.MeshNormalMaterial({ wireframe: true, transparent: true, opacity: 0.8 })
+    const treeCount = 44;
+    const trunks = new THREE.InstancedMesh(
+        new THREE.CylinderGeometry(0.08, 0.14, 2.8, 5),
+        new THREE.MeshBasicMaterial({ color: 0x172d27 }),
+        treeCount
     );
-    core.position.set(0.5, 0.4, -2);
-    add(core);
+    const crowns = new THREE.InstancedMesh(
+        new THREE.ConeGeometry(0.95, 3.2, 6),
+        new THREE.MeshBasicMaterial({ color: 0x204438 }),
+        treeCount
+    );
+    const tree = new THREE.Object3D();
+    for (let i = 0; i < treeCount; i++) {
+        const side = i % 2 ? 1 : -1;
+        const depth = 7 - i * 1.05;
+        const distance = 4.6 + (i * 13 % 7) * 0.6;
+        const height = 0.75 + (i * 7 % 9) * 0.08;
+        tree.position.set(side * distance, -2.8, depth);
+        tree.scale.setScalar(height);
+        tree.updateMatrix();
+        trunks.setMatrixAt(i, tree.matrix);
+        tree.position.y = -0.2;
+        tree.updateMatrix();
+        crowns.setMatrixAt(i, tree.matrix);
+    }
+    add(trunks);
+    add(crowns);
     const imageTextures = [projectArt, signalArt, placeArt].map((url) => new THREE.TextureLoader().load(url));
     imageTextures.forEach((texture, index) => {
         texture.colorSpace = THREE.SRGBColorSpace;
@@ -51,13 +65,6 @@ export function mountJourney(canvas: HTMLCanvasElement | null) {
         frame.rotation.y = index === 1 ? 0.28 : -0.28;
         add(frame);
     });
-    const portal = new THREE.Mesh(
-        new THREE.TorusGeometry(5.1, 0.055, 5, 100),
-        new THREE.MeshBasicMaterial({ color: 0xf0b878, transparent: true, opacity: 0.85 })
-    );
-    portal.position.z = -27;
-    portal.rotation.y = 0.2;
-    add(portal);
     const terrain = new THREE.PlaneGeometry(35, 30, 38, 32);
     terrain.rotateX(-Math.PI / 2);
     const vertices = terrain.attributes.position;
@@ -65,17 +72,17 @@ export function mountJourney(canvas: HTMLCanvasElement | null) {
         const x = vertices.getX(i), z = vertices.getZ(i);
         vertices.setY(i, Math.sin(x * 0.42) * Math.cos(z * 0.31) * 1.4 + Math.sin(z * 0.65) * 0.45);
     }
-    add(new THREE.Mesh(terrain, new THREE.MeshBasicMaterial({ color: 0xb6d1aa, wireframe: true, transparent: true, opacity: 0.35 })));
+    add(new THREE.Mesh(terrain, new THREE.MeshBasicMaterial({ color: 0x183b31, side: THREE.DoubleSide, transparent: true, opacity: 0.55 })));
     terrain.translate(0, -5, -31);
-    const stars = new Float32Array(300 * 3);
-    for (let i = 0; i < 300; i++) {
-        stars[i * 3] = (Math.random() - 0.5) * 28;
-        stars[i * 3 + 1] = (Math.random() - 0.5) * 18;
-        stars[i * 3 + 2] = 8 - Math.random() * 50;
+    const mist = new Float32Array(180 * 3);
+    for (let i = 0; i < 180; i++) {
+        mist[i * 3] = (Math.random() - 0.5) * 24;
+        mist[i * 3 + 1] = Math.random() * 3 - 2;
+        mist[i * 3 + 2] = 8 - Math.random() * 48;
     }
-    const starGeometry = new THREE.BufferGeometry();
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(stars, 3));
-    add(new THREE.Points(starGeometry, new THREE.PointsMaterial({ color: 0xc6e6dc, size: 0.035 })));
+    const mistGeometry = new THREE.BufferGeometry();
+    mistGeometry.setAttribute('position', new THREE.BufferAttribute(mist, 3));
+    add(new THREE.Points(mistGeometry, new THREE.PointsMaterial({ color: 0xe5efdf, size: 0.14, transparent: true, opacity: 0.3 })));
 
     let pointerX = 0, pointerY = 0, frame = 0, disposed = false;
     const resize = () => {
@@ -96,9 +103,6 @@ export function mountJourney(canvas: HTMLCanvasElement | null) {
         camera.position.x += (pointerX * 0.23) * 0.03;
         camera.position.y += (-pointerY * 0.18) * 0.03;
         camera.lookAt(route.getPointAt(Math.min(progress * 0.98 + 0.045, 1)));
-        core.rotation.x += 0.002;
-        core.rotation.y += 0.003;
-        portal.rotation.z += 0.001;
         renderer.render(scene, camera);
         frame = requestAnimationFrame(draw);
     };

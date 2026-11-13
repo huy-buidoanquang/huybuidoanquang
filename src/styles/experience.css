@@ -1,14 +1,13 @@
 .home {
     --acid: #dcf08f;
     --warm: #ffc28a;
-    background: #0b1320;
+    background: #17352f;
 }
 
 .journey-backdrop {
     background:
-        radial-gradient(ellipse at 58% 43%, #284c59 0%, transparent 35%),
-        radial-gradient(ellipse at 30% 110%, #442d42 0%, transparent 48%),
-        #0b1320;
+        linear-gradient(180deg, #11241d38 0%, #0b191d68 60%, #0a1718b8 100%),
+        url('../assets/forest-dawn.webp') center center / cover;
 }
 
 .hero-chapter {
@@ -24,20 +23,14 @@
 }
 
 .hero-chapter::before {
-    width: 52vw;
-    height: 52vw;
-    top: 9vh;
-    left: 24vw;
-    border: 1px solid #ffffff23;
-    border-radius: 50%;
-    box-shadow: 0 0 0 8vw #ffffff04, 0 0 0 17vw #ffffff03;
-    transform: rotate(-17deg) skew(10deg);
+    inset: 0;
+    background: linear-gradient(90deg, #0719149c 0%, transparent 68%);
 }
 
 .hero-chapter::after {
     inset: auto 0 0;
     height: 35vh;
-    background: linear-gradient(transparent, #0b1320aa);
+    background: linear-gradient(transparent, #0a1c1bbb);
     z-index: -1;
 }
 
@@ -76,7 +69,7 @@
 
 .about-chapter {
     min-height: 130svh;
-    background: linear-gradient(#0b1320ee 0%, #0c1d2a55 55%, #151e2a99);
+    background: linear-gradient(#0a1c1bbb 0%, #0b221bb0 55%, #102720df);
 }
 
 .about-inner h2 {
@@ -95,7 +88,7 @@
 
 .projects-chapter {
     min-height: 140svh;
-    background: linear-gradient(#151e2a99, #0d1120bd);
+    background: linear-gradient(#102720df, #10251ed9);
 }
 
 .chapter-heading h2 {
@@ -146,7 +139,9 @@
 
 .journeys-chapter {
     min-height: 170svh;
-    background: linear-gradient(#0d1120bd, #11282a88 45%, #0a2323db);
+    background:
+        linear-gradient(#10251ed9 0%, #0c231f80 33%, #10241c9c 72%, #0a2323dd 100%),
+        url('../assets/mountain-valley.webp') center center / cover;
 }
 
 .journeys-chapter h2 {
@@ -208,13 +203,6 @@
 @media (max-width: 800px) {
     .hero-chapter h1 {
         font-size: 16vw;
-    }
-
-    .hero-chapter::before {
-        width: 95vw;
-        height: 95vw;
-        left: 5vw;
-        top: 22vh;
     }
 
     .about-chapter,
