@@ -1,0 +1,21 @@
+{
+    "name": "portfolio-journal",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "check": "astro check",
+        "test": "node --test src/journey/*.test.mjs"
+    },
+    "dependencies": {
+        "astro": "latest",
+        "three": "latest"
+    },
+    "devDependencies": {
+        "@astrojs/check": "latest",
+        "@types/node": "^26.6.6",
+        "@types/three": "^0.187.0",
+        "typescript": "latest"
+    }
+}
