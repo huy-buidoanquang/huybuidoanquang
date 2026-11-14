@@ -156,7 +156,84 @@
 }
 
 .project-list {
-    margin-top: 18vh;
+    display: flex;
+    flex-direction: column;
+    gap: 13vh;
+    margin-top: 16vh;
+    border: 0;
+}
+
+.project-feature {
+    position: relative;
+    display: block;
+    width: min(82vw, 1260px);
+    min-height: min(82svh, 900px);
+    overflow: hidden;
+    background: #18253b;
+}
+
+.project-feature:nth-child(even) {
+    align-self: flex-end;
+    width: min(70vw, 1080px);
+}
+
+.project-feature::after {
+    content: "";
+    position: absolute;
+    inset: 25% 0 0;
+    background: linear-gradient(transparent, #071321d9);
+}
+
+.project-feature img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease;
+}
+
+.project-feature:hover img,
+.project-feature:focus-visible img {
+    transform: scale(1.05);
+}
+
+.project-feature-copy {
+    position: absolute;
+    z-index: 1;
+    inset: auto 4vw 5vh;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px 24px;
+    align-items: end;
+}
+
+.project-feature-copy small {
+    grid-column: 1 / -1;
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.project-feature-copy strong {
+    grid-column: 1;
+    font-size: clamp(46px, 7vw, 120px);
+    line-height: .9;
+    letter-spacing: -.08em;
+}
+
+.project-feature-copy span {
+    grid-column: 1;
+    max-width: 440px;
+    font-size: clamp(14px, 1.5vw, 21px);
+}
+
+.project-feature-copy b {
+    grid-column: 2;
+    grid-row: 2 / 4;
+    font-weight: 400;
+    text-decoration: underline;
+    text-underline-offset: 6px;
 }
 
 .project-row {
@@ -310,6 +387,24 @@
         margin-left: 0;
     }
 
+    .project-feature,
+    .project-feature:nth-child(even) {
+        width: 100%;
+        min-height: 72svh;
+    }
+
+    .project-feature-copy {
+        inset: auto 5vw 5vh;
+    }
+
+    .project-feature-copy strong {
+        font-size: clamp(42px, 11vw, 82px);
+    }
+
+    .project-feature-copy b {
+        display: none;
+    }
+
     .journeys-chapter {
         min-height: 125svh;
     }
@@ -333,6 +428,7 @@
 
 @media (prefers-reduced-motion: reduce) {
     .project-row::before,
+    .project-feature img,
     .destination-link img,
     .scroll-arrow {
         transition: none;

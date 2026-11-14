@@ -181,8 +181,139 @@ html[data-theme=night] .story-lantern .story-cover img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.story-mist .story-body,
+.story-lantern .story-body {
+    max-width: none;
+    padding: 7vh 0 13vh;
+}
+
+.story-mist .story-body > :not(.story-photo, .photo-pair),
+.story-lantern .story-body > :not(.story-photo, .photo-pair) {
+    max-width: 760px;
+    margin: 0 auto 1.7em;
+    padding-inline: 24px;
+}
+
+.story-photo {
+    width: min(84vw, 1400px);
+    margin: 11vh auto;
+}
+
+.story-photo.photo-full {
+    width: 100%;
+}
+
+.photo-trigger {
+    display: block;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: zoom-in;
+}
+
+.story-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 88svh;
+    object-fit: cover;
+}
+
+.story-photo.photo-full img {
+    height: min(88svh, 900px);
+}
+
+.story-photo figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 4vw;
+    font: 12px/1.5 Arial, sans-serif;
+}
+
+.story-photo figcaption a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.photo-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4vw;
+    width: 90vw;
+    margin: 12vh auto;
+    align-items: start;
+}
+
+.photo-pair .story-photo {
+    width: 100%;
+    margin: 0;
+}
+
+.photo-pair .story-photo:nth-child(2) {
+    margin-top: 14vh;
+}
+
+.photo-pair img {
+    aspect-ratio: 3 / 4;
+}
+
+.story-mist .story-photo.photo-full {
+    width: 90vw;
+    margin-left: 0;
+}
+
+.story-lantern .story-photo.photo-full {
+    width: 100%;
+}
+
+.story-lantern .photo-pair {
+    gap: 1.4vw;
+}
+
+.photo-dialog {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    padding: 4vh 4vw;
+    background: #11151c;
+    color: white;
+    overflow: hidden;
+}
+
+.photo-dialog::backdrop {
+    background: #000d;
+}
+
+.photo-dialog img {
+    display: block;
+    max-width: 100%;
+    max-height: 82dvh;
+    width: auto;
+    height: auto;
+    margin: auto;
+    object-fit: contain;
+}
+
+.photo-dialog p {
+    font-size: 13px;
+    text-align: center;
+}
+
+.photo-dialog button {
+    border: 1px solid currentColor;
+    background: transparent;
+    color: inherit;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
 @supports (animation-timeline: view()) {
-    .story-gallery figure {
+    .story-gallery figure,
+    .story-photo {
         animation: image-arrive 1ms both;
         animation-timeline: view();
         animation-range: entry 0% cover 25%;
@@ -206,6 +337,22 @@ html[data-theme=night] .story-lantern .story-cover img {
         margin: 0 0 42px;
     }
 
+    .story-photo,
+    .story-mist .story-photo.photo-full,
+    .story-lantern .story-photo.photo-full {
+        width: 100%;
+    }
+
+    .photo-pair {
+        display: block;
+        width: 100%;
+    }
+
+    .photo-pair .story-photo,
+    .photo-pair .story-photo:nth-child(2) {
+        margin: 0 0 48px;
+    }
+
     .story-gallery {
         padding-inline: 5vw;
     }
@@ -216,7 +363,8 @@ html[data-theme=night] .story-lantern .story-cover img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .story-gallery figure {
+    .story-gallery figure,
+    .story-photo {
         animation: none;
     }
 }

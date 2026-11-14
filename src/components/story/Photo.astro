@@ -1,0 +1,18 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+const { src, alt, caption, credit, source, layout = 'wide' } = Astro.props as {
+    src: ImageMetadata;
+    alt: string;
+    caption: string;
+    credit?: string;
+    source?: string;
+    layout?: 'wide' | 'portrait' | 'full';
+};
+---
+<figure class:list={['story-photo', 'photo-' + layout]}>
+    <button type="button" class="photo-trigger" data-photo-src={src.src} data-photo-alt={alt} data-photo-caption={caption} aria-label={'Xem ảnh lớn: ' + alt}>
+        <Image src={src} alt={alt} widths={[640,960,1600]} sizes={layout === 'portrait' ? '(max-width: 800px) 100vw, 42vw' : '100vw'} loading="lazy" />
+    </button>
+    <figcaption><span>{caption}</span>{source && <a href={source}>{credit || 'Nguồn ảnh'} ↗</a>}</figcaption>
+</figure>

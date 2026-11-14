@@ -21,7 +21,7 @@ const destinations = defineCollection({
     schema: shared,
 });
 const posts = defineCollection({
-    loader: glob({ pattern: '*.md', base: './src/content/posts' }),
+    loader: glob({ pattern: '*.{md,mdx}', base: './src/content/posts' }),
     schema: (context) => shared(context).extend({
         date: z.coerce.date(),
         category: z.enum(['du-lich', 'ky-thuat', 'nhiep-anh', 'so-thich']),

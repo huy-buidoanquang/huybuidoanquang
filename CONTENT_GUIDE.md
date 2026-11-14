@@ -10,11 +10,11 @@ Mở `src/data/profile.json` trên GitHub, bấm biểu tượng bút chì, sử
 
 ## Sửa hoặc thêm bài viết
 
-- Bài blog: `src/content/posts/`
+- Bài blog: `src/content/posts/` (bài ảnh riêng dùng `.mdx`)
 - Dự án: `src/content/projects/`
 - Địa điểm: `src/content/destinations/`
 
-Mở tệp `.md` và bấm bút chì để sửa. Phần giữa hai dòng `---` là thông tin hiển thị ở danh sách; nội dung bài bắt đầu sau dòng `---` thứ hai. Để thêm bài, sao chép một tệp mẫu, đặt tên ngắn không dấu như `chuyen-di-da-lat.md`, rồi thay toàn bộ nội dung mẫu. Tên tệp trở thành đường dẫn trang.
+Mở tệp `.md` hoặc `.mdx` và bấm bút chì để sửa. Phần giữa hai dòng `---` là thông tin hiển thị ở danh sách; nội dung bài bắt đầu sau dòng `---` thứ hai. Để thêm bài thường, sao chép một tệp `.md`; để thêm bài ảnh theo địa điểm, sao chép một tệp `.mdx`. Đặt tên ngắn không dấu như `chuyen-di-da-lat.mdx`. Tên tệp trở thành đường dẫn trang.
 
 Ví dụ:
 
@@ -47,11 +47,13 @@ gallery:
 
 Ảnh của người khác nên có thêm `credit` và `source` (URL trang nguồn). Khi bắt đầu một địa điểm mới, hãy làm theo [quy trình nghiên cứu và đo ảnh](docs/art-direction/README.md) trước khi chọn nhịp chữ, màu và cách ghép ảnh. Các style có sẵn là điểm bắt đầu; một bài quan trọng có thể được thiết kế riêng trong mã nguồn.
 
+Trong bài `.mdx`, đặt ảnh ngay giữa các đoạn chữ bằng `<Photo src={tenAnh} alt="..." caption="..." />`. Đặt hai ảnh trong `<PhotoPair>...</PhotoPair>` để ghép cạnh nhau. Sao chép các dòng `import` ở đầu bài mẫu rồi đổi tên tệp ảnh; số ảnh tùy ý. Nhấn ảnh để xem lớn, dùng phím mũi tên để chuyển ảnh và Esc để đóng.
+
 ## Thay ảnh
 
 Tải ảnh lên `src/assets/` bằng **Add file → Upload files** trên GitHub. Nên dùng JPEG/WebP cho ảnh chụp; đặt tên chữ thường, không dấu, ví dụ `hoi-an-dem.webp`. Sửa `cover` trong tệp bài viết để trỏ tới ảnh đó. Luôn viết `coverAlt` mô tả nội dung ảnh. Ảnh mẫu trong `src/assets/` chỉ để thử giao diện; hãy thay trước khi xuất bản công khai.
 
-Ba chương đầu dùng ảnh thiên văn thật `src/assets/milkyway-desert.webp` cùng cảnh Three.js; từ chương chuyến đi, nền chuyển sang ảnh chụp Đà Lạt `src/assets/dalat-aerial.webp`. Để đổi một trong hai nền, tải ảnh WebP mới vào `src/assets/`, rồi sửa tên trong `src/styles/experience.css`. Chọn ảnh ngang, nén trước khi tải lên và cập nhật ghi công ảnh trong trang nếu ảnh không phải của bạn.
+Ba chương đầu dùng ảnh thiên văn thật `src/assets/milkyway-desert.webp`; từ chương chuyến đi, nền chuyển sang ảnh chụp Đà Lạt `src/assets/dalat-aerial.webp`. Để đổi một trong hai nền, tải ảnh WebP mới vào `src/assets/`, rồi sửa tên trong `src/styles/experience.css`. Chọn ảnh ngang, nén trước khi tải lên và cập nhật ghi công ảnh trong trang nếu ảnh không phải của bạn.
 
 ## Xem trước và xuất bản
 

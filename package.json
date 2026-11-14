@@ -9,13 +9,12 @@
         "test": "node --test src/journey/*.test.mjs"
     },
     "dependencies": {
-        "astro": "latest",
-        "three": "latest"
+        "@astrojs/mdx": "^8.1.6",
+        "astro": "latest"
     },
     "devDependencies": {
         "@astrojs/check": "latest",
         "@types/node": "^26.6.6",
-        "@types/three": "^0.187.0",
         "typescript": "latest"
     }
 }

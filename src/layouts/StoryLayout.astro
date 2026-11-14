@@ -25,4 +25,33 @@ const gallery = 'gallery' in entry.data ? entry.data.gallery : [];
         </section>}
         <div class="story-end"><span>Hết câu chuyện, còn hành trình.</span><a href="/journal/">Xem những bài khác ↗</a></div>
     </main>
+    <dialog class="photo-dialog" aria-label="Xem ảnh lớn">
+        <button type="button" class="photo-close" aria-label="Đóng ảnh">Đóng ×</button>
+        <img alt="" />
+        <p></p>
+    </dialog>
+    <script>
+        const dialog = document.querySelector<HTMLDialogElement>('.photo-dialog');
+        const triggers = [...document.querySelectorAll<HTMLButtonElement>('.photo-trigger')];
+        let active = 0;
+        const showPhoto = (index: number) => {
+            if (!dialog || triggers.length === 0) return;
+            active = (index + triggers.length) % triggers.length;
+            const trigger = triggers[active];
+            const image = dialog.querySelector('img');
+            const caption = dialog.querySelector('p');
+            if (!image || !caption) return;
+            image.src = trigger.dataset.photoSrc || '';
+            image.alt = trigger.dataset.photoAlt || '';
+            caption.textContent = trigger.dataset.photoCaption || image.alt;
+            if (!dialog.open) dialog.showModal();
+        };
+        triggers.forEach((trigger, index) => trigger.addEventListener('click', () => showPhoto(index)));
+        dialog?.querySelector('.photo-close')?.addEventListener('click', () => dialog.close());
+        dialog?.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') showPhoto(active + 1);
+            if (event.key === 'ArrowLeft') showPhoto(active - 1);
+        });
+        dialog?.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    </script>
 </BaseLayout>
