@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import { getScrollProgress } from './scrollProgress.js';
 import projectArt from '../assets/project.svg?url';
 import signalArt from '../assets/signal.svg?url';
-import placeArt from '../assets/dalat.svg?url';
+import placeArt from '../assets/dalat-aerial.webp?url';
 
-export function mountJourney(canvas: HTMLCanvasElement | null) {
+export function mountJourney(canvas: HTMLCanvasElement | null, getNatureBlend: () => number) {
     if (!canvas) return;
     let renderer: THREE.WebGLRenderer;
     try {
@@ -14,7 +14,9 @@ export function mountJourney(canvas: HTMLCanvasElement | null) {
     }
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x17352f, 0.026);
+    scene.fog = new THREE.FogExp2(0x18223e, 0.023);
+    const cosmicFog = new THREE.Color(0x18223e);
+    const natureFog = new THREE.Color(0x17352f);
     const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
     const route = new THREE.CatmullRomCurve3([
         new THREE.Vector3(0, 0, 13),
@@ -27,62 +29,35 @@ export function mountJourney(canvas: HTMLCanvasElement | null) {
     camera.position.copy(route.getPointAt(0));
     const objects: THREE.Object3D[] = [];
     const add = (object: THREE.Object3D) => { scene.add(object); objects.push(object); };
-    const treeCount = 44;
-    const trunks = new THREE.InstancedMesh(
-        new THREE.CylinderGeometry(0.08, 0.14, 2.8, 5),
-        new THREE.MeshBasicMaterial({ color: 0x172d27 }),
-        treeCount
-    );
-    const crowns = new THREE.InstancedMesh(
-        new THREE.ConeGeometry(0.95, 3.2, 6),
-        new THREE.MeshBasicMaterial({ color: 0x204438 }),
-        treeCount
-    );
-    const tree = new THREE.Object3D();
-    for (let i = 0; i < treeCount; i++) {
-        const side = i % 2 ? 1 : -1;
-        const depth = 7 - i * 1.05;
-        const distance = 4.6 + (i * 13 % 7) * 0.6;
-        const height = 0.75 + (i * 7 % 9) * 0.08;
-        tree.position.set(side * distance, -2.8, depth);
-        tree.scale.setScalar(height);
-        tree.updateMatrix();
-        trunks.setMatrixAt(i, tree.matrix);
-        tree.position.y = -0.2;
-        tree.updateMatrix();
-        crowns.setMatrixAt(i, tree.matrix);
+    const orbitMaterial = new THREE.MeshBasicMaterial({ color: 0xb5c9ff, transparent: true, opacity: 0.34, depthWrite: false });
+    for (let i = 0; i < 13; i++) {
+        const orbit = new THREE.Mesh(new THREE.TorusGeometry(3.5 + Math.sin(i) * 0.7, 0.018, 3, 72), orbitMaterial);
+        orbit.position.set(Math.sin(i * 0.6) * 1.1, Math.cos(i * 0.5) * 0.7, 4 - i * 1.65);
+        orbit.rotation.set(0.2, i * 0.13, i * 0.31);
+        add(orbit);
     }
-    add(trunks);
-    add(crowns);
+    const starPositions = new Float32Array(260 * 3);
+    for (let i = 0; i < 260; i++) {
+        starPositions[i * 3] = (Math.random() - 0.5) * 26;
+        starPositions[i * 3 + 1] = (Math.random() - 0.5) * 18;
+        starPositions[i * 3 + 2] = 10 - Math.random() * 43;
+    }
+    const starGeometry = new THREE.BufferGeometry();
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({ color: 0xdceaff, size: 0.055, transparent: true, opacity: 0.76, depthWrite: false });
+    add(new THREE.Points(starGeometry, starMaterial));
     const imageTextures = [projectArt, signalArt, placeArt].map((url) => new THREE.TextureLoader().load(url));
+    const imageMaterials: THREE.MeshBasicMaterial[] = [];
     imageTextures.forEach((texture, index) => {
         texture.colorSpace = THREE.SRGBColorSpace;
-        const frame = new THREE.Mesh(
-            new THREE.PlaneGeometry(4.8, 3),
-            new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true, opacity: 0.88 })
-        );
-        frame.position.set(index === 1 ? -2.5 : 2.5, index === 2 ? 1.4 : -0.3, -11 - index * 5);
-        frame.rotation.y = index === 1 ? 0.28 : -0.28;
-        add(frame);
+        const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true, opacity: 0.88 });
+        const world = new THREE.Mesh(new THREE.SphereGeometry(1.75, 40, 28), material);
+        world.position.set(index === 1 ? -2.5 : 2.5, index === 2 ? 1.4 : -0.3, -11 - index * 5);
+        world.scale.set(1.35, 1, 0.68);
+        world.rotation.y = index === 1 ? 0.28 : -0.28;
+        imageMaterials.push(material);
+        add(world);
     });
-    const terrain = new THREE.PlaneGeometry(35, 30, 38, 32);
-    terrain.rotateX(-Math.PI / 2);
-    const vertices = terrain.attributes.position;
-    for (let i = 0; i < vertices.count; i++) {
-        const x = vertices.getX(i), z = vertices.getZ(i);
-        vertices.setY(i, Math.sin(x * 0.42) * Math.cos(z * 0.31) * 1.4 + Math.sin(z * 0.65) * 0.45);
-    }
-    add(new THREE.Mesh(terrain, new THREE.MeshBasicMaterial({ color: 0x183b31, side: THREE.DoubleSide, transparent: true, opacity: 0.55 })));
-    terrain.translate(0, -5, -31);
-    const mist = new Float32Array(180 * 3);
-    for (let i = 0; i < 180; i++) {
-        mist[i * 3] = (Math.random() - 0.5) * 24;
-        mist[i * 3 + 1] = Math.random() * 3 - 2;
-        mist[i * 3 + 2] = 8 - Math.random() * 48;
-    }
-    const mistGeometry = new THREE.BufferGeometry();
-    mistGeometry.setAttribute('position', new THREE.BufferAttribute(mist, 3));
-    add(new THREE.Points(mistGeometry, new THREE.PointsMaterial({ color: 0xe5efdf, size: 0.14, transparent: true, opacity: 0.3 })));
 
     let pointerX = 0, pointerY = 0, frame = 0, disposed = false;
     const resize = () => {
@@ -98,6 +73,13 @@ export function mountJourney(canvas: HTMLCanvasElement | null) {
     const draw = () => {
         if (disposed || document.hidden) return;
         const progress = getScrollProgress(scrollY, document.documentElement.scrollHeight - innerHeight);
+        const blend = getNatureBlend();
+        orbitMaterial.opacity = 0.34 * (1 - blend);
+        starMaterial.opacity = 0.76 * (1 - blend);
+        imageMaterials.forEach((material, index) => {
+            material.opacity = 0.88 * (index === 2 ? blend : 1 - blend * 0.65);
+        });
+        scene.fog!.color.copy(cosmicFog).lerp(natureFog, blend);
         const target = route.getPointAt(progress * 0.98);
         camera.position.lerp(target, 0.055);
         camera.position.x += (pointerX * 0.23) * 0.03;

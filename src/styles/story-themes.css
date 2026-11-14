@@ -1,0 +1,222 @@
+.story-gallery {
+    padding: 4vh 4vw 14vh;
+}
+
+.gallery-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-top: 1px solid currentColor;
+    padding: 18px 0 7vh;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+}
+
+.gallery-heading strong {
+    font-weight: 400;
+}
+
+.gallery-images {
+    display: grid;
+    gap: clamp(16px, 3vw, 52px);
+}
+
+.gallery-images figure {
+    margin: 0;
+    min-width: 0;
+}
+
+.gallery-images img {
+    width: 100%;
+    height: 100%;
+    max-height: 85svh;
+    object-fit: cover;
+}
+
+.gallery-images figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding-top: 12px;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.gallery-images figcaption a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+}
+
+.story-mist .story-lead h1,
+.story-mist .story-body,
+.story-mist .gallery-heading {
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+.story-mist .story-lead h1 {
+    font-size: clamp(72px, 11vw, 190px);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -.075em;
+}
+
+.story-mist .story-body {
+    max-width: 680px;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.8;
+}
+
+html[data-theme=forest] .story-mist .story-cover {
+    padding: 0 4vw 0 14vw;
+}
+
+html[data-theme=forest] .story-mist .story-cover img {
+    border-radius: 0;
+    max-height: 82svh;
+}
+
+.story-mist .gallery-images {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+}
+
+.story-mist .gallery-images figure:nth-child(4n+1) {
+    grid-column: span 8;
+}
+
+.story-mist .gallery-images figure:nth-child(4n+2) {
+    grid-column: span 4;
+    margin-top: 16vh;
+}
+
+.story-mist .gallery-images figure:nth-child(4n+3) {
+    grid-column: 2 / span 4;
+}
+
+.story-mist .gallery-images figure:nth-child(4n+4) {
+    grid-column: span 7;
+    margin-top: 12vh;
+}
+
+.story-mist .gallery-images figure:nth-child(4n+2) img,
+.story-mist .gallery-images figure:nth-child(4n+3) img {
+    aspect-ratio: 3 / 4;
+}
+
+html[data-theme=night] .story-lantern {
+    background: #211920;
+    color: #f8e9cc;
+}
+
+.story-lantern .story-lead h1 {
+    text-transform: uppercase;
+    font-size: clamp(76px, 12vw, 220px);
+    font-weight: 900;
+    letter-spacing: -.1em;
+    color: #f2ae6e;
+}
+
+.story-lantern .story-body {
+    max-width: 840px;
+    font-size: clamp(18px, 1.8vw, 25px);
+    line-height: 1.65;
+}
+
+html[data-theme=night] .story-lantern .story-cover {
+    padding: 0;
+}
+
+html[data-theme=night] .story-lantern .story-cover img {
+    border-radius: 0;
+    max-height: 95svh;
+}
+
+.story-lantern .gallery-images {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.3vw;
+}
+
+.story-lantern .gallery-images figure:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.story-lantern .gallery-images figure:nth-child(3n+2) {
+    margin-top: 12vh;
+}
+
+.story-lantern .gallery-images figure:nth-child(3n) {
+    margin-top: -4vh;
+}
+
+.story-lantern .gallery-images img {
+    aspect-ratio: 3 / 4;
+}
+
+.story-lantern .gallery-images figure:first-child img {
+    aspect-ratio: 4 / 3;
+}
+
+.story-lantern .gallery-images figcaption {
+    color: #d8b98d;
+}
+
+.story-studio .story-lead h1 {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: clamp(54px, 8vw, 130px);
+    letter-spacing: -.09em;
+    max-width: 1050px;
+}
+
+.story-studio .story-body {
+    font-family: Consolas, 'Courier New', monospace;
+    max-width: 820px;
+    font-size: clamp(16px, 1.45vw, 21px);
+    line-height: 1.8;
+}
+
+.story-studio .story-gallery .gallery-images {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@supports (animation-timeline: view()) {
+    .story-gallery figure {
+        animation: image-arrive 1ms both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 25%;
+    }
+}
+
+@keyframes image-arrive {
+    from { opacity: .25; transform: translateY(36px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 800px) {
+    .story-mist .gallery-images,
+    .story-lantern .gallery-images,
+    .story-studio .story-gallery .gallery-images {
+        display: block;
+    }
+
+    .story-mist .gallery-images figure,
+    .story-lantern .gallery-images figure {
+        margin: 0 0 42px;
+    }
+
+    .story-gallery {
+        padding-inline: 5vw;
+    }
+
+    .gallery-images img {
+        max-height: 75svh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .story-gallery figure {
+        animation: none;
+    }
+}

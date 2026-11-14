@@ -6,6 +6,7 @@ category: "ky-thuat"
 cover: "../../assets/project.svg"
 coverAlt: "Minh họa những đường nét sáng trên nền xanh đậm"
 theme: "night"
+storyStyle: "studio"
 ---
 
 *Bài viết mẫu — hãy thay bằng dự án và góc nhìn của bạn.*

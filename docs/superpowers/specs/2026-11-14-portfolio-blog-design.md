@@ -21,10 +21,10 @@ Build a personal portfolio that draws visitors into an exploratory 3D scroll jou
 
 ## Experience
 
-1. **Opening:** a distinctive personal object or environment comes into view; the owner's name and one concise introduction stay legible over it. A visible scroll cue starts the trip.
+1. **Opening:** a cosmic environment comes into view; the owner's name and one concise introduction stay legible over it. A visible scroll cue starts the trip.
 2. **Personal chapter:** the camera passes details that reveal interests and background. Short text anchors the scene.
 3. **Projects:** each project becomes a waypoint with a strong visual, name, role, and a direct link to a project page. Hover or focus can reveal more; clicking always works without precise 3D aiming.
-4. **Travel:** the environment expands into destinations. Each place has its own visual mood and leads to its travel story or photo essay.
+4. **Travel:** the cosmic background crossfades smoothly into a location-verified photograph as the camera enters this chapter. Stars and orbits fade while the real landscape emerges. Each place has its own visual mood and leads to its travel story or photo essay.
 5. **Journal:** a clear index offers travel, technical, photography, interests, and passion topics. Article pages prioritize text, images, captions, and navigation to the next story.
 
 The 3D scene is an enhancement around semantic HTML links and headings. On mobile, reduced-motion, or unsupported devices, the same chapter order uses strong stills and direct links. Keyboard users can move between chapter targets and links without relying on camera controls.

@@ -32,11 +32,24 @@ theme: "sand"
 
 `theme` nhận `night`, `sand` hoặc `forest`. `category` nhận `du-lich`, `ky-thuat`, `nhiep-anh` hoặc `so-thich`. Nếu thiếu ảnh, mô tả ảnh, hoặc dùng giá trị không hợp lệ, build sẽ báo lỗi để bạn sửa trước khi đăng.
 
+Mỗi bài có thể chọn `storyStyle: "mist"` (chữ serif, ảnh rải thoáng), `storyStyle: "lantern"` (chữ đậm, ảnh ghép dày) hoặc `storyStyle: "studio"` (bài kỹ thuật gọn). Bộ ảnh `gallery` nhận bao nhiêu ảnh tùy bài; thêm một mục cho mỗi ảnh:
+
+```yaml
+gallery:
+  - src: "../../assets/ten-anh-01.webp"
+    alt: "Mô tả chính xác nội dung ảnh"
+    caption: "Chú thích ngắn"
+  - src: "../../assets/ten-anh-02.webp"
+    alt: "Mô tả ảnh thứ hai"
+```
+
+Ảnh của người khác nên có thêm `credit` và `source` (URL trang nguồn). Khi bắt đầu một địa điểm mới, hãy làm theo [quy trình nghiên cứu và đo ảnh](docs/art-direction/README.md) trước khi chọn nhịp chữ, màu và cách ghép ảnh. Các style có sẵn là điểm bắt đầu; một bài quan trọng có thể được thiết kế riêng trong mã nguồn.
+
 ## Thay ảnh
 
 Tải ảnh lên `src/assets/` bằng **Add file → Upload files** trên GitHub. Nên dùng JPEG/WebP cho ảnh chụp; đặt tên chữ thường, không dấu, ví dụ `hoi-an-dem.webp`. Sửa `cover` trong tệp bài viết để trỏ tới ảnh đó. Luôn viết `coverAlt` mô tả nội dung ảnh. Ảnh mẫu trong `src/assets/` chỉ để thử giao diện; hãy thay trước khi xuất bản công khai.
 
-Ảnh nền trang chủ là `src/assets/forest-dawn.webp`; ảnh nền phần chuyến đi là `src/assets/mountain-valley.webp`. Để đổi chúng, tải ảnh WebP mới vào `src/assets/`, rồi mở `src/styles/experience.css` và thay tên trong hai dòng `url('../assets/...')`. Giữ ảnh ở chiều ngang, khoảng 1600 pixel rộng và nén trước khi tải lên để trang mở nhanh.
+Ba chương đầu dùng ảnh thiên văn thật `src/assets/milkyway-desert.webp` cùng cảnh Three.js; từ chương chuyến đi, nền chuyển sang ảnh chụp Đà Lạt `src/assets/dalat-aerial.webp`. Để đổi một trong hai nền, tải ảnh WebP mới vào `src/assets/`, rồi sửa tên trong `src/styles/experience.css`. Chọn ảnh ngang, nén trước khi tải lên và cập nhật ghi công ảnh trong trang nếu ảnh không phải của bạn.
 
 ## Xem trước và xuất bản
 

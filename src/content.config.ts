@@ -7,6 +7,8 @@ const shared = ({ image }: SchemaContext) => z.object({
     summary: z.string().min(1),
     cover: image(),
     coverAlt: z.string().min(1),
+    coverCredit: z.string().optional(),
+    coverSource: z.url().optional(),
     theme: z.enum(['night', 'sand', 'forest']),
 });
 
@@ -24,6 +26,14 @@ const posts = defineCollection({
         date: z.coerce.date(),
         category: z.enum(['du-lich', 'ky-thuat', 'nhiep-anh', 'so-thich']),
         destination: z.string().optional(),
+        storyStyle: z.enum(['mist', 'lantern', 'studio']).default('studio'),
+        gallery: z.array(z.object({
+            src: context.image(),
+            alt: z.string().min(1),
+            caption: z.string().optional(),
+            credit: z.string().optional(),
+            source: z.url().optional(),
+        })).default([]),
     }),
 });
 

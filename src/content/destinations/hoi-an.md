@@ -1,8 +1,10 @@
 ---
 title: "Hội An"
 summary: "Ánh đèn và những con phố chậm khi trời vừa tối."
-cover: "../../assets/hoi-an.svg"
-coverAlt: "Đèn lồng sáng giữa phố cổ trong minh họa ban đêm"
+cover: "../../assets/hoian-street.webp"
+coverAlt: "Phố cổ Hội An và thuyền đèn lồng bên sông lúc chạng vạng"
+coverCredit: "Chuvanan01 / Wikimedia Commons · CC0"
+coverSource: "https://commons.wikimedia.org/wiki/File:Du-lich-hoi-an.jpg"
 theme: "sand"
 ---
 

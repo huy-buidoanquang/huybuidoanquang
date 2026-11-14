@@ -1,13 +1,33 @@
 .home {
-    --acid: #dcf08f;
-    --warm: #ffc28a;
-    background: #17352f;
+    --acid: #b8d9f8;
+    --warm: #c4b0f3;
+    background: #0b1022;
 }
 
 .journey-backdrop {
+    background: #0b1022;
+    overflow: hidden;
+}
+
+.cosmos-layer,
+.nature-layer {
+    position: absolute;
+    inset: 0;
+    will-change: opacity, transform;
+}
+
+.cosmos-layer {
     background:
-        linear-gradient(180deg, #11241d38 0%, #0b191d68 60%, #0a1718b8 100%),
-        url('../assets/forest-dawn.webp') center center / cover;
+        linear-gradient(90deg, #090e1f8c 0%, #090e1f20 65%),
+        linear-gradient(180deg, #070d1a32 0%, #090e1f08 45%, #090e1fa8 100%),
+        url('../assets/milkyway-desert.webp') center 45% / cover;
+}
+
+.nature-layer {
+    opacity: 0;
+    background:
+        linear-gradient(180deg, #0b122b20, #06191535 70%, #081d175c),
+        url('../assets/dalat-aerial.webp') center center / cover;
 }
 
 .hero-chapter {
@@ -24,13 +44,13 @@
 
 .hero-chapter::before {
     inset: 0;
-    background: linear-gradient(90deg, #0719149c 0%, transparent 68%);
+    background: linear-gradient(90deg, #080e24a8 0%, transparent 68%);
 }
 
 .hero-chapter::after {
     inset: auto 0 0;
     height: 35vh;
-    background: linear-gradient(transparent, #0a1c1bbb);
+    background: linear-gradient(transparent, #0b1022bc);
     z-index: -1;
 }
 
@@ -69,7 +89,7 @@
 
 .about-chapter {
     min-height: 130svh;
-    background: linear-gradient(#0a1c1bbb 0%, #0b221bb0 55%, #102720df);
+    background: linear-gradient(#0b102299 0%, #101a3280 55%, #111528a8);
 }
 
 .about-inner h2 {
@@ -88,7 +108,7 @@
 
 .projects-chapter {
     min-height: 140svh;
-    background: linear-gradient(#102720df, #10251ed9);
+    background: linear-gradient(#111528a8, #1016298c);
 }
 
 .chapter-heading h2 {
@@ -140,8 +160,12 @@
 .journeys-chapter {
     min-height: 170svh;
     background:
-        linear-gradient(#10251ed9 0%, #0c231f80 33%, #10241c9c 72%, #0a2323dd 100%),
-        url('../assets/mountain-valley.webp') center center / cover;
+        linear-gradient(#101629b8 0%, #0c231f80 33%, #10241c9c 72%, #0a2323dd 100%),
+        url('../assets/dalat-aerial.webp') center center / cover;
+}
+
+.journey-active .journeys-chapter {
+    background: linear-gradient(#091c1d8c 0%, #0c231f53 33%, #10241c42 72%, #0a23235c 100%);
 }
 
 .journeys-chapter h2 {
@@ -150,7 +174,7 @@
 }
 
 .journeys-chapter h2 em {
-    color: var(--warm);
+    color: #f4c48f;
 }
 
 .destination-list {
@@ -159,33 +183,56 @@
 }
 
 .destination-link {
-    width: min(58vw, 820px);
-    min-height: 510px;
-    box-shadow: 0 40px 90px #06101288;
-    transform: rotate(-2deg);
-    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+    width: min(84vw, 1320px);
+    min-height: min(74vh, 900px);
+    overflow: visible;
+    background: transparent;
+    transform: none;
+    transition: none;
 }
 
 .destination-link:nth-child(even) {
-    width: min(48vw, 680px);
-    transform: rotate(3deg);
-}
-
-.destination-link:hover,
-.destination-link:nth-child(even):hover {
-    transform: rotate(0deg) translateY(-10px);
+    width: min(68vw, 1060px);
+    align-self: flex-start;
+    margin-top: -8vh;
 }
 
 .destination-link img {
-    filter: saturate(.8) contrast(1.08);
+    transform: scale(1.015);
+    transition: transform 1s cubic-bezier(.2,.8,.2,1), filter .8s;
+}
+
+.destination-link:hover img,
+.destination-link:focus-visible img {
+    transform: scale(1.06);
+    filter: saturate(1.15) contrast(1.08);
 }
 
 .destination-link > span {
-    align-items: baseline;
+    inset: auto 4vw 5vh;
+    display: block;
 }
 
 .destination-link strong {
-    text-shadow: 0 8px 25px #0009;
+    display: block;
+    font-size: clamp(70px, 11vw, 176px);
+    line-height: .8;
+    text-shadow: 0 12px 40px #000b;
+    margin-top: 38px;
+}
+
+.destination-link small {
+    letter-spacing: .16em;
+}
+
+.destination-link b {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    text-align: right;
+    padding-bottom: 5px;
+    text-decoration: underline;
+    text-underline-offset: 6px;
 }
 
 .journal-chapter {
@@ -226,14 +273,23 @@
     .destination-link,
     .destination-link:nth-child(even) {
         width: 100%;
-        min-height: 350px;
+        min-height: 68svh;
+        margin-top: 0;
         transform: none;
+    }
+
+    .destination-link > span {
+        inset: auto 6vw 5vh;
+    }
+
+    .destination-link strong {
+        font-size: clamp(58px, 16vw, 100px);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .project-row::before,
-    .destination-link {
+    .destination-link img {
         transition: none;
     }
 }
