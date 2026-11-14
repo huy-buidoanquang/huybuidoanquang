@@ -13,11 +13,12 @@ const posts = (await getCollection('posts')).sort((a,b) => b.data.date.valueOf()
         <div class="journey-backdrop" aria-hidden="true"><div class="cosmos-layer"></div><div class="nature-layer"></div></div>
         <canvas id="journey-canvas" class="journey-canvas" aria-hidden="true"></canvas>
         <section id="person" class="chapter hero-chapter" aria-labelledby="hero-title">
+            {profile.portrait && <div class="hero-portrait"><img src={profile.portrait} alt={profile.portraitAlt} fetchpriority="high" decoding="async" /></div>}
             <div class="chapter-inner hero-inner">
                 <div class="hero-topline"><span>01 / Điểm xuất phát</span><span>{profile.location} → bất cứ đâu</span></div>
                 <p class="hero-kicker">Portfolio / Field notes<br />Một người, nhiều hành trình</p>
                 <h1 id="hero-title"><span>MAKE.</span><span class="outline">WANDER.</span></h1>
-                <div class="hero-bottomline"><p>{profile.intro}</p><a href="#projects" class="circle-link" aria-label="Cuộn tới dự án">↓</a><span>Cuộn để đi xuyên qua câu chuyện<br />Nhấn vào một điểm để khám phá<br /><a href="https://science.nasa.gov/image-detail/milkyway-desrt-tree-credit-preston-dyches-2/">Ảnh nền: NASA / Preston Dyches ↗</a></span></div>
+                <div class="hero-bottomline"><p>{profile.intro}</p><a href="#projects" class="scroll-arrow" aria-label="Cuộn tới dự án">↓</a><span>Cuộn để đi xuyên qua câu chuyện<br />Nhấn vào một điểm để khám phá<br /><a href="https://science.nasa.gov/image-detail/milkyway-desrt-tree-credit-preston-dyches-2/">Ảnh nền: NASA / Preston Dyches ↗</a></span></div>
             </div>
         </section>
         <section class="chapter about-chapter" aria-labelledby="about-title">

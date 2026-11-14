@@ -6,6 +6,8 @@ Website này dùng các tệp trong repository làm nguồn nội dung. Không c
 
 Mở `src/data/profile.json` trên GitHub, bấm biểu tượng bút chì, sửa tên, lời giới thiệu, email và liên kết mạng xã hội. Giữ dấu ngoặc kép và dấu phẩy đúng như mẫu, rồi chọn **Commit changes** vào một nhánh mới.
 
+Để hiện ảnh cá nhân ở trang portfolio, tải ảnh dọc WebP hoặc JPEG vào thư mục `public/`, ví dụ `public/portrait.webp`. Trong `src/data/profile.json`, sửa `"portrait": ""` thành `"portrait": "/portrait.webp"` và viết `portraitAlt` mô tả bức ảnh. Trang chủ sẽ đặt ảnh lớn cạnh phần giới thiệu; khi trường `portrait` để trống, vị trí ảnh sẽ không xuất hiện. Ảnh rộng khoảng 1200–1600 px là đủ cho bản xem trước.
+
 ## Sửa hoặc thêm bài viết
 
 - Bài blog: `src/content/posts/`
