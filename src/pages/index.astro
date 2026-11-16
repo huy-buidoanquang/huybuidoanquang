@@ -11,9 +11,9 @@ const displayName = profile.shortName === 'YOUR NAME' ? 'HELLO.' : profile.short
 ---
 <BaseLayout title="Portfolio × Journal">
     <main id="main" class="home">
-        <div class="journey-backdrop" aria-hidden="true"><div class="cosmos-layer"></div><div class="nature-layer"></div></div>
+        <div class="journey-backdrop" aria-hidden="true"><div class="cosmos-layer"></div><div class="nature-layer"></div><div class="paper-layer"></div></div>
         <section id="person" class="chapter hero-chapter" aria-labelledby="hero-title">
-            {profile.portrait && <div class="hero-portrait"><img src={profile.portrait} alt={profile.portraitAlt} fetchpriority="high" decoding="async" /></div>}
+            {profile.portrait && <img class="hero-portrait" src={profile.portrait} alt={profile.portraitAlt} fetchpriority="high" decoding="async" />}
             <div class="chapter-inner hero-inner">
                 <div class="hero-topline"><span>01 / Điểm xuất phát</span><span>{profile.location} → bất cứ đâu</span></div>
                 <p class="hero-kicker">Portfolio / Field notes<br />Một người, nhiều hành trình</p>
@@ -43,22 +43,29 @@ const displayName = profile.shortName === 'YOUR NAME' ? 'HELLO.' : profile.short
     <script>
         import { getNatureBlend } from '../journey/scrollProgress.js';
         const home = document.querySelector<HTMLElement>('.home');
+        const portrait = document.querySelector<HTMLImageElement>('.hero-portrait');
         const cosmos = document.querySelector<HTMLElement>('.cosmos-layer');
         const nature = document.querySelector<HTMLElement>('.nature-layer');
-        const portrait = document.querySelector<HTMLElement>('.hero-portrait');
+        const paper = document.querySelector<HTMLElement>('.paper-layer');
+        const about = document.querySelector<HTMLElement>('.about-chapter');
         const journeys = document.querySelector<HTMLElement>('#journeys');
+        const journal = document.querySelector<HTMLElement>('#journal');
         let blend = 0;
         let scheduled = false;
         const update = () => {
             scheduled = false;
-            if (!home || !cosmos || !nature || !journeys) return;
+            if (!home || !portrait || !cosmos || !nature || !paper || !about || !journeys || !journal) return;
+            const portraitBlend = getNatureBlend(about.getBoundingClientRect().top, innerHeight);
             blend = getNatureBlend(journeys.getBoundingClientRect().top, innerHeight);
-            cosmos.style.opacity = String(1 - blend);
-            nature.style.opacity = String(blend);
+            const paperBlend = getNatureBlend(journal.getBoundingClientRect().top, innerHeight);
+            portrait.style.opacity = String((1 - portraitBlend) * (1 - paperBlend));
+            cosmos.style.opacity = String(portraitBlend * (1 - blend) * (1 - paperBlend));
+            nature.style.opacity = String(blend * (1 - paperBlend));
+            paper.style.opacity = String(paperBlend);
             if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 cosmos.style.transform = `scale(1.12) translate3d(0,${Math.min(scrollY * -0.035, 0)}px,0)`;
                 nature.style.transform = `scale(1.08) translate3d(0,${Math.max(-90, (journeys.getBoundingClientRect().top - innerHeight) * 0.035)}px,0)`;
-                if (portrait) portrait.style.setProperty('--portrait-y', Math.min(scrollY * 0.12, 140) + 'px');
+                portrait.style.transform = `translate3d(0,${Math.min(scrollY * 0.12, 140)}px,0)`;
             }
         };
         const queueUpdate = () => {

@@ -10,7 +10,8 @@
 }
 
 .cosmos-layer,
-.nature-layer {
+.nature-layer,
+.paper-layer {
     position: absolute;
     inset: 0;
     will-change: opacity, transform;
@@ -28,6 +29,11 @@
     background:
         linear-gradient(180deg, #0b122b10, #06191520 70%, #081d1745),
         url('../assets/nature-impasto.webp') center center / cover;
+}
+
+.paper-layer {
+    opacity: 0;
+    background: #e9e3d7;
 }
 
 .hero-chapter {
@@ -233,6 +239,10 @@
 
 .journey-active .journeys-chapter {
     background: linear-gradient(#091c1d52 0%, #0c231f38 33%, #10241c42 72%, #0a23235c 100%);
+}
+
+.journey-active .journal-chapter {
+    background: transparent;
 }
 
 .journeys-chapter h2 {
