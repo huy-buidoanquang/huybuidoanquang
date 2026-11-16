@@ -21,7 +21,7 @@ Build a personal portfolio that draws visitors into an exploratory 3D scroll jou
 
 ## Experience
 
-1. **Opening:** a cosmic environment comes into view; the owner's own portrait appears large when provided, while the name and one concise introduction stay legible over it. A visible scroll cue starts the trip.
+1. **Opening:** the owner's portrait anchors a muted full-screen stage, with oversized type across its lower edge and a concise introduction. The cosmic sky emerges as scrolling begins.
 2. **Personal chapter:** the camera passes details that reveal interests and background. Short text anchors the scene.
 3. **Projects:** each project becomes a waypoint with a strong visual, name, role, and a direct link to a project page. Hover or focus can reveal more; clicking always works without precise 3D aiming.
 4. **Travel:** the cosmic background crossfades smoothly into a location-verified photograph as the camera enters this chapter. Stars and orbits fade while the real landscape emerges. Each place has its own visual mood and leads to its travel story or photo essay.

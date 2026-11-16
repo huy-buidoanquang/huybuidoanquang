@@ -53,7 +53,7 @@ Trong bài `.mdx`, đặt ảnh ngay giữa các đoạn chữ bằng `<Photo sr
 
 Tải ảnh lên `src/assets/` bằng **Add file → Upload files** trên GitHub. Nên dùng JPEG/WebP cho ảnh chụp; đặt tên chữ thường, không dấu, ví dụ `hoi-an-dem.webp`. Sửa `cover` trong tệp bài viết để trỏ tới ảnh đó. Luôn viết `coverAlt` mô tả nội dung ảnh. Ảnh mẫu trong `src/assets/` chỉ để thử giao diện; hãy thay trước khi xuất bản công khai.
 
-Ba chương đầu dùng ảnh thiên văn thật `src/assets/milkyway-desert.webp`; từ chương chuyến đi, nền chuyển sang ảnh chụp Đà Lạt `src/assets/dalat-aerial.webp`. Để đổi một trong hai nền, tải ảnh WebP mới vào `src/assets/`, rồi sửa tên trong `src/styles/experience.css`. Chọn ảnh ngang, nén trước khi tải lên và cập nhật ghi công ảnh trong trang nếu ảnh không phải của bạn.
+Phần mở đầu lấy chân dung từ `profile.json`; các chương tiếp theo dùng ảnh thiên văn `src/assets/milkyway-desert.webp`, rồi chuyển sang ảnh Đà Lạt `src/assets/dalat-aerial.webp` ở chương chuyến đi. Để đổi ảnh nền, tải WebP mới vào `src/assets/` và sửa tên trong `src/styles/experience.css`. Chọn ảnh ngang, nén trước khi tải lên và cập nhật ghi công nếu ảnh không phải của bạn.
 
 ## Xem trước và xuất bản
 

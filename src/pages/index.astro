@@ -7,25 +7,27 @@ import '../styles/experience.css';
 const projects = await getCollection('projects');
 const destinations = await getCollection('destinations');
 const posts = (await getCollection('posts')).sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+const displayName = profile.shortName === 'YOUR NAME' ? 'HELLO.' : profile.shortName;
 ---
 <BaseLayout title="Portfolio × Journal">
     <main id="main" class="home">
         <div class="journey-backdrop" aria-hidden="true"><div class="cosmos-layer"></div><div class="nature-layer"></div></div>
         <section id="person" class="chapter hero-chapter" aria-labelledby="hero-title">
+            {profile.portrait && <div class="hero-ambient" aria-hidden="true"><img src={profile.portrait} alt="" /></div>}
             {profile.portrait && <div class="hero-portrait"><img src={profile.portrait} alt={profile.portraitAlt} fetchpriority="high" decoding="async" /></div>}
             <div class="chapter-inner hero-inner">
                 <div class="hero-topline"><span>01 / Điểm xuất phát</span><span>{profile.location} → bất cứ đâu</span></div>
                 <p class="hero-kicker">Portfolio / Field notes<br />Một người, nhiều hành trình</p>
-                <h1 id="hero-title"><span>MAKE.</span><span class="outline">WANDER.</span></h1>
-                <div class="hero-bottomline"><p>{profile.intro}</p><a href="#projects" class="scroll-arrow" aria-label="Cuộn tới dự án">↓</a><span>Cuộn để đi xuyên qua câu chuyện<br />Nhấn vào một điểm để khám phá<br /><a href="https://science.nasa.gov/image-detail/milkyway-desrt-tree-credit-preston-dyches-2/">Ảnh nền: NASA / Preston Dyches ↗</a></span></div>
+                <h1 id="hero-title">{displayName}</h1>
+                <div class="hero-bottomline"><p>{profile.intro}</p><a href="#projects" class="scroll-arrow" aria-label="Cuộn tới dự án">↓</a><span>Cuộn để đi xuyên qua câu chuyện<br />Nhấn vào một điểm để khám phá</span></div>
             </div>
         </section>
         <section class="chapter about-chapter" aria-labelledby="about-title">
-            <div class="chapter-inner about-inner"><span class="section-number">02 / Về tôi</span><h2 id="about-title">Hai thế giới.<br /><em>Một người kể.</em></h2><p>Từ một ý tưởng trên màn hình đến con đường chưa từng đi qua — tôi muốn giữ lại cả quá trình, không chỉ điểm đến.</p></div>
+            <div class="chapter-inner about-inner"><span class="section-number">02 / Về tôi</span><h2 id="about-title">Hai thế giới.<br /><em>Một người kể.</em></h2><p>Từ một ý tưởng trên màn hình đến con đường chưa từng đi qua — tôi muốn giữ lại cả quá trình, không chỉ điểm đến.</p><a class="sky-credit" href="https://science.nasa.gov/image-detail/milkyway-desrt-tree-credit-preston-dyches-2/">Ảnh nền: NASA / Preston Dyches ↗</a></div>
         </section>
         <section id="projects" class="chapter projects-chapter" aria-labelledby="projects-title">
             <div class="chapter-inner"><div class="chapter-heading"><span class="section-number">03 / Những thứ tôi tạo ra</span><h2 id="projects-title">Made<br /><em>of curiosity.</em></h2></div>
-                <div class="project-list">{projects.map((project,index) => <a class="project-feature" href={'/projects/' + project.id + '/'}><Image src={project.data.cover} alt={project.data.coverAlt} widths={[640,960,1440]} sizes="(max-width: 800px) 100vw, 78vw" loading="lazy" /><span class="project-feature-copy"><small>0{index+1} / Dự án</small><strong>{project.data.title}</strong><span>{project.data.summary}</span><b>Khám phá ↗</b></span></a>)}</div>
+                <div class="project-list">{projects.map((project,index) => <a class="project-row" href={'/projects/' + project.id + '/'}><span class="project-order">0{index+1}</span><strong>{project.data.title}</strong><span class="project-summary">{project.data.summary}</span><span class="project-arrow">↗</span><Image class="project-preview" src={project.data.cover} alt={project.data.coverAlt} widths={[480,960]} sizes="(max-width: 800px) 100vw, 35vw" loading="lazy" /></a>)}</div>
                 <p class="sample-note">Dự án mẫu — thay nội dung trong GitHub.</p>
             </div>
         </section>
@@ -57,7 +59,7 @@ const posts = (await getCollection('posts')).sort((a,b) => b.data.date.valueOf()
             if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 cosmos.style.transform = `scale(1.12) translate3d(0,${Math.min(scrollY * -0.035, 0)}px,0)`;
                 nature.style.transform = `scale(1.08) translate3d(0,${Math.max(-90, (journeys.getBoundingClientRect().top - innerHeight) * 0.035)}px,0)`;
-                if (portrait) portrait.style.transform = `translate3d(0,${Math.min(scrollY * 0.12, 140)}px,0)`;
+                if (portrait) portrait.style.setProperty('--portrait-y', Math.min(scrollY * 0.12, 140) + 'px');
             }
         };
         const queueUpdate = () => {
