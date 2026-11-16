@@ -5,6 +5,10 @@
     "location": "Việt Nam",
     "email": "hello@example.com",
     "portrait": "/portrait.webp",
+    "portraitWide": "/portrait-wide.webp",
+    "portraitUltrawide": "/portrait-ultrawide.webp",
+    "portraitTablet": "/portrait-tablet.webp",
+    "portraitMobile": "/portrait-mobile.webp",
     "portraitAlt": "Chân dung impressionist của Huy Bui Doan Quang tại sân bay",
     "socials": [
         { "label": "GitHub", "url": "https://github.com/" }

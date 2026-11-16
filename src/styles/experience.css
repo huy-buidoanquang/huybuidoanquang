@@ -50,7 +50,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: calc(100svh - 120px);
+    min-height: calc(100svh - 120px - 8vh);
 }
 
 .hero-ambient {
@@ -72,19 +72,19 @@
 .hero-portrait {
     position: absolute;
     z-index: 1;
-    top: 0;
-    left: 50%;
-    width: min(82vw, 1600px);
-    height: 88svh;
+    inset: 0;
+    display: block;
+    width: 100vw;
+    height: 100svh;
     overflow: hidden;
-    transform: translate3d(-50%, var(--portrait-y, 0px), 0);
 }
 
 .hero-portrait img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center;
+    object-fit: cover;
+    object-position: center 8%;
     filter: saturate(.94) contrast(1.04);
 }
 
@@ -343,33 +343,25 @@
 
 @media (max-width: 800px) {
     .hero-chapter {
-        display: flex;
-        flex-direction: column;
+        display: block;
         min-height: 100svh;
         padding-top: 100px;
     }
 
+    .hero-inner {
+        min-height: calc(100svh - 100px - 8vh);
+    }
+
     .hero-portrait {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 3 / 2;
-        margin: 10px auto 20px;
-        transform: none;
+        width: 100vw;
+        height: 100svh;
     }
 
     .hero-portrait img {
-        object-fit: contain;
+        object-fit: cover;
         object-position: center;
     }
 
-    .hero-inner {
-        min-height: auto;
-        gap: 15px;
-        width: 100%;
-    }
 
     .hero-chapter h1 {
         font-size: clamp(48px, 13vw, 104px);

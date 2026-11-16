@@ -6,7 +6,7 @@ Website này dùng các tệp trong repository làm nguồn nội dung. Không c
 
 Mở `src/data/profile.json` trên GitHub, bấm biểu tượng bút chì, sửa tên, lời giới thiệu, email và liên kết mạng xã hội. Giữ dấu ngoặc kép và dấu phẩy đúng như mẫu, rồi chọn **Commit changes** vào một nhánh mới.
 
-Để hiện ảnh cá nhân ở trang portfolio, tải ảnh dọc WebP hoặc JPEG vào thư mục `public/`, ví dụ `public/portrait.webp`. Trong `src/data/profile.json`, sửa `"portrait": ""` thành `"portrait": "/portrait.webp"` và viết `portraitAlt` mô tả bức ảnh. Trang chủ sẽ đặt ảnh lớn cạnh phần giới thiệu; khi trường `portrait` để trống, vị trí ảnh sẽ không xuất hiện. Ảnh rộng khoảng 1200–1600 px là đủ cho bản xem trước.
+Ảnh hero dùng các file responsive để phủ khung mà không kéo méo: `portrait-wide.webp` (16:9), `portrait-ultrawide.webp` (21:9), `portrait-tablet.webp` (4:3), `portrait-mobile.webp` (9:16), cùng `portrait.webp` làm fallback. Khi thay chân dung, tải đủ các crop mới vào `public/`, rồi sửa các trường `portrait*` trong `src/data/profile.json` nếu tên file khác. Viết `portraitAlt` mô tả ảnh. Không dùng một crop duy nhất cho mọi tỷ lệ vì các màn hình dọc và siêu rộng cần vùng lấy ảnh khác nhau.
 
 ## Sửa hoặc thêm bài viết
 
