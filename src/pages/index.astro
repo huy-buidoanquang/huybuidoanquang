@@ -13,7 +13,6 @@ const displayName = profile.shortName === 'YOUR NAME' ? 'HELLO.' : profile.short
     <main id="main" class="home">
         <div class="journey-backdrop" aria-hidden="true"><div class="cosmos-layer"></div><div class="nature-layer"></div></div>
         <section id="person" class="chapter hero-chapter" aria-labelledby="hero-title">
-            {profile.portrait && <div class="hero-ambient" aria-hidden="true"><img src={profile.portrait} alt="" /></div>}
             {profile.portrait && <div class="hero-portrait"><img src={profile.portrait} alt={profile.portraitAlt} fetchpriority="high" decoding="async" /></div>}
             <div class="chapter-inner hero-inner">
                 <div class="hero-topline"><span>01 / Điểm xuất phát</span><span>{profile.location} → bất cứ đâu</span></div>

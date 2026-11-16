@@ -1,11 +1,11 @@
 {
-    "name": "Tên của bạn",
-    "shortName": "YOUR NAME",
+    "name": "Huy Bui Doan Quang",
+    "shortName": "HUY BUI DOAN QUANG",
     "intro": "Tôi tạo ra những điều mới, đi đến những nơi lạ và kể lại những gì mình học được.",
     "location": "Việt Nam",
     "email": "hello@example.com",
     "portrait": "/portrait.webp",
-    "portraitAlt": "Chân dung của tôi trong áo sơ mi đen",
+    "portraitAlt": "Chân dung impressionist của Huy Bui Doan Quang tại sân bay",
     "socials": [
         { "label": "GitHub", "url": "https://github.com/" }
     ]
