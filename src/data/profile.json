@@ -4,8 +4,8 @@
     "intro": "Tôi tạo ra những điều mới, đi đến những nơi lạ và kể lại những gì mình học được.",
     "location": "Việt Nam",
     "email": "hello@example.com",
-    "portrait": "",
-    "portraitAlt": "Chân dung của tôi",
+    "portrait": "/portrait.webp",
+    "portraitAlt": "Chân dung của tôi trong áo sơ mi đen",
     "socials": [
         { "label": "GitHub", "url": "https://github.com/" }
     ]

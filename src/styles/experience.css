@@ -48,8 +48,8 @@
     width: min(43vw, 680px);
     height: 78svh;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 78%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 78%, transparent);
+    -webkit-mask-image: radial-gradient(ellipse 72% 75% at 50% 48%, #000 38%, transparent 100%);
+    mask-image: radial-gradient(ellipse 72% 75% at 50% 48%, #000 38%, transparent 100%);
 }
 
 .hero-portrait img {
