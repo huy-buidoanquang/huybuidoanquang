@@ -24,7 +24,7 @@ Build a personal portfolio that draws visitors into an exploratory 3D scroll jou
 1. **Opening:** the owner's portrait anchors a muted full-screen stage, with oversized type across its lower edge and a concise introduction. The cosmic sky emerges as scrolling begins.
 2. **Personal chapter:** the camera passes details that reveal interests and background. Short text anchors the scene.
 3. **Projects:** each project becomes a waypoint with a strong visual, name, role, and a direct link to a project page. Hover or focus can reveal more; clicking always works without precise 3D aiming.
-4. **Travel:** the cosmic background crossfades smoothly into a location-verified photograph as the camera enters this chapter. Stars and orbits fade while the real landscape emerges. Each place has its own visual mood and leads to its travel story or photo essay.
+4. **Travel:** the cosmic background crossfades smoothly into an impressionist landscape as the camera enters this chapter. Each destination article then uses its own location-verified photographs and art direction.
 5. **Journal:** a clear index offers travel, technical, photography, interests, and passion topics. Article pages prioritize text, images, captions, and navigation to the next story.
 
 The 3D scene is an enhancement around semantic HTML links and headings. On mobile, reduced-motion, or unsupported devices, the same chapter order uses strong stills and direct links. Keyboard users can move between chapter targets and links without relying on camera controls.
@@ -39,7 +39,7 @@ Store original or preprocessed images with the GitHub project and publish optimi
 
 ## Implementation and performance
 
-Use static Astro pages for navigation, SEO, and articles. Load one Three.js canvas on the home journey only, after the page's essential text and first visual are ready. Tie camera progress to scroll, keep scenes in one renderer, load later scene assets near their chapter, cap rendering resolution, pause when hidden, and dispose resources when leaving. Provide a static poster before 3D is ready. Keep article pages free of the journey bundle unless an individual story explicitly needs a small scene. Respect reduced motion and avoid hijacking ordinary scrolling.
+Use static Astro pages for navigation, SEO, and articles. Create depth from the owner's portrait and real photographs with layered CSS transforms tied to normal scrolling. Use two coordinated painted background assets for the cosmic-to-nature transition; no Three.js geometry. Keep the background crossfade independent of the visual effect so content remains available when motion is reduced or scripts are unavailable. Optimize local images and lazy-load photos below the first screen.
 
 Build a local preview first. Once the owner connects a GitHub repository, deploy static `dist/` output to Cloudflare Pages and use branch previews to review edits. Add the owner's existing domain after the preview is approved. The owner must supply the domain and Cloudflare access for that final setup.
 

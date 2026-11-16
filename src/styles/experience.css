@@ -18,16 +18,16 @@
 
 .cosmos-layer {
     background:
-        linear-gradient(90deg, #090e1f8c 0%, #090e1f20 65%),
-        linear-gradient(180deg, #070d1a32 0%, #090e1f08 45%, #090e1fa8 100%),
-        url('../assets/milkyway-desert.webp') center 45% / cover;
+        linear-gradient(90deg, #090e1f55 0%, #090e1f08 65%),
+        linear-gradient(180deg, #070d1a18 0%, #090e1f08 45%, #090e1f68 100%),
+        url('../assets/cosmos-impasto.webp') center 45% / cover;
 }
 
 .nature-layer {
     opacity: 0;
     background:
-        linear-gradient(180deg, #0b122b20, #06191535 70%, #081d175c),
-        url('../assets/dalat-aerial.webp') center center / cover;
+        linear-gradient(180deg, #0b122b10, #06191520 70%, #081d1745),
+        url('../assets/nature-impasto.webp') center center / cover;
 }
 
 .hero-chapter {
@@ -152,14 +152,6 @@
     padding-left: 24px;
 }
 
-.sky-credit {
-    grid-column: 2;
-    justify-self: end;
-    font-size: 11px;
-    color: #e5e9e9;
-    opacity: .75;
-}
-
 .projects-chapter {
     min-height: 140svh;
     background: linear-gradient(#111528a8, #1016298c);
@@ -235,12 +227,12 @@
 .journeys-chapter {
     min-height: 170svh;
     background:
-        linear-gradient(#101629b8 0%, #0c231f80 33%, #10241c9c 72%, #0a2323dd 100%),
-        url('../assets/dalat-aerial.webp') center center / cover;
+        linear-gradient(#10162970 0%, #0c231f48 33%, #10241c5c 72%, #0a232388 100%),
+        url('../assets/nature-impasto.webp') center center / cover;
 }
 
 .journey-active .journeys-chapter {
-    background: linear-gradient(#091c1d8c 0%, #0c231f53 33%, #10241c42 72%, #0a23235c 100%);
+    background: linear-gradient(#091c1d52 0%, #0c231f38 33%, #10241c42 72%, #0a23235c 100%);
 }
 
 .journeys-chapter h2 {
