@@ -326,7 +326,14 @@
 
 @media (max-width: 800px) {
     .hero-portrait {
-        height: 100svh;
+        inset: 12vh 0 auto;
+        height: auto;
+        aspect-ratio: 3 / 2;
+    }
+
+    .hero-portrait img {
+        object-fit: contain;
+        object-position: center;
     }
 
     .hero-chapter h1 {
