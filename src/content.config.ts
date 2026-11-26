@@ -13,6 +13,7 @@ const storyStyles = [
     'autumn-ridge',
     'karst-emerald',
     'moss-summit',
+    'karst-blossom',
 ] as const;
 
 const atmospheres = [
@@ -24,6 +25,7 @@ const atmospheres = [
     'waterfall',
     'spores',
     'petals',
+    'karst-blossom',
 ] as const;
 
 const galleryItem = (context: SchemaContext) => z.object({

@@ -671,7 +671,8 @@ html[data-theme=night] .story-coastal {
     font-size: clamp(58px, 9.8vw, 168px);
     font-weight: 900;
     letter-spacing: -.045em;
-    line-height: .95;
+    line-height: 1.08;
+    padding-bottom: .08em;
     background: linear-gradient(120deg, #fff6ec 20%, #ff9b63 72%, #68d6d8 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -986,6 +987,73 @@ html[data-theme=night] .story-moss-summit .story-cover img {
     font-size: clamp(38px, 5vw, 66px);
     color: #9ae0a0;
     border-top: 1px solid #f2d59b44;
+    padding-top: .5em;
+}
+
+/* ==========================================================================
+   BESPOKE DESTINATION THEME 7: KARST-BLOSSOM (Hà Giang — Stone Plateau & Peach Blossoms)
+   ========================================================================== */
+
+html[data-theme=night] .story-karst-blossom {
+    background:
+        radial-gradient(circle at 82% 10%, #5e294054 0%, transparent 42%),
+        radial-gradient(circle at 14% 38%, #2a374859 0%, transparent 48%),
+        linear-gradient(180deg, #111419 0%, #181c24 52%, #111319 100%);
+    color: #efeae6;
+}
+
+.story-karst-blossom .story-meta span {
+    color: #f3a6bc;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+}
+
+.story-karst-blossom .story-lead h1 {
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(58px, 10.2vw, 178px);
+    line-height: 1.08;
+    padding-bottom: .08em;
+    letter-spacing: -.045em;
+    background: linear-gradient(135deg, #f9f5f3 12%, #f4b2c5 96%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.story-karst-blossom .story-telemetry {
+    border-color: #f3a6bc42;
+}
+
+.story-karst-blossom .story-telemetry dd {
+    color: #f7c7d5;
+}
+
+html[data-theme=night] .story-karst-blossom .story-cover {
+    padding: 0 3vw;
+}
+
+html[data-theme=night] .story-karst-blossom .story-cover img {
+    border-radius: 0;
+    max-height: 85svh;
+    object-position: center 60%;
+    border: 1px solid #f3a6bc2e;
+    box-shadow: 0 36px 90px #00000080;
+}
+
+.story-karst-blossom .story-body {
+    font-size: clamp(18px, 1.72vw, 23px);
+    line-height: 1.8;
+}
+
+.story-karst-blossom .story-body h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(38px, 5vw, 66px);
+    letter-spacing: -.02em;
+    color: #f3a6bc;
+    border-top: 1px solid #e45c7666;
     padding-top: .5em;
 }
 

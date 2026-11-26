@@ -1,4 +1,4 @@
-type AtmosphereType = 'none' | 'ocean' | 'clouds' | 'embers' | 'golden-wind' | 'waterfall' | 'spores' | 'petals';
+type AtmosphereType = 'none' | 'ocean' | 'clouds' | 'embers' | 'golden-wind' | 'waterfall' | 'spores' | 'petals' | 'karst-blossom';
 
 interface Mote3D {
     x: number;
@@ -30,9 +30,27 @@ function initAtmosphereCanvas(canvas: HTMLCanvasElement, mode: AtmosphereType): 
             x: s1,
             y: s2,
             z: 0.25 + s3 * 0.95,
-            vx: mode === 'clouds' ? 0.008 + s3 * 0.012 : mode === 'golden-wind' ? 0.018 + s3 * 0.02 : (s1 - 0.5) * 0.009,
-            vy: mode === 'waterfall' ? 0.035 + s3 * 0.045 : mode === 'spores' || mode === 'embers' ? -(0.008 + s3 * 0.014) : (s2 - 0.5) * 0.006,
-            size: mode === 'clouds' ? 90 + s3 * 160 : mode === 'ocean' ? 2 + s3 * 4.5 : 1.6 + s3 * 3.8,
+            vx: mode === 'clouds'
+                ? 0.008 + s3 * 0.012
+                : mode === 'golden-wind'
+                    ? 0.018 + s3 * 0.02
+                    : mode === 'karst-blossom'
+                        ? 0.009 + s3 * 0.014
+                        : (s1 - 0.5) * 0.009,
+            vy: mode === 'waterfall'
+                ? 0.035 + s3 * 0.045
+                : mode === 'karst-blossom'
+                    ? 0.008 + s3 * 0.012
+                    : mode === 'spores' || mode === 'embers'
+                        ? -(0.008 + s3 * 0.014)
+                        : (s2 - 0.5) * 0.006,
+            size: mode === 'clouds'
+                ? 90 + s3 * 160
+                : mode === 'karst-blossom'
+                    ? (s3 < 0.24 ? 70 + s2 * 110 : 2.8 + s3 * 4.4)
+                    : mode === 'ocean'
+                        ? 2 + s3 * 4.5
+                        : 1.6 + s3 * 3.8,
             phase: i * 0.85,
             tint: s3,
         };
@@ -130,6 +148,35 @@ function initAtmosphereCanvas(canvas: HTMLCanvasElement, mode: AtmosphereType): 
                     : `rgba(202, 162, 92, ${(0.22 * m.z).toFixed(3)})`;
                 ctx.fillRect(-m.size, -m.size * 0.45, m.size * 2, m.size * 0.9);
                 ctx.restore();
+            } else if (mode === 'karst-blossom') {
+                if (m.tint < 0.24) {
+                    const rad = m.size * m.z;
+                    const grad = ctx.createRadialGradient(x, y, rad * 0.08, x, y, rad);
+                    grad.addColorStop(0, `rgba(196, 206, 220, ${(0.075 * m.z).toFixed(3)})`);
+                    grad.addColorStop(1, 'rgba(196, 206, 220, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(x, y, rad, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    const sz = m.size * m.z;
+                    const flutter = 0.45 + 0.55 * Math.abs(Math.sin(t * 1.4 + m.phase));
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(t * 0.65 + m.phase);
+                    ctx.scale(1, flutter);
+                    ctx.fillStyle = m.tint > 0.72
+                        ? `rgba(246, 172, 196, ${(0.42 * m.z).toFixed(3)})`
+                        : m.tint > 0.45
+                            ? `rgba(255, 214, 228, ${(0.34 * m.z).toFixed(3)})`
+                            : `rgba(218, 86, 114, ${(0.28 * m.z).toFixed(3)})`;
+                    ctx.beginPath();
+                    ctx.moveTo(0, -sz);
+                    ctx.bezierCurveTo(sz * 0.85, -sz * 0.55, sz * 0.85, sz * 0.55, 0, sz);
+                    ctx.bezierCurveTo(-sz * 0.85, sz * 0.55, -sz * 0.85, -sz * 0.55, 0, -sz);
+                    ctx.fill();
+                    ctx.restore();
+                }
             }
         }
 

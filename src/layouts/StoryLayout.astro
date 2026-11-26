@@ -40,7 +40,7 @@ const backHref = entry.collection === 'posts'
         ? localizePath('/#projects', lang)
         : localizePath('/#journeys', lang);
 
-const darkStyles = new Set(['lantern', 'coastal', 'karst-emerald', 'moss-summit', 'night']);
+const darkStyles = new Set(['lantern', 'coastal', 'karst-emerald', 'moss-summit', 'karst-blossom', 'night']);
 const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
 ---
 <BaseLayout
