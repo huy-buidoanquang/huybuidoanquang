@@ -3,9 +3,180 @@
    ========================================================================== */
 
 .story-page {
+    --story-accent: #c8ec81;
     position: relative;
     overflow-x: clip;
     font-family: 'Be Vietnam Pro', 'Space Grotesk', Arial, Helvetica, sans-serif;
+}
+
+.reading-progress {
+    position: fixed;
+    z-index: 60;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: transparent;
+    pointer-events: none;
+}
+
+.reading-progress-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--story-accent);
+    transform-origin: left center;
+    transform: scaleX(0);
+    will-change: transform;
+}
+
+.story-coastal { --story-accent: #ff9c66; }
+.story-cloudsea { --story-accent: #274768; }
+.story-highland-winter { --story-accent: #c2781a; }
+.story-autumn-ridge { --story-accent: #b8372c; }
+.story-karst-emerald { --story-accent: #7ee3c4; }
+.story-moss-summit { --story-accent: #9ae0a0; }
+.story-karst-blossom { --story-accent: #f3a6bc; }
+.story-commencement { --story-accent: #c69a47; }
+
+html[data-theme=night] .story-night .story-cover {
+    padding: 0 4vw;
+}
+
+html[data-theme=night] .story-night .story-cover img {
+    border-radius: 6px;
+    border: 1px solid #ffffff24;
+    box-shadow: 0 30px 80px #00000066;
+    max-height: 78svh;
+}
+
+.project-links-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.project-link-btn {
+    display: inline-block;
+    padding: 5px 12px;
+    border: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .06em;
+    transition: background .2s, color .2s, border-color .2s;
+}
+
+.project-link-btn:hover {
+    background: var(--story-accent);
+    color: #0e141c;
+    border-color: var(--story-accent);
+}
+
+.story-pager {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(16px, 2.5vw, 32px);
+    padding: 0 4vw 6vh;
+}
+
+.story-pager-card {
+    display: grid;
+    grid-template-columns: 128px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    background: color-mix(in srgb, currentColor 4%, transparent);
+    transition: border-color .25s, transform .25s, background .25s;
+}
+
+.story-pager-card:hover {
+    border-color: var(--story-accent);
+    background: color-mix(in srgb, var(--story-accent) 9%, transparent);
+    transform: translateY(-2px);
+}
+
+.story-pager-next {
+    grid-template-columns: minmax(0, 1fr) 128px;
+    text-align: right;
+}
+
+.story-pager-next .story-pager-thumb {
+    order: 2;
+}
+
+.story-pager-thumb {
+    width: 128px;
+    height: 92px;
+    overflow: hidden;
+    background: #10151e;
+}
+
+.story-pager-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .45s cubic-bezier(.2, .8, .2, 1);
+}
+
+.story-pager-card:hover .story-pager-thumb img {
+    transform: scale(1.08);
+}
+
+.story-pager-dir {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--story-accent);
+    margin-bottom: 6px;
+}
+
+.story-pager-info strong {
+    display: block;
+    font-size: clamp(18px, 2vw, 26px);
+    line-height: 1.15;
+    letter-spacing: -.03em;
+}
+
+.story-pager-info small {
+    display: block;
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: .68;
+}
+
+.story-end-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.story-share-btn {
+    padding: 7px 14px;
+    border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+}
+
+.story-share-btn:hover,
+.story-share-btn.is-copied {
+    background: var(--story-accent);
+    color: #0e141c;
+    border-color: var(--story-accent);
 }
 
 .story-atmosphere {
@@ -1334,6 +1505,29 @@ html[data-theme=night] .story-karst-blossom .story-cover img {
 
     .story-telemetry {
         gap: 14px 22px;
+    }
+
+    .story-pager {
+        grid-template-columns: 1fr;
+    }
+
+    .story-pager-spacer {
+        display: none;
+    }
+
+    .story-pager-card,
+    .story-pager-next {
+        grid-template-columns: 92px minmax(0, 1fr);
+        text-align: left;
+    }
+
+    .story-pager-next .story-pager-thumb {
+        order: 0;
+    }
+
+    .story-pager-thumb {
+        width: 92px;
+        height: 72px;
     }
 }
 

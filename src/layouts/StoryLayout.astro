@@ -1,17 +1,20 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import { getLangFromPath, localizePath, ui, type Lang } from '../i18n/ui.js';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { getLangFromPath, isViId, localizePath, stripEntryLang, ui, type Lang } from '../i18n/ui.js';
 import '../styles/story-themes.css';
 
+type AnyStory = CollectionEntry<'posts'> | CollectionEntry<'projects'> | CollectionEntry<'destinations'>;
+
 const { entry, label, lang: propLang } = Astro.props as {
-    entry: CollectionEntry<'posts'> | CollectionEntry<'projects'> | CollectionEntry<'destinations'>;
+    entry: AnyStory;
     label: string;
     lang?: Lang;
 };
 
 const lang: Lang = propLang || getLangFromPath(Astro.url.pathname);
+const wantVi = lang === 'vi';
 const t = ui[lang];
 const style = 'storyStyle' in entry.data ? entry.data.storyStyle : entry.data.theme;
 const gallery = 'gallery' in entry.data ? entry.data.gallery : [];
@@ -21,7 +24,9 @@ const formattedDate = 'dateRange' in entry.data
     ? entry.data.dateRange
     : 'date' in entry.data
         ? new Intl.DateTimeFormat(dateLocale, { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(entry.data.date)
-        : undefined;
+        : 'year' in entry.data && entry.data.year
+            ? entry.data.year
+            : undefined;
 const metaLabel = formattedDate ? `${label} · ${formattedDate}` : label;
 
 const telemetry = 'coordinates' in entry.data
@@ -33,12 +38,54 @@ const telemetry = 'coordinates' in entry.data
     }
     : null;
 
+const projectMeta = entry.collection === 'projects'
+    ? {
+        stack: entry.data.stack,
+        role: entry.data.role,
+        year: entry.data.year,
+        repoUrl: entry.data.repoUrl,
+        liveUrl: entry.data.liveUrl,
+    }
+    : null;
+
 const navBase = t.storyNav[entry.collection];
 const backHref = entry.collection === 'posts'
     ? localizePath('/journal/', lang)
     : entry.collection === 'projects'
         ? localizePath('/#projects', lang)
         : localizePath('/#journeys', lang);
+
+// Compute chronological/ordered Previous & Next stories within the same collection + language
+let siblings: AnyStory[] = [];
+if (entry.collection === 'destinations') {
+    siblings = (await getCollection('destinations'))
+        .filter((e) => isViId(e.id) === wantVi)
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+} else if (entry.collection === 'posts') {
+    siblings = (await getCollection('posts'))
+        .filter((e) => isViId(e.id) === wantVi)
+        .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.date.valueOf() - a.data.date.valueOf());
+} else {
+    siblings = (await getCollection('projects'))
+        .filter((e) => isViId(e.id) === wantVi)
+        .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+}
+
+const currentIdx = siblings.findIndex((s) => s.id === entry.id);
+const prevEntry = currentIdx > 0 ? siblings[currentIdx - 1] : null;
+const nextEntry = currentIdx >= 0 && currentIdx < siblings.length - 1 ? siblings[currentIdx + 1] : null;
+
+const entryHref = (item: AnyStory) => {
+    const slug = stripEntryLang(item.id);
+    const prefix = item.collection === 'posts' ? '/journal/' : item.collection === 'projects' ? '/projects/' : '/places/';
+    return localizePath(`${prefix}${slug}/`, lang);
+};
+
+const entrySub = (item: AnyStory) => {
+    if ('region' in item.data) return `${item.data.region} · ${item.data.dateRange}`;
+    if ('date' in item.data) return `${t.categories[item.data.category]} · ${item.data.date.getUTCFullYear()}`;
+    return item.data.role || item.data.year || t.projectLabel;
+};
 
 const darkStyles = new Set(['lantern', 'coastal', 'karst-emerald', 'moss-summit', 'karst-blossom', 'night']);
 const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
@@ -52,6 +99,16 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
     lang={lang}
 >
     <main id="main" class:list={['story-page', 'story-' + style]}>
+        <div
+            class="reading-progress"
+            role="progressbar"
+            aria-label={t.readingProgressAria}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+        >
+            <span class="reading-progress-fill"></span>
+        </div>
         {atmosphere !== 'none' && <canvas class="story-atmosphere" data-atmosphere={atmosphere} aria-hidden="true"></canvas>}
         <div class="story-lead">
             <div class="story-meta"><a href={backHref}>{navBase.backLabel}</a><span>{metaLabel}</span></div>
@@ -63,6 +120,31 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
                     <div><dt>{t.telemetryCoords}</dt><dd>{telemetry.coordinates}</dd></div>
                     {telemetry.elevation && <div><dt>{t.telemetryElevation}</dt><dd>{telemetry.elevation}</dd></div>}
                     <div><dt>{t.telemetryDates}</dt><dd>{telemetry.dateRange}</dd></div>
+                </dl>
+            )}
+            {projectMeta && (projectMeta.stack.length > 0 || projectMeta.repoUrl || projectMeta.liveUrl) && (
+                <dl class="story-telemetry project-telemetry" aria-label={t.projectLabel}>
+                    {projectMeta.role && <div><dt>{t.projectRole}</dt><dd>{projectMeta.role}</dd></div>}
+                    {projectMeta.year && <div><dt>{t.projectYear}</dt><dd>{projectMeta.year}</dd></div>}
+                    {projectMeta.stack.length > 0 && (
+                        <div>
+                            <dt>{t.projectStack}</dt>
+                            <dd class="project-stack-list">{projectMeta.stack.join(' · ')}</dd>
+                        </div>
+                    )}
+                    {(projectMeta.repoUrl || projectMeta.liveUrl) && (
+                        <div>
+                            <dt>{t.projectLinks}</dt>
+                            <dd class="project-links-row">
+                                {projectMeta.repoUrl && (
+                                    <a class="project-link-btn" href={projectMeta.repoUrl} target="_blank" rel="noopener noreferrer">{t.repoLabel}</a>
+                                )}
+                                {projectMeta.liveUrl && (
+                                    <a class="project-link-btn" href={projectMeta.liveUrl} target="_blank" rel="noopener noreferrer">{t.liveDemoLabel}</a>
+                                )}
+                            </dd>
+                        </div>
+                    )}
                 </dl>
             )}
         </div>
@@ -128,7 +210,48 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
                 </div>
             </section>
         )}
-        <div class="story-end"><span>{navBase.endText}</span><a href={backHref}>{navBase.endLabel}</a></div>
+        {(prevEntry || nextEntry) && (
+            <nav class="story-pager" aria-label={t.navAria}>
+                {prevEntry ? (
+                    <a class="story-pager-card" href={entryHref(prevEntry)}>
+                        <div class="story-pager-thumb">
+                            <Image src={prevEntry.data.cover} alt={prevEntry.data.coverAlt} widths={[320, 640]} sizes="(max-width: 800px) 92vw, 22vw" loading="lazy" />
+                        </div>
+                        <div class="story-pager-info">
+                            <span class="story-pager-dir">{t.prevStoryLabel}</span>
+                            <strong>{prevEntry.data.title}</strong>
+                            <small>{entrySub(prevEntry)}</small>
+                        </div>
+                    </a>
+                ) : <div class="story-pager-spacer" aria-hidden="true"></div>}
+                {nextEntry && (
+                    <a class="story-pager-card story-pager-next" href={entryHref(nextEntry)}>
+                        <div class="story-pager-thumb">
+                            <Image src={nextEntry.data.cover} alt={nextEntry.data.coverAlt} widths={[320, 640]} sizes="(max-width: 800px) 92vw, 22vw" loading="lazy" />
+                        </div>
+                        <div class="story-pager-info">
+                            <span class="story-pager-dir">{t.nextStoryLabel}</span>
+                            <strong>{nextEntry.data.title}</strong>
+                            <small>{entrySub(nextEntry)}</small>
+                        </div>
+                    </a>
+                )}
+            </nav>
+        )}
+        <div class="story-end">
+            <span>{navBase.endText}</span>
+            <div class="story-end-actions">
+                <button
+                    type="button"
+                    class="story-share-btn"
+                    data-default-label={t.copyLink}
+                    data-copied-label={t.linkCopied}
+                >
+                    {t.copyLink}
+                </button>
+                <a href={backHref}>{navBase.endLabel}</a>
+            </div>
+        </div>
     </main>
     <dialog class="photo-dialog" aria-label={t.lightboxAria} data-zoom-prefix={lang === 'vi' ? 'Phóng' : 'Zoom'}>
         <div class="photo-dialog-bg" aria-hidden="true"></div>
@@ -152,6 +275,48 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
 
         initStoryExperience();
 
+        // Reading Progress Bar (theme-colored, GPU-composited)
+        const progressEl = document.querySelector<HTMLElement>('.reading-progress');
+        const progressFill = document.querySelector<HTMLElement>('.reading-progress-fill');
+        if (progressEl && progressFill) {
+            let ticking = false;
+            const updateProgress = () => {
+                ticking = false;
+                const docH = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+                const ratio = Math.max(0, Math.min(1, window.scrollY / docH));
+                progressFill.style.transform = `scaleX(${ratio.toFixed(4)})`;
+                progressEl.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
+            };
+            const onScrollProgress = () => {
+                if (!ticking) {
+                    ticking = true;
+                    requestAnimationFrame(updateProgress);
+                }
+            };
+            window.addEventListener('scroll', onScrollProgress, { passive: true });
+            window.addEventListener('resize', onScrollProgress, { passive: true });
+            updateProgress();
+        }
+
+        // Copy Link share button
+        const shareBtn = document.querySelector<HTMLButtonElement>('.story-share-btn');
+        shareBtn?.addEventListener('click', async () => {
+            const defaultLabel = shareBtn.dataset.defaultLabel || 'Copy link';
+            const copiedLabel = shareBtn.dataset.copiedLabel || 'Link copied ✓';
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                shareBtn.textContent = copiedLabel;
+                shareBtn.classList.add('is-copied');
+                window.setTimeout(() => {
+                    shareBtn.textContent = defaultLabel;
+                    shareBtn.classList.remove('is-copied');
+                }, 2200);
+            } catch {
+                window.prompt(defaultLabel, window.location.href);
+            }
+        });
+
+        // Museum Immersive Pan / Zoom / Pinch / Preload Lightbox
         const dialog = document.querySelector<HTMLDialogElement>('.photo-dialog');
         const triggers = [...document.querySelectorAll<HTMLButtonElement>('.photo-trigger')];
         const prevBtn = dialog?.querySelector<HTMLButtonElement>('.photo-prev');
@@ -173,6 +338,20 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
         let dragStartX = 0;
         let dragStartY = 0;
         let touchStartX = 0;
+        let pinchStartDist = 0;
+        let pinchStartZoom = 1;
+        const preloaded = new Set<string>();
+
+        const preloadPhoto = (index: number) => {
+            if (triggers.length <= 1) return;
+            const norm = (index + triggers.length) % triggers.length;
+            const src = triggers[norm]?.dataset.photoSrc;
+            if (!src || preloaded.has(src)) return;
+            preloaded.add(src);
+            const img = new window.Image();
+            img.decoding = 'async';
+            img.src = src;
+        };
 
         const applyTransform = () => {
             if (!imgEl || !zoomBtn || !stage) return;
@@ -233,6 +412,8 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
                 btn.classList.toggle('is-active', isCur);
                 if (isCur) btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
             });
+            preloadPhoto(active + 1);
+            preloadPhoto(active - 1);
             if (!dialog.open) dialog.showModal();
         };
 
@@ -278,10 +459,32 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
         });
         stage?.addEventListener('pointerup', () => { dragging = false; });
 
+        const touchDistance = (touches: TouchList) =>
+            Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
+
         stage?.addEventListener('touchstart', (e) => {
-            if (e.touches.length === 1) touchStartX = e.touches[0].clientX;
+            if (e.touches.length === 2) {
+                pinchStartDist = touchDistance(e.touches);
+                pinchStartZoom = zoom;
+            } else if (e.touches.length === 1) {
+                pinchStartDist = 0;
+                touchStartX = e.touches[0].clientX;
+            }
         }, { passive: true });
+        stage?.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2 && pinchStartDist > 0) {
+                e.preventDefault();
+                const ratio = touchDistance(e.touches) / pinchStartDist;
+                zoom = Math.max(1, Math.min(3, pinchStartZoom * ratio));
+                if (zoom <= 1.02) { panX = 0; panY = 0; }
+                applyTransform();
+            }
+        }, { passive: false });
         stage?.addEventListener('touchend', (e) => {
+            if (pinchStartDist > 0) {
+                if (e.touches.length < 2) pinchStartDist = 0;
+                return;
+            }
             if (zoom > 1.05 || e.changedTouches.length !== 1) return;
             const dx = e.changedTouches[0].clientX - touchStartX;
             if (Math.abs(dx) > 48) showPhoto(dx < 0 ? active + 1 : active - 1);

@@ -248,6 +248,77 @@
     font-size: clamp(20px, 2.2vw, 31px);
     border-left: 2px solid var(--warm);
     padding-left: 24px;
+    margin-right: 52px;
+}
+
+.about-meta-grid {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px 36px;
+    margin: 7vh 0 0;
+    padding-top: 28px;
+    border-top: 1px solid #ffffff2e;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.about-meta-grid dt {
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 10px;
+}
+
+.about-meta-grid dd {
+    margin: 0;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #eef1f6;
+}
+
+.about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+}
+
+.about-links a {
+    border-bottom: 1px solid #ffffff44;
+    padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+}
+
+.about-links a:hover {
+    color: #c8ec81;
+    border-color: #c8ec81;
+}
+
+.project-title-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.project-tags em {
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid #ffffff30;
+    background: #0d152a88;
+    color: #cde3f8;
 }
 
 .projects-chapter {
@@ -320,6 +391,10 @@
     margin-left: 3vw;
 }
 
+.project-row:nth-child(4) {
+    margin-left: 5vw;
+}
+
 .project-order {
     color: var(--acid);
     font-family: 'JetBrains Mono', monospace;
@@ -347,6 +422,308 @@
 
 .journeys-chapter h2 em {
     color: #f4c48f;
+}
+
+/* Interactive Topographic Vietnam Expedition Map */
+.expedition-map {
+    display: grid;
+    grid-template-columns: minmax(270px, 390px) minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: stretch;
+    margin: 8vh 0 11vh;
+    padding: clamp(20px, 3vw, 36px);
+    background: #08151999;
+    border: 1px solid #ffffff24;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 28px 80px #00000055;
+}
+
+.expedition-map-canvas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: #061015cc;
+    border: 1px solid #ffffff1a;
+}
+
+.map-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #cde3df;
+}
+
+.map-count {
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #c8ec8122;
+    color: #c8ec81;
+    border: 1px solid #c8ec8144;
+}
+
+.vietnam-svg {
+    width: 100%;
+    height: auto;
+    max-height: 520px;
+    display: block;
+}
+
+.map-graticule line {
+    stroke: #ffffff14;
+    stroke-width: 1;
+    stroke-dasharray: 3 6;
+}
+
+.map-graticule text {
+    fill: #ffffff44;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .08em;
+}
+
+.vn-silhouette-outer {
+    fill: none;
+    stroke: #c8ec8126;
+    stroke-width: 7;
+    stroke-linejoin: round;
+}
+
+.vn-silhouette {
+    fill: #12292d99;
+    stroke: #7ec8be88;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+}
+
+.map-archipelagos circle {
+    fill: #7ec8beaa;
+}
+
+.map-archipelagos text {
+    fill: #9ad2cb77;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: .08em;
+}
+
+.map-route-line {
+    fill: none;
+    stroke: #f4c48f66;
+    stroke-width: 1.4;
+    stroke-dasharray: 4 6;
+    stroke-linejoin: round;
+}
+
+.map-pin {
+    cursor: pointer;
+    outline: none;
+}
+
+.map-pin .pin-pulse {
+    fill: var(--pin-accent, #c8ec81);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.map-pin.is-active .pin-pulse,
+.map-pin:hover .pin-pulse {
+    animation: pin-radar 2s cubic-bezier(0, 0, .2, 1) infinite;
+}
+
+.map-pin .pin-ring {
+    fill: #071317cc;
+    stroke: var(--pin-accent, #c8ec81);
+    stroke-width: 1.5;
+    transition: transform .22s ease, stroke-width .22s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.map-pin .pin-core {
+    fill: var(--pin-accent, #c8ec81);
+}
+
+.map-pin .pin-code {
+    fill: #f4f1e8dd;
+    stroke: #061015;
+    stroke-width: 3px;
+    paint-order: stroke;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 600;
+    transition: fill .2s;
+}
+
+.map-pin.is-active .pin-ring,
+.map-pin:hover .pin-ring,
+.map-pin:focus-visible .pin-ring {
+    transform: scale(1.26);
+    stroke-width: 2.2;
+}
+
+.map-pin.is-active .pin-code,
+.map-pin:hover .pin-code {
+    fill: var(--pin-accent, #c8ec81);
+}
+
+@keyframes pin-radar {
+    0% { opacity: .45; transform: scale(.55); }
+    100% { opacity: 0; transform: scale(1.75); }
+}
+
+.expedition-map-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    min-width: 0;
+}
+
+.map-subtitle {
+    margin: 0;
+    font-size: 15px !important;
+    max-width: none !important;
+    color: #d6e4e1cc;
+}
+
+.map-stop-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.map-stop-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    background: #0b1c20aa;
+    border: 1px solid #ffffff26;
+    color: #eef2efcc;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s, color .2s, transform .2s;
+}
+
+.map-stop-pill span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--pin-accent, #c8ec81);
+}
+
+.map-stop-pill strong {
+    font-weight: 600;
+}
+
+.map-stop-pill:hover,
+.map-stop-pill.is-active {
+    background: color-mix(in srgb, var(--pin-accent, #c8ec81) 16%, #0b1c20);
+    border-color: var(--pin-accent, #c8ec81);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.map-preview-cards {
+    flex: 1;
+    display: flex;
+}
+
+.map-preview-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 22px;
+    width: 100%;
+    padding: 16px;
+    background: #071317cc;
+    border: 1px solid color-mix(in srgb, var(--pin-accent, #c8ec81) 36%, transparent);
+    align-items: center;
+}
+
+.map-preview-card[hidden] {
+    display: none;
+}
+
+.map-preview-media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: #0d1f24;
+}
+
+.map-preview-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+}
+
+.map-preview-media:hover img {
+    transform: scale(1.06);
+}
+
+.map-preview-coords {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    padding: 4px 8px;
+    background: #071117cc;
+    border: 1px solid #ffffff28;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .1em;
+    color: var(--pin-accent, #c8ec81);
+}
+
+.map-preview-body small {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--pin-accent, #c8ec81);
+    margin-bottom: 10px;
+}
+
+.map-preview-body h3 {
+    margin: 0 0 12px;
+    font-size: clamp(24px, 2.8vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -.03em;
+    color: #fff;
+}
+
+.map-preview-body p {
+    margin: 0 0 18px;
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    color: #e6ece9cc;
+}
+
+.map-preview-cta {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--pin-accent, #c8ec81);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+
+.map-foot-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #c8deda88;
 }
 
 .destination-list {
@@ -523,6 +900,27 @@
         display: none;
     }
 
+    .about-meta-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .about-inner p {
+        margin-right: 0;
+    }
+
+    .expedition-map {
+        grid-template-columns: 1fr;
+    }
+
+    .vietnam-svg {
+        max-height: 390px;
+    }
+
+    .map-preview-card {
+        grid-template-columns: 1fr;
+    }
+
     .destination-list {
         display: flex;
         flex-direction: column;
@@ -635,7 +1033,8 @@
     }
 
     .project-row:nth-child(2),
-    .project-row:nth-child(3) {
+    .project-row:nth-child(3),
+    .project-row:nth-child(4) {
         margin-left: 0;
     }
 
@@ -687,8 +1086,10 @@
     .project-preview,
     .destination-link,
     .destination-media img,
-    .scroll-arrow {
+    .scroll-arrow,
+    .map-pin .pin-pulse {
         transition: none;
         transform: none;
+        animation: none;
     }
 }

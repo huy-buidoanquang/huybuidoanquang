@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ExpeditionMap from '../ExpeditionMap.astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import profile from '../../data/profile.json';
@@ -10,7 +11,9 @@ const { lang = 'en' } = Astro.props as { lang?: Lang };
 const t = ui[lang];
 const wantVi = lang === 'vi';
 
-const projects = (await getCollection('projects')).filter((e) => isViId(e.id) === wantVi);
+const projects = (await getCollection('projects'))
+    .filter((e) => isViId(e.id) === wantVi)
+    .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 const destinations = (await getCollection('destinations'))
     .filter((e) => isViId(e.id) === wantVi)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -24,6 +27,9 @@ const restName = restParts.join(' ');
 const introText = wantVi ? profile.introVi : profile.intro;
 const locationText = wantVi ? profile.locationVi : profile.location;
 const portraitAlt = wantVi ? profile.portraitAltVi : profile.portraitAlt;
+const expeditionCount = String(destinations.length);
+const journeysBody = t.journeysBody.replace('{count}', expeditionCount);
+const aboutBaseValue = t.aboutBaseValue.replace('{count}', expeditionCount);
 ---
 <BaseLayout title={t.homeTitle} description={introText} lang={lang}>
     <main id="main" class="home">
@@ -62,15 +68,57 @@ const portraitAlt = wantVi ? profile.portraitAltVi : profile.portraitAlt;
             </div>
         </section>
         <section id="about" class="chapter about-chapter" aria-labelledby="about-title">
-            <div class="chapter-inner about-inner"><span class="section-number">{t.aboutNumber}</span><h2 id="about-title">{t.aboutHeading1}<br /><em>{t.aboutHeading2}</em></h2><p>{t.aboutBody}</p></div>
+            <div class="chapter-inner about-inner">
+                <span class="section-number">{t.aboutNumber}</span>
+                <h2 id="about-title">{t.aboutHeading1}<br /><em>{t.aboutHeading2}</em></h2>
+                <p>{t.aboutBody}</p>
+                <dl class="about-meta-grid">
+                    <div>
+                        <dt>{t.aboutCraftLabel}</dt>
+                        <dd>{t.aboutCraftValue}</dd>
+                    </div>
+                    <div>
+                        <dt>{t.aboutBaseLabel}</dt>
+                        <dd>{aboutBaseValue}</dd>
+                    </div>
+                    <div>
+                        <dt>{t.aboutLinksLabel}</dt>
+                        <dd class="about-links">
+                            {profile.socials.map((social) => (
+                                <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label} ↗</a>
+                            ))}
+                            <a href={'mailto:' + profile.email}>Email ↗</a>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
         </section>
         <section id="projects" class="chapter projects-chapter" aria-labelledby="projects-title">
             <div class="chapter-inner"><div class="chapter-heading"><span class="section-number">{t.projectsNumber}</span><h2 id="projects-title">{t.projectsHeading1}<br /><em>{t.projectsHeading2}</em></h2></div>
-                <div class="project-list">{projects.map((project, index) => <a class="project-row" href={localizePath(`/projects/${stripEntryLang(project.id)}/`, lang)}><span class="project-order">0{index + 1}</span><strong>{project.data.title}</strong><span class="project-summary">{project.data.summary}</span><span class="project-arrow">↗</span><Image class="project-preview" src={project.data.cover} alt={project.data.coverAlt} widths={[480, 960]} sizes="(max-width: 800px) 100vw, 35vw" loading="lazy" /></a>)}</div>
+                <div class="project-list">{projects.map((project, index) => (
+                    <a class="project-row" href={localizePath(`/projects/${stripEntryLang(project.id)}/`, lang)}>
+                        <span class="project-order">0{index + 1}</span>
+                        <div class="project-title-col">
+                            <strong>{project.data.title}</strong>
+                            {project.data.stack.length > 0 && (
+                                <span class="project-tags">
+                                    {project.data.stack.slice(0, 4).map((tech) => <em>{tech}</em>)}
+                                </span>
+                            )}
+                        </div>
+                        <span class="project-summary">{project.data.summary}</span>
+                        <span class="project-arrow">↗</span>
+                        <Image class="project-preview" src={project.data.cover} alt={project.data.coverAlt} widths={[480, 960]} sizes="(max-width: 800px) 100vw, 35vw" loading="lazy" />
+                    </a>
+                ))}</div>
             </div>
         </section>
         <section id="journeys" class="chapter journeys-chapter" aria-labelledby="journeys-title">
-            <div class="chapter-inner"><span class="section-number">{t.journeysNumber}</span><h2 id="journeys-title">{t.journeysHeading1}<br /><em>{t.journeysHeading2}</em></h2><p>{t.journeysBody}</p>
+            <div class="chapter-inner">
+                <span class="section-number">{t.journeysNumber}</span>
+                <h2 id="journeys-title">{t.journeysHeading1}<br /><em>{t.journeysHeading2}</em></h2>
+                <p>{journeysBody}</p>
+                <ExpeditionMap destinations={destinations} lang={lang} />
                 <div class="destination-list">{destinations.map((place, index) => (
                     <a href={localizePath(`/places/${stripEntryLang(place.id)}/`, lang)} class:list={['destination-link', 'dest-theme-' + place.data.storyStyle]}>
                         <div class="destination-media">

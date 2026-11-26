@@ -1,6 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { getLangFromPath, ui } from '../../i18n/ui.js';
+
 const { src, alt, caption, credit, source, layout = 'wide', frame } = Astro.props as {
     src: ImageMetadata;
     alt: string;
@@ -10,6 +12,7 @@ const { src, alt, caption, credit, source, layout = 'wide', frame } = Astro.prop
     layout?: 'wide' | 'portrait' | 'full';
     frame?: string;
 };
+const t = ui[getLangFromPath(Astro.url.pathname)];
 ---
 <figure class:list={['story-photo', 'photo-' + layout]}>
     <div class="photo-3d-frame" data-tilt-3d data-tilt-strength="5">
@@ -19,7 +22,7 @@ const { src, alt, caption, credit, source, layout = 'wide', frame } = Astro.prop
             data-photo-src={src.src}
             data-photo-alt={alt}
             data-photo-caption={caption}
-            aria-label={'Enlarge photo: ' + alt}
+            aria-label={`${t.enlargePhoto}: ${alt}`}
         >
             <Image
                 src={src}
@@ -34,6 +37,6 @@ const { src, alt, caption, credit, source, layout = 'wide', frame } = Astro.prop
     </div>
     <figcaption>
         <span>{caption}</span>
-        {source && <a href={source} target="_blank" rel="noopener noreferrer">{credit || 'Photo source'} ↗</a>}
+        {source && <a href={source} target="_blank" rel="noopener noreferrer">{credit || t.photoSource} ↗</a>}
     </figcaption>
 </figure>

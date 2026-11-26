@@ -49,7 +49,14 @@ const shared = ({ image }: SchemaContext) => z.object({
 
 const projects = defineCollection({
     loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
-    schema: shared,
+    schema: (context) => shared(context).extend({
+        repoUrl: z.url().optional(),
+        liveUrl: z.url().optional(),
+        stack: z.array(z.string()).default([]),
+        year: z.string().optional(),
+        role: z.string().optional(),
+        order: z.number().default(99),
+    }),
 });
 
 const destinations = defineCollection({

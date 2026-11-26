@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#081415"/>
+      <stop offset="55%" stop-color="#0d2224"/>
+      <stop offset="100%" stop-color="#071214"/>
+    </linearGradient>
+    <radialGradient id="amber" cx="28%" cy="68%" r="48%">
+      <stop offset="0%" stop-color="#f5b864" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#081415" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="jade" cx="76%" cy="28%" r="48%">
+      <stop offset="0%" stop-color="#58dfb4" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#081415" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <rect width="1200" height="760" fill="url(#amber)"/>
+  <rect width="1200" height="760" fill="url(#jade)"/>
+  <g stroke="#7be7c7" stroke-opacity="0.08" stroke-width="1">
+    <path d="M0 190H1200M0 380H1200M0 570H1200"/>
+    <path d="M200 0V760M400 0V760M600 0V760M800 0V760M1000 0V760"/>
+  </g>
+  <g font-family="ui-monospace,Consolas,monospace" font-size="14" letter-spacing="2.4" fill="#88c5b6">
+    <text x="88" y="88">MEZON FACTORY · ECOSYSTEM ASSEMBLY LINE</text>
+    <text x="1112" y="88" text-anchor="end" fill="#f5b864">INTERACTIVE SYSTEM DIAGRAM</text>
+  </g>
+  <path d="M120 430 C270 430, 290 250, 440 250 C590 250, 610 470, 760 470 C910 470, 930 290, 1080 290" fill="none" stroke="#58dfb4" stroke-width="3" stroke-opacity="0.72"/>
+  <path d="M120 458 C270 458, 290 278, 440 278 C590 278, 610 498, 760 498 C910 498, 930 318, 1080 318" fill="none" stroke="#f5b864" stroke-width="1.5" stroke-dasharray="7 8" stroke-opacity="0.65"/>
+  <g font-family="ui-monospace,Consolas,monospace" text-anchor="middle">
+    <g transform="translate(220 390)">
+      <rect x="-92" y="-44" width="184" height="88" rx="10" fill="#0c2424" stroke="#58dfb4" stroke-width="1.5"/>
+      <text y="-6" font-size="15" font-weight="700" fill="#eef9f5">INPUT EVENTS</text>
+      <text y="18" font-size="12" fill="#8bdcc4">Clients · Bots</text>
+    </g>
+    <g transform="translate(490 250)">
+      <rect x="-102" y="-48" width="204" height="96" rx="10" fill="#102b2a" stroke="#f5b864" stroke-width="1.5"/>
+      <text y="-8" font-size="15" font-weight="700" fill="#fff4e2">SYMBIOTIC CORE</text>
+      <text y="18" font-size="12" fill="#f5b864">Routing · State</text>
+    </g>
+    <g transform="translate(760 470)">
+      <rect x="-102" y="-48" width="204" height="96" rx="10" fill="#0d2626" stroke="#58dfb4" stroke-width="1.5"/>
+      <text y="-8" font-size="15" font-weight="700" fill="#eef9f5">ASSEMBLY STAGE</text>
+      <text y="18" font-size="12" fill="#8bdcc4">Apps · Workflows</text>
+    </g>
+    <g transform="translate(995 290)">
+      <rect x="-92" y="-44" width="184" height="88" rx="10" fill="#102927" stroke="#c8ec81" stroke-width="1.5"/>
+      <text y="-6" font-size="15" font-weight="700" fill="#f6ffe5">COMMUNITY</text>
+      <text y="18" font-size="12" fill="#c8ec81">Live Ecosystem</text>
+    </g>
+  </g>
+  <g fill="#f5b864">
+    <circle cx="354" cy="340" r="6"/>
+    <circle cx="626" cy="360" r="6" fill="#58dfb4"/>
+    <circle cx="886" cy="380" r="6" fill="#c8ec81"/>
+  </g>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090e1c"/>
+      <stop offset="55%" stop-color="#111936"/>
+      <stop offset="100%" stop-color="#0b1328"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="72%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#68c5ff" stop-opacity="0.28"/>
+      <stop offset="55%" stop-color="#a27bff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#090e1c" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="layer1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c8ec81" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#68c5ff" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="layer2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#68c5ff" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#a27bff" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <rect width="1200" height="760" fill="url(#glow)"/>
+  <g stroke="#ffffff" stroke-opacity="0.06" stroke-width="1">
+    <path d="M0 120H1200M0 240H1200M0 360H1200M0 480H1200M0 600H1200"/>
+    <path d="M150 0V760M300 0V760M450 0V760M600 0V760M750 0V760M900 0V760M1050 0V760"/>
+  </g>
+  <g font-family="ui-monospace,Consolas,monospace" font-size="14" letter-spacing="2.4" fill="#9fb9dc">
+    <text x="88" y="88">MEZON.NET · FOUR-LAYER .NET ARCHITECTURE</text>
+    <text x="1112" y="88" text-anchor="end" fill="#c8ec81">C# · gRPC · PROTOBUF</text>
+  </g>
+  <g transform="translate(150 155)">
+    <polygon points="450,0 900,112 450,224 0,112" fill="url(#layer1)" stroke="#c8ec81" stroke-opacity="0.7" stroke-width="1.5"/>
+    <text x="450" y="106" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="19" font-weight="700" fill="#f4f1e8">Mezon.Net.Sdk</text>
+    <text x="450" y="132" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#c8ec81">Bot Facade · Entities · DI · MMN / SSE</text>
+  </g>
+  <g transform="translate(150 265)">
+    <polygon points="450,0 900,112 450,224 0,112" fill="url(#layer2)" stroke="#68c5ff" stroke-opacity="0.65" stroke-width="1.5"/>
+    <text x="450" y="106" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="19" font-weight="700" fill="#eef6ff">Mezon.Net.Client + Mmn</text>
+    <text x="450" y="132" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#8ad4ff">Socket Engine · Envelope · gRPC · ZK Prove</text>
+  </g>
+  <g transform="translate(150 375)">
+    <polygon points="450,0 900,112 450,224 0,112" fill="#a27bff" fill-opacity="0.12" stroke="#c4b0f3" stroke-opacity="0.6" stroke-width="1.5"/>
+    <text x="450" y="106" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="19" font-weight="700" fill="#f3eeff">Mezon.Net.Transport</text>
+    <text x="450" y="132" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#c4b0f3">TCP Primary + Browser WebSocket</text>
+  </g>
+  <g transform="translate(150 485)">
+    <polygon points="450,0 900,112 450,224 0,112" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.34" stroke-width="1.5"/>
+    <text x="450" y="106" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="19" font-weight="700" fill="#d9e2f0">Mezon.Net.Core</text>
+    <text x="450" y="132" text-anchor="middle" font-family="ui-monospace,Consolas,monospace" font-size="13" fill="#a2b4cf">Protobuf · Contracts · Protocol Maps</text>
+  </g>
+  <g stroke="#c8ec81" stroke-dasharray="5 7" stroke-opacity="0.5" stroke-width="1.5">
+    <line x1="600" y1="312" x2="600" y2="338"/>
+    <line x1="600" y1="422" x2="600" y2="448"/>
+    <line x1="600" y1="532" x2="600" y2="558"/>
+  </g>
+</svg>
