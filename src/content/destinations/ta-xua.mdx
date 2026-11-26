@@ -1,0 +1,76 @@
+---
+title: "Ta Xua"
+summary: "A first winter climb into Bac Yen — boundless silver cloud seas, mountain-ridge winds, and wooden cabin windows opening directly into white fog."
+date: 2023-02-19
+dateRange: "Feb 18–19, 2023"
+region: "Bac Yen · Son La"
+coordinates: "21°19′N 104°25′E"
+elevation: "~1,600m"
+cover: "../../assets/places/ta-xua/cover-ridge-vista.webp"
+coverAlt: "Huy sitting quietly along a high mountain ridge in Ta Xua looking over layered misty valleys"
+theme: "forest"
+storyStyle: "cloudsea"
+atmosphere: "clouds"
+---
+
+import Photo from '../../components/story/Photo.astro';
+import PhotoPair from '../../components/story/PhotoPair.astro';
+import Photo3DShowcase from '../../components/story/Photo3DShowcase.astro';
+import PhotoDeck3D from '../../components/story/PhotoDeck3D.astro';
+import PhotoStrip from '../../components/story/PhotoStrip.astro';
+import seaOfClouds from '../../assets/places/ta-xua/sea-of-clouds.webp';
+import deckCrew from '../../assets/places/ta-xua/deck-crew.webp';
+import leapAboveClouds from '../../assets/places/ta-xua/leap-above-clouds.webp';
+import huyMountainWind from '../../assets/places/ta-xua/huy-mountain-wind.webp';
+import ridgeFriends from '../../assets/places/ta-xua/ridge-friends.webp';
+import valleyOverlook from '../../assets/places/ta-xua/valley-overlook.webp';
+import sunsetCloudsDuo from '../../assets/places/ta-xua/sunset-clouds-duo.webp';
+import heartFramedSunrise from '../../assets/places/ta-xua/heart-framed-sunrise.webp';
+import cabinMistSolo from '../../assets/places/ta-xua/cabin-mist-solo.webp';
+import cabinMistSilhouette from '../../assets/places/ta-xua/cabin-mist-silhouette.webp';
+
+February in Ta Xua moves on weather's terms. One minute the valley below disappears beneath a motionless ocean of white; ten minutes later the wind parts the veil and exposes every razor fold of Son La.
+
+## Above the cloud line
+
+Waking up cold in the highlands pays off the instant you step onto the ridge deck and realize the sky isn't overhead anymore — it is pooled directly beneath your boots.
+
+<Photo3DShowcase
+    src={seaOfClouds}
+    alt="A dense silver-white sea of clouds filling the deep mountain valley below Ta Xua at dawn"
+    caption="A boundless winter cloud sea trapped between mountain walls"
+    tag="BAC YEN · SEA OF CLOUDS"
+    meta="21°19′N 104°25′E · ~1,600M ELEVATION"
+/>
+
+<PhotoPair>
+    <Photo src={leapAboveClouds} alt="Mid-air leap high above a rolling white sea of clouds in Ta Xua" caption="Weightless for a split second above the valley" frame="FIG. 01" layout="portrait" />
+    <Photo src={huyMountainWind} alt="Close portrait of Huy in a dark winter jacket with cold highland clouds drifting behind him" caption="Cold ridge air and clear winter focus" frame="FIG. 02" layout="portrait" />
+</PhotoPair>
+
+## Ridges & open skies
+
+By afternoon the cloud blanket lifted into pale blue haze, turning the grassy ridgelines into front-row benches above miles of terraced mountain slopes.
+
+<PhotoStrip
+    label="Highland Ridge Reel"
+    photos={[
+        { src: deckCrew, alt: "Full group of friends gathered along the highland viewpoint rail above morning clouds", caption: "Everyone out on the balcony for the morning cloud hunt" },
+        { src: ridgeFriends, alt: "Three friends sitting together along a sunlit highland ridge overlooking deep valleys", caption: "Catching our breath along the ridge" },
+        { src: valleyOverlook, alt: "Sitting on stacked ridge stones gazing across layered blue-green mountains of Son La", caption: "Layers of northwest ridges fading into the haze" },
+    ]}
+/>
+
+## Dusk & the wooden window
+
+When evening fog rolled back up the hillside, the timber cabin became a camera obscura — warm string bulbs overhead, dark silhouettes inside, and pure luminous white mist pressing right against the doorframe.
+
+<PhotoDeck3D
+    title="Dusk & Cabin Fog Stack"
+    photos={[
+        { src: heartFramedSunrise, alt: "Silhouette framed through hands forming a heart against golden highland morning light", caption: "Framing the mountain light at sunrise" },
+        { src: sunsetCloudsDuo, alt: "Two silhouettes standing before a sweeping dusk sky streaked with silver clouds above the valley", caption: "Silver evening clouds gathering across the valley" },
+        { src: cabinMistSolo, alt: "Moody silhouette framed inside a dark timber cabin doorway opening into thick white mountain mist", caption: "Looking straight out into the fog wall" },
+        { src: cabinMistSilhouette, alt: "Two silhouettes framed beneath glowing string bulbs inside the misty mountain cabin doorway", caption: "Warm cabin light against an ocean of white mist" },
+    ]}
+/>

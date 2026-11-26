@@ -1,11 +1,10 @@
 ---
 title: "Frames Along the Road"
 summary: "An art-directed photo essay format where each destination sets its own rhythm."
-cover: "../../assets/hoian-street.webp"
-coverAlt: "Hoi An ancient riverside street and lantern boats at twilight"
-coverCredit: "Chuvanan01 / Wikimedia Commons · CC0"
-coverSource: "https://commons.wikimedia.org/wiki/File:Du-lich-hoi-an.jpg"
-theme: "sand"
+cover: "../../assets/places/phu-sa-phin/twilight-camp-ledge.webp"
+coverAlt: "Twilight camp ledge looking out across an ocean of highland clouds at Phu Sa Phin"
+theme: "night"
+atmosphere: "clouds"
 ---
 
 Places don't feel interchangeable, so the pages that hold their photographs shouldn't look identical either.

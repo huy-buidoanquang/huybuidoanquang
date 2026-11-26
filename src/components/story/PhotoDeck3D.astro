@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface DeckPhoto {
+    src: ImageMetadata;
+    alt: string;
+    caption: string;
+}
+
+const { photos, title = 'Interactive 3D Stack' } = Astro.props as {
+    photos: DeckPhoto[];
+    title?: string;
+};
+---
+<section class="photo-deck-3d" aria-label={title}>
+    <div class="deck-header">
+        <span class="deck-label">{title}</span>
+        <div class="deck-controls">
+            <span class="deck-counter" aria-live="polite">01 / {String(photos.length).padStart(2, '0')}</span>
+            <button type="button" class="deck-prev" aria-label="Previous photo in stack">←</button>
+            <button type="button" class="deck-next" aria-label="Next photo in stack">→</button>
+        </div>
+    </div>
+    <div class="deck-stage">
+        {photos.map((photo, index) => (
+            <div class="deck-card" data-deck-index={index}>
+                <button
+                    type="button"
+                    class="photo-trigger deck-trigger"
+                    data-photo-src={photo.src.src}
+                    data-photo-alt={photo.alt}
+                    data-photo-caption={photo.caption}
+                    aria-label={`View photo ${index + 1} of ${photos.length}: ${photo.alt}`}
+                >
+                    <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        widths={[480, 960, 1400]}
+                        sizes="(max-width: 800px) 84vw, 44vw"
+                        loading="lazy"
+                    />
+                    <span class="deck-index-pill" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                </button>
+            </div>
+        ))}
+    </div>
+    <div class="deck-footer">
+        <p class="deck-active-caption">{photos[Math.floor(photos.length / 2)]?.caption || photos[0]?.caption}</p>
+        <span class="deck-hint">Click side cards or drag to fan · Click center to zoom</span>
+    </div>
+</section>

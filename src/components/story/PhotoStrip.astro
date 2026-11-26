@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface StripPhoto {
+    src: ImageMetadata;
+    alt: string;
+    caption: string;
+}
+
+const { photos, label = 'Field Reel' } = Astro.props as {
+    photos: StripPhoto[];
+    label?: string;
+};
+---
+<section class="photo-strip" aria-label={label}>
+    <div class="strip-header">
+        <span class="strip-label">{label} · {String(photos.length).padStart(2, '0')} frames</span>
+        <div class="strip-controls">
+            <button type="button" class="strip-prev" aria-label="Scroll filmstrip left">←</button>
+            <button type="button" class="strip-next" aria-label="Scroll filmstrip right">→</button>
+        </div>
+    </div>
+    <div class="strip-track">
+        {photos.map((photo, index) => (
+            <figure class="strip-slide">
+                <button
+                    type="button"
+                    class="photo-trigger"
+                    data-photo-src={photo.src.src}
+                    data-photo-alt={photo.alt}
+                    data-photo-caption={photo.caption}
+                    aria-label={`Enlarge reel frame ${index + 1}: ${photo.alt}`}
+                >
+                    <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        widths={[520, 960, 1400]}
+                        sizes="(max-width: 800px) 82vw, 42vw"
+                        loading="lazy"
+                    />
+                </button>
+                <figcaption>
+                    <span class="strip-num">{String(index + 1).padStart(2, '0')}</span>
+                    <span>{photo.caption}</span>
+                </figcaption>
+            </figure>
+        ))}
+    </div>
+</section>

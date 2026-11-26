@@ -11,10 +11,22 @@ const { entry, label } = Astro.props as {
 
 const style = 'storyStyle' in entry.data ? entry.data.storyStyle : entry.data.theme;
 const gallery = 'gallery' in entry.data ? entry.data.gallery : [];
-const formattedDate = 'date' in entry.data
-    ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(entry.data.date)
-    : undefined;
+const atmosphere = entry.data.atmosphere || 'none';
+const formattedDate = 'dateRange' in entry.data
+    ? entry.data.dateRange
+    : 'date' in entry.data
+        ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(entry.data.date)
+        : undefined;
 const metaLabel = formattedDate ? `${label} · ${formattedDate}` : label;
+
+const telemetry = 'coordinates' in entry.data
+    ? {
+        region: entry.data.region,
+        coordinates: entry.data.coordinates,
+        elevation: entry.data.elevation,
+        dateRange: entry.data.dateRange,
+    }
+    : null;
 
 const navigationByCollection = {
     posts: {
@@ -41,22 +53,45 @@ const navigationByCollection = {
 } as const;
 
 const nav = navigationByCollection[entry.collection];
+const darkStyles = new Set(['lantern', 'coastal', 'karst-emerald', 'moss-summit', 'night']);
+const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
 ---
 <BaseLayout
     title={entry.data.title}
     description={entry.data.summary}
-    theme={style === 'lantern' ? 'night' : entry.data.theme}
+    theme={pageTheme}
     ogImage={entry.data.cover.src}
     ogType="article"
 >
     <main id="main" class:list={['story-page', 'story-' + style]}>
+        {atmosphere !== 'none' && <canvas class="story-atmosphere" data-atmosphere={atmosphere} aria-hidden="true"></canvas>}
         <div class="story-lead">
             <div class="story-meta"><a href={nav.backHref}>{nav.backLabel}</a><span>{metaLabel}</span></div>
             <h1>{entry.data.title}</h1>
             <p>{entry.data.summary}</p>
+            {telemetry && (
+                <dl class="story-telemetry" aria-label="Expedition details">
+                    <div><dt>Region</dt><dd>{telemetry.region}</dd></div>
+                    <div><dt>Coordinates</dt><dd>{telemetry.coordinates}</dd></div>
+                    {telemetry.elevation && <div><dt>Elevation</dt><dd>{telemetry.elevation}</dd></div>}
+                    <div><dt>Dates</dt><dd>{telemetry.dateRange}</dd></div>
+                </dl>
+            )}
         </div>
         <figure class="story-cover">
-            <Image src={entry.data.cover} alt={entry.data.coverAlt} widths={[640, 960, 1600]} sizes="100vw" />
+            <div class="photo-3d-frame cover-3d-frame" data-tilt-3d data-tilt-strength="3.5">
+                <button
+                    type="button"
+                    class="photo-trigger"
+                    data-photo-src={entry.data.cover.src}
+                    data-photo-alt={entry.data.coverAlt}
+                    data-photo-caption={entry.data.coverAlt}
+                    aria-label={'Inspect cover photo in fullscreen: ' + entry.data.coverAlt}
+                >
+                    <Image src={entry.data.cover} alt={entry.data.coverAlt} widths={[640, 1080, 1600]} sizes="100vw" fetchpriority="high" />
+                    <span class="photo-glare" aria-hidden="true"></span>
+                </button>
+            </div>
             <figcaption>
                 {entry.data.coverAlt}
                 {entry.data.coverCredit && <> · {entry.data.coverCredit}</>}
@@ -73,22 +108,25 @@ const nav = navigationByCollection[entry.collection];
                 <div class="gallery-images">
                     {gallery.map((photo, index) => (
                         <figure>
-                            <button
-                                type="button"
-                                class="photo-trigger"
-                                data-photo-src={photo.src.src}
-                                data-photo-alt={photo.alt}
-                                data-photo-caption={photo.caption || photo.alt}
-                                aria-label={'Enlarge photo: ' + photo.alt}
-                            >
-                                <Image
-                                    src={photo.src}
-                                    alt={photo.alt}
-                                    widths={[480, 960, 1600]}
-                                    sizes="(max-width: 800px) 100vw, 70vw"
-                                    loading="lazy"
-                                />
-                            </button>
+                            <div class="photo-3d-frame" data-tilt-3d data-tilt-strength="5">
+                                <button
+                                    type="button"
+                                    class="photo-trigger"
+                                    data-photo-src={photo.src.src}
+                                    data-photo-alt={photo.alt}
+                                    data-photo-caption={photo.caption || photo.alt}
+                                    aria-label={'Enlarge photo: ' + photo.alt}
+                                >
+                                    <Image
+                                        src={photo.src}
+                                        alt={photo.alt}
+                                        widths={[480, 960, 1600]}
+                                        sizes="(max-width: 800px) 100vw, 70vw"
+                                        loading="lazy"
+                                    />
+                                    <span class="photo-glare" aria-hidden="true"></span>
+                                </button>
+                            </div>
                             <figcaption>
                                 <span>{String(index + 1).padStart(2, '0')} / {photo.caption || photo.alt}</span>
                                 {photo.source && (
@@ -104,55 +142,171 @@ const nav = navigationByCollection[entry.collection];
         )}
         <div class="story-end"><span>{nav.endText}</span><a href={nav.endHref}>{nav.endLabel}</a></div>
     </main>
-    <dialog class="photo-dialog" aria-label="Photo viewer">
+    <dialog class="photo-dialog" aria-label="Immersive photo viewer">
+        <div class="photo-dialog-bg" aria-hidden="true"></div>
         <div class="photo-dialog-bar">
             <span class="photo-counter" aria-live="polite"></span>
             <div class="photo-dialog-actions">
+                <button type="button" class="photo-zoom" aria-label="Toggle zoom">Zoom 1×</button>
                 <button type="button" class="photo-prev" aria-label="Previous photo">←</button>
                 <button type="button" class="photo-next" aria-label="Next photo">→</button>
                 <button type="button" class="photo-close" aria-label="Close photo">Close ×</button>
             </div>
         </div>
-        <img alt="" />
-        <p></p>
+        <div class="photo-stage">
+            <img class="photo-dialog-img" alt="" draggable="false" />
+        </div>
+        <p class="photo-dialog-caption"></p>
+        <div class="photo-thumbs" role="list" aria-label="Jump to photo"></div>
     </dialog>
     <script>
+        import { initStoryExperience } from '../journey/StoryAtmosphere3D.ts';
+
+        initStoryExperience();
+
         const dialog = document.querySelector<HTMLDialogElement>('.photo-dialog');
         const triggers = [...document.querySelectorAll<HTMLButtonElement>('.photo-trigger')];
         const prevBtn = dialog?.querySelector<HTMLButtonElement>('.photo-prev');
         const nextBtn = dialog?.querySelector<HTMLButtonElement>('.photo-next');
+        const zoomBtn = dialog?.querySelector<HTMLButtonElement>('.photo-zoom');
         const counter = dialog?.querySelector<HTMLElement>('.photo-counter');
+        const bgEl = dialog?.querySelector<HTMLElement>('.photo-dialog-bg');
+        const stage = dialog?.querySelector<HTMLElement>('.photo-stage');
+        const imgEl = dialog?.querySelector<HTMLImageElement>('.photo-dialog-img');
+        const captionEl = dialog?.querySelector<HTMLElement>('.photo-dialog-caption');
+        const thumbsEl = dialog?.querySelector<HTMLElement>('.photo-thumbs');
+
         let active = 0;
+        let zoom = 1;
+        let panX = 0;
+        let panY = 0;
+        let dragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let touchStartX = 0;
+
+        const applyTransform = () => {
+            if (!imgEl || !zoomBtn || !stage) return;
+            imgEl.style.transform = `translate3d(${panX.toFixed(1)}px, ${panY.toFixed(1)}px, 0) scale(${zoom.toFixed(2)})`;
+            zoomBtn.textContent = zoom > 1.05 ? `Zoom ${zoom.toFixed(1)}×` : 'Zoom 1×';
+            stage.classList.toggle('is-zoomed', zoom > 1.05);
+        };
+
+        const resetZoom = () => {
+            zoom = 1;
+            panX = 0;
+            panY = 0;
+            applyTransform();
+        };
+
+        const thumbButtons: HTMLButtonElement[] = [];
+        if (thumbsEl && triggers.length > 1) {
+            triggers.forEach((trigger, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'photo-thumb';
+                btn.setAttribute('aria-label', `Jump to photo ${idx + 1}`);
+                const thumbImg = document.createElement('img');
+                thumbImg.src = trigger.querySelector('img')?.currentSrc || trigger.dataset.photoSrc || '';
+                thumbImg.alt = '';
+                thumbImg.loading = 'lazy';
+                btn.appendChild(thumbImg);
+                btn.addEventListener('click', () => showPhoto(idx));
+                thumbsEl.appendChild(btn);
+                thumbButtons.push(btn);
+            });
+        }
 
         const showPhoto = (index: number) => {
-            if (!dialog || triggers.length === 0) return;
+            if (!dialog || !imgEl || !captionEl || triggers.length === 0) return;
             active = (index + triggers.length) % triggers.length;
             const trigger = triggers[active];
-            const image = dialog.querySelector('img');
-            const caption = dialog.querySelector('p');
-            if (!image || !caption) return;
-            image.src = trigger.dataset.photoSrc || '';
-            image.alt = trigger.dataset.photoAlt || '';
-            caption.textContent = trigger.dataset.photoCaption || image.alt;
+            const src = trigger.dataset.photoSrc || '';
+            const alt = trigger.dataset.photoAlt || '';
+            const cap = trigger.dataset.photoCaption || alt;
+
+            resetZoom();
+            imgEl.classList.remove('is-switching');
+            void imgEl.offsetWidth;
+            imgEl.classList.add('is-switching');
+            imgEl.src = src;
+            imgEl.alt = alt;
+            captionEl.textContent = cap;
+            if (bgEl) bgEl.style.backgroundImage = `url("${src}")`;
             if (counter) {
                 counter.textContent = `${String(active + 1).padStart(2, '0')} / ${String(triggers.length).padStart(2, '0')}`;
             }
             const multiple = triggers.length > 1;
             if (prevBtn) prevBtn.hidden = !multiple;
             if (nextBtn) nextBtn.hidden = !multiple;
+            thumbButtons.forEach((btn, idx) => {
+                const isCur = idx === active;
+                btn.classList.toggle('is-active', isCur);
+                if (isCur) btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            });
             if (!dialog.open) dialog.showModal();
+        };
+
+        const toggleZoom = () => {
+            if (zoom > 1.05) {
+                resetZoom();
+            } else {
+                zoom = 2.15;
+                panX = 0;
+                panY = 0;
+                applyTransform();
+            }
         };
 
         triggers.forEach((trigger, index) => trigger.addEventListener('click', () => showPhoto(index)));
         prevBtn?.addEventListener('click', () => showPhoto(active - 1));
         nextBtn?.addEventListener('click', () => showPhoto(active + 1));
+        zoomBtn?.addEventListener('click', toggleZoom);
         dialog?.querySelector('.photo-close')?.addEventListener('click', () => dialog.close());
+
+        stage?.addEventListener('dblclick', toggleZoom);
+        stage?.addEventListener('wheel', (event) => {
+            if (!dialog?.open) return;
+            event.preventDefault();
+            const nextZoom = Math.max(1, Math.min(3, zoom + (event.deltaY < 0 ? 0.25 : -0.25)));
+            zoom = nextZoom;
+            if (zoom <= 1.02) { panX = 0; panY = 0; }
+            applyTransform();
+        }, { passive: false });
+
+        stage?.addEventListener('pointerdown', (event) => {
+            if (zoom <= 1.05) return;
+            dragging = true;
+            dragStartX = event.clientX - panX;
+            dragStartY = event.clientY - panY;
+            stage.setPointerCapture(event.pointerId);
+        });
+        stage?.addEventListener('pointermove', (event) => {
+            if (!dragging) return;
+            panX = event.clientX - dragStartX;
+            panY = event.clientY - dragStartY;
+            applyTransform();
+        });
+        stage?.addEventListener('pointerup', () => { dragging = false; });
+
+        stage?.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        stage?.addEventListener('touchend', (e) => {
+            if (zoom > 1.05 || e.changedTouches.length !== 1) return;
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(dx) > 48) showPhoto(dx < 0 ? active + 1 : active - 1);
+        }, { passive: true });
+
         dialog?.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowRight') showPhoto(active + 1);
             if (event.key === 'ArrowLeft') showPhoto(active - 1);
+            if (event.key === '+' || event.key === '=') { zoom = Math.min(3, zoom + 0.35); applyTransform(); }
+            if (event.key === '-') { zoom = Math.max(1, zoom - 0.35); if (zoom <= 1.02) resetZoom(); else applyTransform(); }
+            if (event.key === '0') resetZoom();
         });
         dialog?.addEventListener('click', (event) => {
-            if (event.target === dialog) dialog.close();
+            if (event.target === dialog || event.target === stage) dialog.close();
         });
     </script>
 </BaseLayout>

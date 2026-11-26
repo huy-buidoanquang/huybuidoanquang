@@ -6,17 +6,35 @@ import profile from '../data/profile.json';
 import '../styles/experience.css';
 
 const projects = await getCollection('projects');
-const destinations = await getCollection('destinations');
+const destinations = (await getCollection('destinations')).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 const posts = (await getCollection('posts')).sort(
     (a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.date.valueOf() - a.data.date.valueOf(),
 );
+
 const displayName = profile.shortName === 'YOUR NAME' ? 'HELLO.' : profile.shortName;
 const [firstName, ...restParts] = displayName.trim().split(/\s+/);
 const restName = restParts.join(' ');
 ---
 <BaseLayout title="Portfolio × Journal">
     <main id="main" class="home">
-        <div class="journey-backdrop" aria-hidden="true"><div class="cosmos-layer"></div><div class="nature-layer"></div><div class="paper-layer"></div></div>
+        <div class="journey-backdrop" aria-hidden="true">
+            <div class="cosmos-layer"></div>
+            <div class="nature-layer"></div>
+            <div class="paper-layer"></div>
+            <canvas class="stage-3d"></canvas>
+        </div>
+        <aside class="compass-hud" aria-label="Chapter quick navigation">
+            <div class="compass-rail" aria-hidden="true"><span class="compass-progress"></span></div>
+            <nav>
+                <a href="#person" class="is-active" aria-label="Chapter 01: Departure">01</a>
+                <a href="#about" aria-label="Chapter 02: About">02</a>
+                <a href="#projects" aria-label="Chapter 03: Projects">03</a>
+                <a href="#journeys" aria-label="Chapter 04: Journeys">04</a>
+                <a href="#journal" aria-label="Chapter 05: Journal">05</a>
+            </nav>
+        </aside>
         <section id="person" class="chapter hero-chapter" aria-labelledby="hero-title">
             {profile.portrait && <picture class="hero-portrait">
                 <source media="(max-aspect-ratio: 3 / 4)" srcset={profile.portraitMobile} />
@@ -35,7 +53,7 @@ const restName = restParts.join(' ');
                 <div class="hero-bottomline"><p>{profile.intro}</p><a href="#projects" class="scroll-arrow" aria-label="Scroll to projects">↓</a><span>Scroll to move through the chapters<br />Click any stop to explore</span></div>
             </div>
         </section>
-        <section class="chapter about-chapter" aria-labelledby="about-title">
+        <section id="about" class="chapter about-chapter" aria-labelledby="about-title">
             <div class="chapter-inner about-inner"><span class="section-number">02 / About</span><h2 id="about-title">Two worlds.<br /><em>One storyteller.</em></h2><p>Between lines of code and unfamiliar roads — I care about keeping the whole process, not just the finished frame.</p></div>
         </section>
         <section id="projects" class="chapter projects-chapter" aria-labelledby="projects-title">
@@ -44,16 +62,34 @@ const restName = restParts.join(' ');
             </div>
         </section>
         <section id="journeys" class="chapter journeys-chapter" aria-labelledby="journeys-title">
-            <div class="chapter-inner"><span class="section-number">04 / Beyond the screen</span><h2 id="journeys-title">Beyond<br /><em>coordinates.</em></h2><p>Walking through a place is watching it shift with the light, the people, and the memories you carry home.</p>
-                <div class="destination-list">{destinations.map((place, index) => <a href={'/places/' + place.id + '/'} class="destination-link"><Image src={place.data.cover} alt={place.data.coverAlt} widths={[640, 960, 1440]} sizes="(max-width: 800px) 100vw, 84vw" loading="lazy" /><span><small>Destination / 0{index + 1}</small><strong>{place.data.title}</strong><b>Explore ↗</b></span></a>)}</div>
+            <div class="chapter-inner"><span class="section-number">04 / Beyond the screen</span><h2 id="journeys-title">Beyond<br /><em>coordinates.</em></h2><p>Six real expeditions across Vietnam — from dawn granite reefs to starlit cloud seas at 2,868 meters. Each place carries its own atmosphere and photo archive.</p>
+                <div class="destination-list">{destinations.map((place, index) => (
+                    <a href={'/places/' + place.id + '/'} class:list={['destination-link', 'dest-theme-' + place.data.storyStyle]}>
+                        <div class="destination-media">
+                            <Image src={place.data.cover} alt={place.data.coverAlt} widths={[640, 1080, 1440]} sizes="(max-width: 800px) 100vw, 76vw" loading="lazy" />
+                            <span class="card-glare" aria-hidden="true"></span>
+                        </div>
+                        <span class="destination-meta-top">
+                            <em>{place.data.coordinates}</em>
+                            {place.data.elevation && <em>{place.data.elevation}</em>}
+                        </span>
+                        <span class="destination-overlay">
+                            <small>{String(index + 1).padStart(2, '0')} · {place.data.region} · {place.data.dateRange}</small>
+                            <strong>{place.data.title}</strong>
+                            <b>Step inside ↗</b>
+                        </span>
+                    </a>
+                ))}</div>
             </div>
         </section>
         <section id="journal" class="chapter journal-chapter" aria-labelledby="journal-title">
-            <div class="chapter-inner"><span class="section-number">05 / Journal</span><h2 id="journal-title">Field<br /><em>notes.</em></h2><div class="journal-list">{posts.slice(0, 3).map((post, index) => <a href={'/journal/' + post.id + '/'}><span>0{index + 1}</span><strong>{post.data.title}</strong><span>{post.data.category} · {post.data.date.getUTCFullYear()}</span><b>↗</b></a>)}</div><a class="text-link" href="/journal/">Read all stories ↗</a></div>
+            <div class="chapter-inner"><span class="section-number">05 / Journal</span><h2 id="journal-title">Field<br /><em>notes.</em></h2><div class="journal-list">{posts.slice(0, 4).map((post, index) => <a href={'/journal/' + post.id + '/'}><span>0{index + 1}</span><strong>{post.data.title}</strong><span>{post.data.category} · {post.data.date.getUTCFullYear()}</span><b>↗</b></a>)}</div><a class="text-link" href="/journal/">Browse all stories & journeys ↗</a></div>
         </section>
     </main>
     <script>
         import { getNatureBlend } from '../journey/scrollProgress.js';
+        import { initJourneyStage3D } from '../journey/JourneyStage3D.ts';
+
         const home = document.querySelector<HTMLElement>('.home');
         const portrait = document.querySelector<HTMLElement>('.hero-portrait');
         const cosmos = document.querySelector<HTMLElement>('.cosmos-layer');
@@ -93,5 +129,6 @@ const restName = restParts.join(' ');
         addEventListener('resize', queueUpdate, { passive: true });
         addEventListener('pageshow', queueUpdate);
         update();
+        initJourneyStage3D();
     </script>
 </BaseLayout>

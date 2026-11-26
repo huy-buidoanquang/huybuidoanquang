@@ -1,0 +1,77 @@
+---
+title: "Nhon Hai"
+summary: "Granite headlands, saltwater tide pools, and a molten coral sunrise breaking across the East Sea off the Phuong Mai Peninsula."
+date: 2024-08-10
+dateRange: "Aug 9–10, 2024"
+region: "Binh Dinh · South Central Coast"
+coordinates: "13°46′N 109°14′E"
+elevation: "Sea Level"
+cover: "../../assets/places/nhon-hai/cover-sunrise-silhouette.webp"
+coverAlt: "Silhouette resting on dark coastal granite rocks at Nhon Hai as a coral-orange dawn breaks over the East Sea"
+theme: "night"
+storyStyle: "coastal"
+atmosphere: "ocean"
+---
+
+import Photo from '../../components/story/Photo.astro';
+import PhotoPair from '../../components/story/PhotoPair.astro';
+import Photo3DShowcase from '../../components/story/Photo3DShowcase.astro';
+import PhotoDeck3D from '../../components/story/PhotoDeck3D.astro';
+import PhotoStrip from '../../components/story/PhotoStrip.astro';
+import moltenSunrise from '../../assets/places/nhon-hai/molten-sunrise.webp';
+import dawnHeadland from '../../assets/places/nhon-hai/dawn-headland.webp';
+import graniteRidgeHuy from '../../assets/places/nhon-hai/granite-ridge-huy.webp';
+import morningHorizonProfile from '../../assets/places/nhon-hai/morning-horizon-profile.webp';
+import rockSilhouetteGlow from '../../assets/places/nhon-hai/rock-silhouette-glow.webp';
+import boatInSunpath from '../../assets/places/nhon-hai/boat-in-sunpath.webp';
+import turquoiseTidepool from '../../assets/places/nhon-hai/turquoise-tidepool.webp';
+import cliffPortrait from '../../assets/places/nhon-hai/cliff-portrait.webp';
+import friendsOnGranite from '../../assets/places/nhon-hai/friends-on-granite.webp';
+import nightShore from '../../assets/places/nhon-hai/night-shore.webp';
+
+Before the heat of an August morning wakes the fishing village of Nhon Hai, the coast belongs entirely to wind, dark granite, and the slow shift from indigo into fire.
+
+## Waiting on the headland
+
+Climbing out across the weathered boulders before five in the morning turns the ocean into a wide-open theater. First comes a bruised violet strip above the water, then brushed streaks of coral, and finally a single blinding ember lifting straight out of the sea.
+
+<Photo3DShowcase
+    src={moltenSunrise}
+    alt="A brilliant tangerine sun lifting cleanly out of the East Sea beneath glowing bands of August clouds"
+    caption="The exact minute the horizon caught fire"
+    tag="NHON HAI · FIRST LIGHT"
+    meta="13°46′N 109°14′E · EAST SEA HORIZON"
+/>
+
+<PhotoPair>
+    <Photo src={rockSilhouetteGlow} alt="Silhouette seated on rugged dark coastal boulders facing a burning tangerine sunrise sky" caption="Stillness against the rising light" frame="FIG. 01" layout="portrait" />
+    <Photo src={boatInSunpath} alt="A small wooden fishing boat crossing the shimmering golden sun-path on calm morning water" caption="A lone fishing boat sliding across the sun-path" frame="FIG. 02" layout="portrait" />
+</PhotoPair>
+
+## Granite cliffs & clear tide pools
+
+Once the sun clears the horizon, the silhouettes give way to texture: rose-tinted granite slabs carved smooth by salt spray, emerald-blue pockets of water trapped between boulders, and an entire rocky shoreline built for climbing barefoot.
+
+<PhotoDeck3D
+    title="Granite & Saltwater Stack"
+    photos={[
+        { src: graniteRidgeHuy, alt: "Huy standing atop stacked coastal granite boulders facing the early morning breeze", caption: "Perched on the sun-warmed headland rocks" },
+        { src: morningHorizonProfile, alt: "Side profile of Huy looking out over calm pastel morning water along the rocky coast", caption: "Salt air and a pastel sea" },
+        { src: turquoiseTidepool, alt: "Crystal-clear turquoise seawater pooled naturally between weathered granite rocks", caption: "Clear saltwater pockets tucked inside the reef" },
+        { src: cliffPortrait, alt: "Huy standing before the steep rocky cliff face above the shallow turquoise bay", caption: "Under the steep granite walls of the peninsula" },
+        { src: nightShore, alt: "Huy pointing toward the dark horizon along the quiet sand beach at night", caption: "Last glance out toward the dark bay after nightfall" },
+    ]}
+/>
+
+## Along the rocky bay
+
+The best hours in Nhon Hai aren't rushed from landmark to landmark — they happen perched together on warm rock ledges, listening to waves fold into the coves while the light turns from amber to crisp coastal blue.
+
+<PhotoStrip
+    label="Coastal Reel"
+    photos={[
+        { src: dawnHeadland, alt: "Wide twilight view of the rocky headland stretching into calm dawn water", caption: "The peninsula headland emerging at blue hour" },
+        { src: friendsOnGranite, alt: "Friends gathered across sunlit pink-ochre coastal boulders above clear water", caption: "Climbing the granite shelves together after sunrise" },
+        { src: moltenSunrise, alt: "Golden sunrise reflecting across the open waves of Nhon Hai", caption: "Morning glare spreading across the East Sea" },
+    ]}
+/>

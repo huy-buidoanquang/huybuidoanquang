@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+const { src, alt, caption, tag, meta } = Astro.props as {
+    src: ImageMetadata;
+    alt: string;
+    caption: string;
+    tag?: string;
+    meta?: string;
+};
+---
+<figure class="photo-showcase-3d">
+    <div class="showcase-stage" data-tilt-3d data-tilt-strength="9">
+        <button
+            type="button"
+            class="photo-trigger showcase-trigger"
+            data-photo-src={src.src}
+            data-photo-alt={alt}
+            data-photo-caption={caption}
+            aria-label={'Inspect featured photo in fullscreen: ' + alt}
+        >
+            <Image
+                src={src}
+                alt={alt}
+                widths={[800, 1280, 1600]}
+                sizes="(max-width: 800px) 100vw, 90vw"
+                loading="lazy"
+            />
+            <span class="photo-glare" aria-hidden="true"></span>
+            <span class="showcase-floating-hud" aria-hidden="true">
+                {tag && <small>{tag}</small>}
+                <strong>{caption}</strong>
+                {meta && <em>{meta}</em>}
+            </span>
+        </button>
+    </div>
+</figure>

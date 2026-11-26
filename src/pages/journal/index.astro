@@ -1,17 +1,84 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-const posts = (await getCollection('posts')).sort(
-    (a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.date.valueOf() - a.data.date.valueOf(),
-);
+
+const posts = await getCollection('posts');
+const destinations = await getCollection('destinations');
+
+interface ArchiveItem {
+    href: string;
+    title: string;
+    tag: string;
+    group: 'journeys' | 'milestones' | 'engineering';
+    date: Date;
+    featured: boolean;
+}
+
+const items: ArchiveItem[] = [
+    ...posts.map((post) => ({
+        href: `/journal/${post.id}/`,
+        title: post.data.title,
+        tag: `${post.data.category} · ${post.data.date.getUTCFullYear()}`,
+        group: (post.data.category === 'milestone' ? 'milestones' : post.data.category === 'engineering' ? 'engineering' : 'journeys') as ArchiveItem['group'],
+        date: post.data.date,
+        featured: post.data.featured,
+    })),
+    ...destinations.map((place) => ({
+        href: `/places/${place.id}/`,
+        title: `${place.data.title} — ${place.data.region}`,
+        tag: `journey · ${place.data.dateRange}`,
+        group: 'journeys' as const,
+        date: place.data.date,
+        featured: false,
+    })),
+].sort((a, b) => Number(b.featured) - Number(a.featured) || b.date.valueOf() - a.date.valueOf());
 ---
 <BaseLayout title="Journal" theme="sand">
     <main id="main" class="archive-page">
         <div class="archive-intro">
-            <span class="section-number">Journal / Field notes</span>
+            <span class="section-number">Journal / Complete Archive</span>
             <h1>Stories<br /><em>to tell.</em></h1>
-            <p>Dispatches from the places I've walked through, the milestones I've lived through, and the things I've built along the way.</p>
+            <p>Every journey, milestone, and technical note — collected chronologically with its own atmosphere and photo archive.</p>
+            <div class="archive-filters" role="tablist" aria-label="Filter stories by topic">
+                <button type="button" class="filter-pill is-active" data-filter="all" role="tab" aria-selected="true">All ({items.length})</button>
+                <button type="button" class="filter-pill" data-filter="journeys" role="tab" aria-selected="false">Journeys ({items.filter((i) => i.group === 'journeys').length})</button>
+                <button type="button" class="filter-pill" data-filter="milestones" role="tab" aria-selected="false">Milestones ({items.filter((i) => i.group === 'milestones').length})</button>
+                <button type="button" class="filter-pill" data-filter="engineering" role="tab" aria-selected="false">Engineering ({items.filter((i) => i.group === 'engineering').length})</button>
+            </div>
         </div>
-        <div class="archive-list">{posts.map((post, index) => <a href={'/journal/' + post.id + '/'}><span>0{index + 1}</span><strong>{post.data.title}</strong><span>{post.data.category} · {post.data.date.getUTCFullYear()}</span><b>↗</b></a>)}</div>
+        <div class="archive-list">
+            {items.map((item, index) => (
+                <a href={item.href} data-group={item.group}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{item.title}</strong>
+                    <span>{item.tag}</span>
+                    <b>↗</b>
+                </a>
+            ))}
+        </div>
     </main>
+    <script>
+        const pills = [...document.querySelectorAll<HTMLButtonElement>('.filter-pill')];
+        const rows = [...document.querySelectorAll<HTMLAnchorElement>('.archive-list a')];
+        pills.forEach((pill) => {
+            pill.addEventListener('click', () => {
+                const target = pill.dataset.filter || 'all';
+                pills.forEach((p) => {
+                    const active = p === pill;
+                    p.classList.toggle('is-active', active);
+                    p.setAttribute('aria-selected', String(active));
+                });
+                let shown = 0;
+                rows.forEach((row) => {
+                    const visible = target === 'all' || row.dataset.group === target;
+                    row.hidden = !visible;
+                    if (visible) {
+                        shown += 1;
+                        const num = row.querySelector('span');
+                        if (num) num.textContent = String(shown).padStart(2, '0');
+                    }
+                });
+            });
+        });
+    </script>
 </BaseLayout>
