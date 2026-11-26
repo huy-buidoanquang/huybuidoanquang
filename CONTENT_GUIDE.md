@@ -20,19 +20,19 @@ Ví dụ:
 
 ```md
 ---
-title: "Một ngày ở Hội An"
-summary: "Ánh đèn, con phố nhỏ và một buổi tối đáng nhớ."
+title: "A Day in Hoi An"
+summary: "Lantern light, quiet alleys, and an evening worth remembering."
 date: 2026-11-14
-category: "du-lich"
+category: "travel"
 cover: "../../assets/hoi-an.jpg"
-coverAlt: "Đèn lồng sáng trên một con phố Hội An"
+coverAlt: "Glowing lanterns along an evening street in Hoi An"
 theme: "sand"
 ---
 
-Đây là đoạn mở đầu bài viết của tôi.
+Opening paragraph of the story.
 ```
 
-`theme` nhận `night`, `sand` hoặc `forest`. `category` nhận `du-lich`, `ky-thuat`, `nhiep-anh` hoặc `so-thich`. Nếu thiếu ảnh, mô tả ảnh, hoặc dùng giá trị không hợp lệ, build sẽ báo lỗi để bạn sửa trước khi đăng.
+`theme` nhận `night`, `sand` hoặc `forest`. `category` nhận `travel`, `engineering`, `photography` hoặc `notes`. Nếu thiếu ảnh, mô tả ảnh, hoặc dùng giá trị không hợp lệ, build sẽ báo lỗi để bạn sửa trước khi đăng.
 
 Mỗi bài có thể chọn `storyStyle: "mist"` (chữ serif, ảnh rải thoáng), `storyStyle: "lantern"` (chữ đậm, ảnh ghép dày) hoặc `storyStyle: "studio"` (bài kỹ thuật gọn). Bộ ảnh `gallery` nhận bao nhiêu ảnh tùy bài; thêm một mục cho mỗi ảnh:
 

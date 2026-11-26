@@ -26,7 +26,7 @@ const canonicalUrl = !noIndex && Astro.site ? new URL(Astro.url.pathname, Astro.
 const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString() : ogImage;
 ---
 <!doctype html>
-<html lang="vi" data-theme={theme}>
+<html lang="en" data-theme={theme}>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -48,20 +48,20 @@ const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString
         <title>{pageTitle}</title>
     </head>
     <body>
-        <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
+        <a class="skip-link" href="#main">Skip to content</a>
         <div class="site-intro" aria-hidden="true"><div class="intro-greetings"><span>HELLO</span><span>BONJOUR</span><span>XIN CHÀO</span></div></div>
         <header class="site-header">
-            <a class="brand" href="/" aria-label="Về trang chủ">{profile.shortName}<span class="brand-dot">.</span></a>
-            <nav aria-label="Điều hướng chính">
-                <a href="/#projects">Dự án</a>
-                <a href="/#journeys">Chuyến đi</a>
-                <a href="/journal/">Bài viết</a>
+            <a class="brand" href="/" aria-label="Back to home">{profile.shortName}<span class="brand-dot">.</span></a>
+            <nav aria-label="Primary navigation">
+                <a href="/#projects">Projects</a>
+                <a href="/#journeys">Journeys</a>
+                <a href="/journal/">Journal</a>
             </nav>
             <span class="header-index">Portfolio / Journal — 2026</span>
         </header>
         <slot />
         <footer class="site-footer">
-            <p>Một câu chuyện vẫn đang tiếp tục.</p>
+            <p>The story is still unfolding.</p>
             <a class="footer-mail" href={'mailto:' + profile.email}>Let's talk ↗</a>
             <div class="footer-bottom">
                 <span>© {new Date().getFullYear()} {profile.name}</span>
@@ -70,7 +70,7 @@ const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString
                         <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label} ↗</a>
                     ))}
                 </div>
-                <a href="/">Về đầu trang ↑</a>
+                <a href="/">Back to top ↑</a>
             </div>
         </footer>
         <script is:inline>

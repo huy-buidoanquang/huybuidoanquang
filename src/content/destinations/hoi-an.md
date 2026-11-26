@@ -1,11 +1,13 @@
 ---
-title: "Hội An"
-summary: "Ánh đèn và những con phố chậm khi trời vừa tối."
+title: "Hoi An"
+summary: "Yellow walls, river reflections, and lantern light after dusk."
 cover: "../../assets/hoian-street.webp"
-coverAlt: "Phố cổ Hội An và thuyền đèn lồng bên sông lúc chạng vạng"
+coverAlt: "Hoi An ancient riverside street and lantern boats at twilight"
 coverCredit: "Chuvanan01 / Wikimedia Commons · CC0"
 coverSource: "https://commons.wikimedia.org/wiki/File:Du-lich-hoi-an.jpg"
 theme: "sand"
 ---
 
-**Địa điểm mẫu.** Thay bằng ảnh và trải nghiệm thật của bạn. Mỗi nơi có thể mang một màu sắc và cách kể riêng.
+By late afternoon, ochre facades hold onto the last warmth of the sun. Once dusk settles over the Thu Bon River, the old town trades daylight for pools of silk lantern color floating across dark water.
+
+Read the accompanying photo essay in the journal: [Hoi An After Dusk](/journal/light-and-places/).

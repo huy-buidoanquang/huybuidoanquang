@@ -1,14 +1,22 @@
 ---
-title: "Tôi thích xây những điều mới"
-summary: "Một vài ghi chép về kỹ thuật, tò mò và quá trình thử nghiệm."
+title: "Notes on Building Small, Lasting Things"
+summary: "Why starting with a small question and cutting away complexity usually leads somewhere better."
 date: 2026-11-10
-category: "ky-thuat"
+category: "engineering"
 cover: "../../assets/project.svg"
-coverAlt: "Minh họa những đường nét sáng trên nền xanh đậm"
+coverAlt: "Luminous architectural linework over a deep indigo backdrop"
 theme: "night"
 storyStyle: "studio"
 ---
 
-*Bài viết mẫu — hãy thay bằng dự án và góc nhìn của bạn.*
+Most of the projects I remember fondly began as a small, stubborn curiosity rather than a grand roadmap.
 
-Tôi thường bắt đầu bằng một câu hỏi nhỏ, rồi học được nhiều hơn trong quá trình biến nó thành thứ có thể dùng được.
+## Start with something real
+
+An idea stays fuzzy until it meets a browser, a terminal, or a real person trying to use it. Putting a small working slice on screen early exposes what actually matters — usually far fewer moving parts than the first sketch assumed.
+
+## Clarity beats cleverness
+
+It is tempting to stack frameworks, animations, and abstractions just because they are available. In practice, the best work feels inevitable: readable code, fast loads, honest typography, and room to grow without carrying dead weight.
+
+Keeping these notes is part of that habit — documenting not only what shipped, but why the simpler path won.

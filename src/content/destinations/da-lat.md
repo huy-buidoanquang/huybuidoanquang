@@ -1,11 +1,13 @@
 ---
-title: "Đà Lạt"
-summary: "Một hành trình qua sương, rừng thông và những buổi sáng chậm."
+title: "Da Lat"
+summary: "Mist, pine ridges, and highland mornings that refuse to hurry."
 cover: "../../assets/dalat-aerial.webp"
-coverAlt: "Ảnh chụp hồ và những dãy đồi ở Đà Lạt từ trên cao"
+coverAlt: "Aerial view of the lake and layered pine hills of Da Lat"
 coverCredit: "NgoLinh312 / Wikimedia Commons · CC0"
 coverSource: "https://commons.wikimedia.org/wiki/File:Da_Lat_aerial_view.png"
 theme: "forest"
 ---
 
-Đây là **nội dung mẫu**. Thay bằng ký ức, ảnh và những chi tiết thật của chuyến đi của bạn.
+Up in the Central Highlands, the light changes before you finish a cup of coffee. Cool air drifts off the lake, pine canopies soften the skyline, and the whole town seems tuned to a quieter tempo.
+
+Read the accompanying photo essay in the journal: [Da Lat, Between Lake and Pines](/journal/notes-from-da-lat/).

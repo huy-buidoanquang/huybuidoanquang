@@ -97,7 +97,7 @@
 
 .hero-chapter::before {
     inset: 0;
-    background: linear-gradient(180deg, #10162220 0%, transparent 35%, #101622b8 100%);
+    background: linear-gradient(180deg, #0c122066 0%, transparent 26%, transparent 48%, #101622cc 100%);
     z-index: 1;
 }
 
@@ -111,32 +111,53 @@
 .hero-topline,
 .hero-bottomline {
     border-color: #e7e8dc78;
+    text-shadow: 0 2px 14px #000a, 0 1px 3px #0009;
+}
+
+.site-header {
+    text-shadow: 0 2px 14px #0009, 0 1px 3px #0008;
 }
 
 .hero-kicker {
     position: absolute;
     top: 27vh;
     right: 0;
-    max-width: 200px;
+    max-width: 220px;
     color: white;
     text-align: right;
     line-height: 1.65;
+    text-shadow: 0 2px 18px #000c, 0 1px 4px #000a;
 }
 
 .hero-chapter h1 {
     position: relative;
     z-index: 3;
-    font-size: clamp(62px, 11vw, 180px);
-    line-height: .8;
-    text-align: center;
-    margin: auto -3vw 3vh;
+    font-size: clamp(68px, 11.5vw, 184px);
+    line-height: .84;
+    letter-spacing: -.08em;
+    text-align: left;
+    margin: auto 0 3vh;
     text-shadow: 0 15px 70px #0006;
-    text-wrap: balance;
+    text-wrap: normal;
+}
+
+.hero-name-first {
+    display: block;
+}
+
+.hero-name-rest {
+    display: block;
+    font-size: clamp(28px, 5.2vw, 88px);
+    line-height: .96;
+    letter-spacing: -.055em;
+    margin-top: .08em;
 }
 
 .hero-bottomline p {
-    font-size: clamp(17px, 1.9vw, 29px);
+    max-width: 480px;
+    font-size: clamp(16px, 1.55vw, 23px);
     font-weight: 600;
+    line-height: 1.4;
 }
 
 .hero-bottomline > span {
@@ -352,8 +373,26 @@
 
 
     .hero-chapter h1 {
-        font-size: clamp(48px, 13vw, 104px);
-        margin: 24px 0;
+        font-size: clamp(54px, 16vw, 108px);
+        margin: auto 0 24px;
+        max-width: 100%;
+    }
+
+    .hero-name-rest {
+        font-size: clamp(22px, 6.8vw, 44px);
+        letter-spacing: -.05em;
+    }
+
+    .about-inner h2,
+    .chapter-heading h2,
+    .journeys-chapter h2,
+    .journal-chapter h2 {
+        font-size: clamp(42px, 12vw, 76px);
+        overflow-wrap: break-word;
+    }
+
+    .footer-mail {
+        font-size: clamp(44px, 13vw, 96px);
     }
 
     .hero-kicker {
@@ -454,8 +493,11 @@
     }
 
     .hero-chapter h1 {
-        font-size: clamp(64px, 5.5vw, 132px);
-        white-space: nowrap;
+        font-size: clamp(64px, 7.5vw, 150px);
+    }
+
+    .hero-name-rest {
+        font-size: clamp(32px, 3.6vw, 72px);
     }
 }
 

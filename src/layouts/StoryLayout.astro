@@ -15,24 +15,24 @@ const gallery = 'gallery' in entry.data ? entry.data.gallery : [];
 const navigationByCollection = {
     posts: {
         backHref: '/journal/',
-        backLabel: '← Trở lại bài viết',
-        endText: 'Hết câu chuyện, còn hành trình.',
+        backLabel: '← Back to journal',
+        endText: 'End of the story, not the journey.',
         endHref: '/journal/',
-        endLabel: 'Xem những bài khác ↗',
+        endLabel: 'Read more stories ↗',
     },
     projects: {
         backHref: '/#projects',
-        backLabel: '← Trở lại dự án',
-        endText: 'Hết một dự án, mở ra câu hỏi tiếp theo.',
+        backLabel: '← Back to projects',
+        endText: 'One project shipped, another question waiting.',
         endHref: '/#projects',
-        endLabel: 'Xem những dự án khác ↗',
+        endLabel: 'Explore more projects ↗',
     },
     destinations: {
         backHref: '/#journeys',
-        backLabel: '← Trở lại chuyến đi',
-        endText: 'Mỗi nơi đi qua để lại một nhịp sáng riêng.',
+        backLabel: '← Back to journeys',
+        endText: 'Every place leaves its own light behind.',
         endHref: '/#journeys',
-        endLabel: 'Xem những điểm đến khác ↗',
+        endLabel: 'Explore more places ↗',
     },
 } as const;
 
@@ -56,15 +56,15 @@ const nav = navigationByCollection[entry.collection];
             <figcaption>
                 {entry.data.coverAlt}
                 {entry.data.coverCredit && <> · {entry.data.coverCredit}</>}
-                {entry.data.coverSource && <> · <a href={entry.data.coverSource} target="_blank" rel="noopener noreferrer">Nguồn ảnh ↗</a></>}
+                {entry.data.coverSource && <> · <a href={entry.data.coverSource} target="_blank" rel="noopener noreferrer">Photo source ↗</a></>}
             </figcaption>
         </figure>
         <article class="story-body"><slot /></article>
         {gallery.length > 0 && (
-            <section class="story-gallery" aria-label="Bộ ảnh">
+            <section class="story-gallery" aria-label="Photo gallery">
                 <div class="gallery-heading">
-                    <span>Bộ ảnh</span>
-                    <strong>{String(gallery.length).padStart(2, '0')} khoảnh khắc</strong>
+                    <span>Gallery</span>
+                    <strong>{String(gallery.length).padStart(2, '0')} frames</strong>
                 </div>
                 <div class="gallery-images">
                     {gallery.map((photo, index) => (
@@ -75,7 +75,7 @@ const nav = navigationByCollection[entry.collection];
                                 data-photo-src={photo.src.src}
                                 data-photo-alt={photo.alt}
                                 data-photo-caption={photo.caption || photo.alt}
-                                aria-label={'Xem ảnh lớn: ' + photo.alt}
+                                aria-label={'Enlarge photo: ' + photo.alt}
                             >
                                 <Image
                                     src={photo.src}
@@ -89,7 +89,7 @@ const nav = navigationByCollection[entry.collection];
                                 <span>{String(index + 1).padStart(2, '0')} / {photo.caption || photo.alt}</span>
                                 {photo.source && (
                                     <a href={photo.source} target="_blank" rel="noopener noreferrer">
-                                        {photo.credit || 'Nguồn ảnh'} ↗
+                                        {photo.credit || 'Photo source'} ↗
                                     </a>
                                 )}
                             </figcaption>
@@ -100,13 +100,13 @@ const nav = navigationByCollection[entry.collection];
         )}
         <div class="story-end"><span>{nav.endText}</span><a href={nav.endHref}>{nav.endLabel}</a></div>
     </main>
-    <dialog class="photo-dialog" aria-label="Xem ảnh lớn">
+    <dialog class="photo-dialog" aria-label="Photo viewer">
         <div class="photo-dialog-bar">
             <span class="photo-counter" aria-live="polite"></span>
             <div class="photo-dialog-actions">
-                <button type="button" class="photo-prev" aria-label="Ảnh trước">←</button>
-                <button type="button" class="photo-next" aria-label="Ảnh tiếp theo">→</button>
-                <button type="button" class="photo-close" aria-label="Đóng ảnh">Đóng ×</button>
+                <button type="button" class="photo-prev" aria-label="Previous photo">←</button>
+                <button type="button" class="photo-next" aria-label="Next photo">→</button>
+                <button type="button" class="photo-close" aria-label="Close photo">Close ×</button>
             </div>
         </div>
         <img alt="" />
