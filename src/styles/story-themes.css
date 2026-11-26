@@ -181,15 +181,82 @@ html[data-theme=night] .story-lantern .story-cover img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+html[data-theme=sand] .story-commencement {
+    background: #f2ede4;
+    color: #162033;
+}
+
+.story-commencement .story-meta span {
+    color: #9e2330;
+    font-weight: 700;
+}
+
+.story-commencement .story-lead h1,
+.story-commencement .story-body,
+.story-commencement .gallery-heading {
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+.story-commencement .story-lead h1 {
+    font-size: clamp(62px, 10vw, 172px);
+    font-weight: 700;
+    line-height: .9;
+    letter-spacing: -.06em;
+    color: #162033;
+}
+
+.story-commencement .story-lead p {
+    color: #2b364a;
+}
+
+html[data-theme=sand] .story-commencement .story-cover {
+    padding: 0 4vw;
+    transform: none;
+}
+
+html[data-theme=sand] .story-commencement .story-cover img {
+    max-height: 82svh;
+    object-position: center 78%;
+}
+
+.story-commencement .story-cover figcaption {
+    border-bottom: 1px solid #16203326;
+    padding: 14px 0 18px;
+}
+
+.story-commencement .story-body {
+    font-size: clamp(19px, 1.85vw, 25px);
+    line-height: 1.8;
+}
+
+.story-commencement .story-body h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(32px, 4.4vw, 56px);
+    letter-spacing: -.04em;
+    color: #162033;
+    border-top: 1px solid #9e23304d;
+    padding-top: .55em;
+}
+
+.story-commencement .story-photo figcaption {
+    color: #2b364a;
+}
+
+.story-commencement .story-photo.photo-full {
+    width: min(92vw, 1520px);
+}
+
 .story-mist .story-body,
-.story-lantern .story-body {
+.story-lantern .story-body,
+.story-commencement .story-body {
     max-width: none;
     padding: 7vh 0 13vh;
 }
 
 .story-mist .story-body > :not(.story-photo, .photo-pair),
-.story-lantern .story-body > :not(.story-photo, .photo-pair) {
-    max-width: 760px;
+.story-lantern .story-body > :not(.story-photo, .photo-pair),
+.story-commencement .story-body > :not(.story-photo, .photo-pair) {
+    max-width: 740px;
     margin: 0 auto 1.7em;
     padding-inline: 24px;
 }
@@ -376,7 +443,8 @@ html[data-theme=night] .story-lantern .story-cover img {
 
     .story-photo,
     .story-mist .story-photo.photo-full,
-    .story-lantern .story-photo.photo-full {
+    .story-lantern .story-photo.photo-full,
+    .story-commencement .story-photo.photo-full {
         width: 100%;
     }
 

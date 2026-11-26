@@ -1,15 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = (await getCollection('posts')).sort(
+    (a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.date.valueOf() - a.data.date.valueOf(),
+);
 ---
 <BaseLayout title="Journal" theme="sand">
     <main id="main" class="archive-page">
         <div class="archive-intro">
             <span class="section-number">Journal / Field notes</span>
             <h1>Stories<br /><em>to tell.</em></h1>
-            <p>Dispatches from the places I've walked through, the things I've built, and whatever sparked my curiosity along the way.</p>
+            <p>Dispatches from the places I've walked through, the milestones I've lived through, and the things I've built along the way.</p>
         </div>
-        <div class="archive-list">{posts.map((post, index) => <a href={'/journal/' + post.id + '/'}><span>0{index + 1}</span><strong>{post.data.title}</strong><span>{post.data.category}</span><b>↗</b></a>)}</div>
+        <div class="archive-list">{posts.map((post, index) => <a href={'/journal/' + post.id + '/'}><span>0{index + 1}</span><strong>{post.data.title}</strong><span>{post.data.category} · {post.data.date.getUTCFullYear()}</span><b>↗</b></a>)}</div>
     </main>
 </BaseLayout>

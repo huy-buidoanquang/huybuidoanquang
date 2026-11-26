@@ -11,6 +11,10 @@ const { entry, label } = Astro.props as {
 
 const style = 'storyStyle' in entry.data ? entry.data.storyStyle : entry.data.theme;
 const gallery = 'gallery' in entry.data ? entry.data.gallery : [];
+const formattedDate = 'date' in entry.data
+    ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(entry.data.date)
+    : undefined;
+const metaLabel = formattedDate ? `${label} · ${formattedDate}` : label;
 
 const navigationByCollection = {
     posts: {
@@ -47,7 +51,7 @@ const nav = navigationByCollection[entry.collection];
 >
     <main id="main" class:list={['story-page', 'story-' + style]}>
         <div class="story-lead">
-            <div class="story-meta"><a href={nav.backHref}>{nav.backLabel}</a><span>{label}</span></div>
+            <div class="story-meta"><a href={nav.backHref}>{nav.backLabel}</a><span>{metaLabel}</span></div>
             <h1>{entry.data.title}</h1>
             <p>{entry.data.summary}</p>
         </div>

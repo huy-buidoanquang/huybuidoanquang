@@ -32,9 +32,9 @@ theme: "sand"
 Opening paragraph of the story.
 ```
 
-`theme` nhận `night`, `sand` hoặc `forest`. `category` nhận `travel`, `engineering`, `photography` hoặc `notes`. Nếu thiếu ảnh, mô tả ảnh, hoặc dùng giá trị không hợp lệ, build sẽ báo lỗi để bạn sửa trước khi đăng.
+`theme` nhận `night`, `sand` hoặc `forest`. `category` nhận `milestone`, `travel`, `engineering`, `photography` hoặc `notes`. Có thể đặt `featured: true` để ưu tiên hiện ở đầu mục Nhật ký. Nếu thiếu ảnh, mô tả ảnh, hoặc dùng giá trị không hợp lệ, build sẽ báo lỗi để bạn sửa trước khi đăng.
 
-Mỗi bài có thể chọn `storyStyle: "mist"` (chữ serif, ảnh rải thoáng), `storyStyle: "lantern"` (chữ đậm, ảnh ghép dày) hoặc `storyStyle: "studio"` (bài kỹ thuật gọn). Bộ ảnh `gallery` nhận bao nhiêu ảnh tùy bài; thêm một mục cho mỗi ảnh:
+Mỗi bài có thể chọn `storyStyle: "mist"` (chữ serif, ảnh rải thoáng), `storyStyle: "lantern"` (chữ đậm, ảnh ghép dày), `storyStyle: "commencement"` (giấy kem, xanh navy & đỏ lễ tốt nghiệp) hoặc `storyStyle: "studio"` (bài kỹ thuật gọn). Bộ ảnh `gallery` nhận bao nhiêu ảnh tùy bài; thêm một mục cho mỗi ảnh:
 
 ```yaml
 gallery:

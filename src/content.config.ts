@@ -24,9 +24,10 @@ const posts = defineCollection({
     loader: glob({ pattern: '*.{md,mdx}', base: './src/content/posts' }),
     schema: (context) => shared(context).extend({
         date: z.coerce.date(),
-        category: z.enum(['travel', 'engineering', 'photography', 'notes']),
+        category: z.enum(['milestone', 'travel', 'engineering', 'photography', 'notes']),
         destination: z.string().optional(),
-        storyStyle: z.enum(['mist', 'lantern', 'studio']).default('studio'),
+        featured: z.boolean().default(false),
+        storyStyle: z.enum(['mist', 'lantern', 'studio', 'commencement']).default('studio'),
         gallery: z.array(z.object({
             src: context.image(),
             alt: z.string().min(1),
