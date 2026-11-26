@@ -6,7 +6,7 @@
         "dev": "astro dev",
         "build": "astro build",
         "check": "astro check",
-        "test": "node --test src/journey/*.test.mjs"
+        "test": "node --test src/journey/*.test.mjs src/i18n/*.test.mjs"
     },
     "dependencies": {
         "@astrojs/mdx": "^8.1.6",

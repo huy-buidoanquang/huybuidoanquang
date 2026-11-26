@@ -46,12 +46,12 @@ const shared = ({ image }: SchemaContext) => z.object({
 });
 
 const projects = defineCollection({
-    loader: glob({ pattern: '*.{md,mdx}', base: './src/content/projects' }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
     schema: shared,
 });
 
 const destinations = defineCollection({
-    loader: glob({ pattern: '*.{md,mdx}', base: './src/content/destinations' }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/destinations' }),
     schema: (context) => shared(context).extend({
         date: z.coerce.date(),
         dateRange: z.string().min(1),
@@ -64,7 +64,7 @@ const destinations = defineCollection({
 });
 
 const posts = defineCollection({
-    loader: glob({ pattern: '*.{md,mdx}', base: './src/content/posts' }),
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
     schema: (context) => shared(context).extend({
         date: z.coerce.date(),
         category: z.enum(['milestone', 'travel', 'engineering', 'photography', 'notes']),

@@ -2,7 +2,7 @@
     --acid: #b8d9f8;
     --warm: #c4b0f3;
     background: #0b1022;
-    font-family: 'Space Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'Be Vietnam Pro', 'Space Grotesk', Arial, Helvetica, sans-serif;
 }
 
 .journey-backdrop {
@@ -182,9 +182,10 @@
 
 .hero-kicker {
     position: absolute;
-    top: 27vh;
+    top: 52px;
     right: 0;
-    max-width: 220px;
+    margin: 0;
+    max-width: 280px;
     color: white;
     text-align: right;
     line-height: 1.65;
@@ -194,10 +195,11 @@
 .hero-chapter h1 {
     position: relative;
     z-index: 3;
-    font-family: 'Syne', Arial, Helvetica, sans-serif;
-    font-size: clamp(68px, 11.5vw, 184px);
-    line-height: .86;
-    letter-spacing: -.05em;
+    font-family: 'Be Vietnam Pro', 'Space Grotesk', Arial, Helvetica, sans-serif;
+    font-size: clamp(72px, 11.5vw, 188px);
+    font-weight: 900;
+    line-height: .9;
+    letter-spacing: -.045em;
     text-align: left;
     margin: auto 0 3vh;
     text-shadow: 0 15px 70px #0006;
@@ -210,9 +212,10 @@
 
 .hero-name-rest {
     display: block;
-    font-size: clamp(28px, 5vw, 84px);
-    line-height: .96;
-    letter-spacing: -.04em;
+    font-size: clamp(28px, 4.9vw, 84px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -.035em;
     margin-top: .08em;
 }
 
@@ -473,10 +476,11 @@
 
 .destination-overlay strong {
     display: block;
-    font-family: 'Syne', Arial, Helvetica, sans-serif;
-    font-size: clamp(38px, 5.8vw, 92px);
-    line-height: .94;
-    letter-spacing: -.04em;
+    font-family: 'Be Vietnam Pro', 'Space Grotesk', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 5.4vw, 84px);
+    line-height: .98;
+    letter-spacing: -.035em;
     text-shadow: 0 12px 40px #000c;
     margin-top: 12px;
     color: #fff;
@@ -599,8 +603,9 @@
 
     .site-header {
         display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 13px;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 12px;
         padding: 16px 5vw;
     }
 
@@ -609,6 +614,7 @@
     }
 
     .site-header nav {
+        grid-column: 1 / -1;
         width: 100%;
         justify-content: space-between;
         gap: 8px;

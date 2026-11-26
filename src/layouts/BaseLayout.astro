@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/transitions.css';
 import profile from '../data/profile.json';
+import { getLangFromPath, localizePath, ui, type Lang } from '../i18n/ui.js';
 
 interface Props {
     title: string;
@@ -10,11 +11,16 @@ interface Props {
     ogImage?: string;
     ogType?: 'website' | 'article';
     noIndex?: boolean;
+    lang?: Lang;
 }
+
+const detectedLang = Astro.props.lang || getLangFromPath(Astro.url.pathname);
+const t = ui[detectedLang];
+const defaultIntro = detectedLang === 'vi' ? profile.introVi : profile.intro;
 
 const {
     title,
-    description = profile.intro,
+    description = defaultIntro,
     theme = 'night',
     ogImage = profile.portraitWide || profile.portrait,
     ogType = 'website',
@@ -24,9 +30,17 @@ const {
 const pageTitle = `${title} · ${profile.name}`;
 const canonicalUrl = !noIndex && Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString() : ogImage;
+const enPath = localizePath(Astro.url.pathname, 'en');
+const viPath = localizePath(Astro.url.pathname, 'vi');
+const enUrl = !noIndex && Astro.site ? new URL(enPath, Astro.site).toString() : undefined;
+const viUrl = !noIndex && Astro.site ? new URL(viPath, Astro.site).toString() : undefined;
+const homeHref = localizePath('/', detectedLang);
+const projectsHref = localizePath('/#projects', detectedLang);
+const journeysHref = localizePath('/#journeys', detectedLang);
+const journalHref = localizePath('/journal/', detectedLang);
 ---
 <!doctype html>
-<html lang="en" data-theme={theme}>
+<html lang={detectedLang} data-theme={theme} data-en-path={enPath} data-vi-path={viPath}>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -38,9 +52,12 @@ const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&family=Syne:wght@700;800&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap"
         />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        {enUrl && <link rel="alternate" hreflang="en" href={enUrl} />}
+        {viUrl && <link rel="alternate" hreflang="vi" href={viUrl} />}
+        {enUrl && <link rel="alternate" hreflang="x-default" href={enUrl} />}
         <meta property="og:site_name" content={profile.name} />
         <meta property="og:type" content={ogType} />
         <meta property="og:title" content={pageTitle} />
@@ -52,23 +69,61 @@ const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString
         <meta name="twitter:description" content={description} />
         {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
         <title>{pageTitle}</title>
+        {!noIndex && (
+            <script is:inline>
+                (() => {
+                    try {
+                        const root = document.documentElement;
+                        const current = root.lang === 'vi' ? 'vi' : 'en';
+                        const enDest = root.getAttribute('data-en-path') || '/';
+                        const viDest = root.getAttribute('data-vi-path') || '/vi/';
+                        const saved = localStorage.getItem('preferred-lang');
+                        let target = saved === 'vi' || saved === 'en' ? saved : null;
+                        if (!target) {
+                            const langs = navigator.languages && navigator.languages.length
+                                ? navigator.languages
+                                : [navigator.language || 'en'];
+                            for (const raw of langs) {
+                                const code = String(raw || '').toLowerCase();
+                                if (code === 'vi' || code.startsWith('vi-')) { target = 'vi'; break; }
+                                if (code === 'en' || code.startsWith('en-')) { target = 'en'; break; }
+                            }
+                            if (!target) target = 'en';
+                        }
+                        if (target !== current) {
+                            const dest = target === 'vi' ? viDest : enDest;
+                            if (dest && dest !== location.pathname) {
+                                location.replace(dest + location.search + location.hash);
+                            }
+                        }
+                    } catch {}
+                })();
+            </script>
+        )}
     </head>
     <body>
-        <a class="skip-link" href="#main">Skip to content</a>
+        <a class="skip-link" href="#main">{t.skipLink}</a>
         <div class="site-intro" aria-hidden="true"><div class="intro-greetings"><span>HELLO</span><span>BONJOUR</span><span>XIN CHÀO</span></div></div>
         <header class="site-header">
-            <a class="brand" href="/" aria-label="Back to home">{profile.shortName}<span class="brand-dot">.</span></a>
-            <nav aria-label="Primary navigation">
-                <a href="/#projects">Projects</a>
-                <a href="/#journeys">Journeys</a>
-                <a href="/journal/">Journal</a>
+            <a class="brand" href={homeHref} aria-label={t.backHomeAria}>{profile.shortName}<span class="brand-dot">.</span></a>
+            <nav aria-label={t.navAria}>
+                <a href={projectsHref}>{t.navProjects}</a>
+                <a href={journeysHref}>{t.navJourneys}</a>
+                <a href={journalHref}>{t.navJournal}</a>
             </nav>
-            <span class="header-index">Portfolio / Journal — 2026</span>
+            <div class="header-right">
+                <div class="lang-switch" role="group" aria-label={t.langSwitchAria}>
+                    <a href={enPath} data-lang-choice="en" aria-current={detectedLang === 'en' ? 'page' : undefined}>EN</a>
+                    <span aria-hidden="true">/</span>
+                    <a href={viPath} data-lang-choice="vi" aria-current={detectedLang === 'vi' ? 'page' : undefined}>VI</a>
+                </div>
+                <span class="header-index">Portfolio / Journal — 2026</span>
+            </div>
         </header>
         <slot />
         <footer class="site-footer">
-            <p>The story is still unfolding.</p>
-            <a class="footer-mail" href={'mailto:' + profile.email}>Let's talk ↗</a>
+            <p>{t.footerTagline}</p>
+            <a class="footer-mail" href={'mailto:' + profile.email}>{t.footerMail}</a>
             <div class="footer-bottom">
                 <span>© {new Date().getFullYear()} {profile.name}</span>
                 <div class="footer-socials">
@@ -76,11 +131,22 @@ const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString
                         <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label} ↗</a>
                     ))}
                 </div>
-                <a href="/">Back to top ↑</a>
+                <a href={homeHref}>{t.footerTop}</a>
             </div>
         </footer>
         <script is:inline>
             (() => {
+                document.querySelectorAll('.lang-switch a[data-lang-choice]').forEach((link) => {
+                    link.addEventListener('click', () => {
+                        const choice = link.getAttribute('data-lang-choice');
+                        try {
+                            if (choice === 'en' || choice === 'vi') {
+                                localStorage.setItem('preferred-lang', choice);
+                            }
+                        } catch {}
+                    });
+                });
+
                 const root = document.documentElement;
                 let playIntro = false;
                 try {
@@ -97,7 +163,7 @@ const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString
                 window.setTimeout(() => {
                     root.classList.remove('intro-active');
                     root.classList.add('intro-skipped');
-                }, 1900);
+                }, 3080);
             })();
         </script>
     </body>

@@ -9,13 +9,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 >
     <main id="main" class="not-found-page">
         <div class="not-found-inner">
-            <span class="section-number">404 / Off the map</span>
-            <h1>Out of<br /><em>frame.</em></h1>
-            <p>This path doesn't lead anywhere — or the story has moved to a new address.</p>
+            <span class="section-number" data-vi="404 / Lạc đường">404 / Off the map</span>
+            <h1 data-vi-html="Ngoài<br /><em>khung hình.</em>">Out of<br /><em>frame.</em></h1>
+            <p data-vi="Đường dẫn này không còn ở đây — hoặc câu chuyện đã chuyển sang một địa chỉ khác.">This path doesn't lead anywhere — or the story has moved to a new address.</p>
             <div class="not-found-links">
-                <a class="text-link" href="/">← Back home</a>
-                <a class="text-link" href="/journal/">Read the journal ↗</a>
+                <a class="text-link" href="/" data-vi="← Về trang chủ" data-vi-href="/vi/">← Back home</a>
+                <a class="text-link" href="/journal/" data-vi="Đọc nhật ký ↗" data-vi-href="/vi/journal/">Read the journal ↗</a>
             </div>
         </div>
     </main>
+    <script is:inline>
+        (() => {
+            try {
+                const saved = localStorage.getItem('preferred-lang');
+                const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+                const isVi = saved === 'vi' || (!saved && langs.some((l) => String(l).toLowerCase().startsWith('vi')));
+                if (!isVi) return;
+                document.documentElement.lang = 'vi';
+                document.querySelectorAll('[data-vi]').forEach((el) => {
+                    const txt = el.getAttribute('data-vi');
+                    if (txt !== null) el.textContent = txt;
+                });
+                document.querySelectorAll('[data-vi-html]').forEach((el) => {
+                    const html = el.getAttribute('data-vi-html');
+                    if (html !== null) el.innerHTML = html;
+                });
+                document.querySelectorAll('[data-vi-href]').forEach((el) => {
+                    const href = el.getAttribute('data-vi-href');
+                    if (href !== null) el.setAttribute('href', href);
+                });
+            } catch {}
+        })();
+    </script>
 </BaseLayout>

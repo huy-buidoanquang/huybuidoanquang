@@ -1,11 +1,13 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import StoryLayout from '../../layouts/StoryLayout.astro';
+import { isViId, ui } from '../../i18n/ui.js';
+
 export async function getStaticPaths() {
-    const entries = await getCollection('projects');
+    const entries = (await getCollection('projects')).filter((e) => !isViId(e.id));
     return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
 }
 const { entry } = Astro.props as { entry: CollectionEntry<'projects'> };
 const { Content } = await render(entry);
 ---
-<StoryLayout entry={entry} label="Project"><Content /></StoryLayout>
+<StoryLayout entry={entry} label={ui.en.projectLabel} lang="en"><Content /></StoryLayout>

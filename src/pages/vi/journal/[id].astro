@@ -1,0 +1,13 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import StoryLayout from '../../../layouts/StoryLayout.astro';
+import { isViId, stripEntryLang, ui } from '../../../i18n/ui.js';
+
+export async function getStaticPaths() {
+    const entries = (await getCollection('posts')).filter((e) => isViId(e.id));
+    return entries.map((entry) => ({ params: { id: stripEntryLang(entry.id) }, props: { entry } }));
+}
+const { entry } = Astro.props as { entry: CollectionEntry<'posts'> };
+const { Content } = await render(entry);
+---
+<StoryLayout entry={entry} label={ui.vi.categories[entry.data.category]} lang="vi"><Content /></StoryLayout>

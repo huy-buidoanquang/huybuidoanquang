@@ -2,20 +2,25 @@
 import BaseLayout from './BaseLayout.astro';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { getLangFromPath, localizePath, ui, type Lang } from '../i18n/ui.js';
 import '../styles/story-themes.css';
 
-const { entry, label } = Astro.props as {
+const { entry, label, lang: propLang } = Astro.props as {
     entry: CollectionEntry<'posts'> | CollectionEntry<'projects'> | CollectionEntry<'destinations'>;
     label: string;
+    lang?: Lang;
 };
 
+const lang: Lang = propLang || getLangFromPath(Astro.url.pathname);
+const t = ui[lang];
 const style = 'storyStyle' in entry.data ? entry.data.storyStyle : entry.data.theme;
 const gallery = 'gallery' in entry.data ? entry.data.gallery : [];
 const atmosphere = entry.data.atmosphere || 'none';
+const dateLocale = lang === 'vi' ? 'vi-VN' : 'en-US';
 const formattedDate = 'dateRange' in entry.data
     ? entry.data.dateRange
     : 'date' in entry.data
-        ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(entry.data.date)
+        ? new Intl.DateTimeFormat(dateLocale, { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(entry.data.date)
         : undefined;
 const metaLabel = formattedDate ? `${label} · ${formattedDate}` : label;
 
@@ -28,31 +33,13 @@ const telemetry = 'coordinates' in entry.data
     }
     : null;
 
-const navigationByCollection = {
-    posts: {
-        backHref: '/journal/',
-        backLabel: '← Back to journal',
-        endText: 'End of the story, not the journey.',
-        endHref: '/journal/',
-        endLabel: 'Read more stories ↗',
-    },
-    projects: {
-        backHref: '/#projects',
-        backLabel: '← Back to projects',
-        endText: 'One project shipped, another question waiting.',
-        endHref: '/#projects',
-        endLabel: 'Explore more projects ↗',
-    },
-    destinations: {
-        backHref: '/#journeys',
-        backLabel: '← Back to journeys',
-        endText: 'Every place leaves its own light behind.',
-        endHref: '/#journeys',
-        endLabel: 'Explore more places ↗',
-    },
-} as const;
+const navBase = t.storyNav[entry.collection];
+const backHref = entry.collection === 'posts'
+    ? localizePath('/journal/', lang)
+    : entry.collection === 'projects'
+        ? localizePath('/#projects', lang)
+        : localizePath('/#journeys', lang);
 
-const nav = navigationByCollection[entry.collection];
 const darkStyles = new Set(['lantern', 'coastal', 'karst-emerald', 'moss-summit', 'night']);
 const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
 ---
@@ -62,19 +49,20 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
     theme={pageTheme}
     ogImage={entry.data.cover.src}
     ogType="article"
+    lang={lang}
 >
     <main id="main" class:list={['story-page', 'story-' + style]}>
         {atmosphere !== 'none' && <canvas class="story-atmosphere" data-atmosphere={atmosphere} aria-hidden="true"></canvas>}
         <div class="story-lead">
-            <div class="story-meta"><a href={nav.backHref}>{nav.backLabel}</a><span>{metaLabel}</span></div>
+            <div class="story-meta"><a href={backHref}>{navBase.backLabel}</a><span>{metaLabel}</span></div>
             <h1>{entry.data.title}</h1>
             <p>{entry.data.summary}</p>
             {telemetry && (
-                <dl class="story-telemetry" aria-label="Expedition details">
-                    <div><dt>Region</dt><dd>{telemetry.region}</dd></div>
-                    <div><dt>Coordinates</dt><dd>{telemetry.coordinates}</dd></div>
-                    {telemetry.elevation && <div><dt>Elevation</dt><dd>{telemetry.elevation}</dd></div>}
-                    <div><dt>Dates</dt><dd>{telemetry.dateRange}</dd></div>
+                <dl class="story-telemetry" aria-label={t.telemetryAria}>
+                    <div><dt>{t.telemetryRegion}</dt><dd>{telemetry.region}</dd></div>
+                    <div><dt>{t.telemetryCoords}</dt><dd>{telemetry.coordinates}</dd></div>
+                    {telemetry.elevation && <div><dt>{t.telemetryElevation}</dt><dd>{telemetry.elevation}</dd></div>}
+                    <div><dt>{t.telemetryDates}</dt><dd>{telemetry.dateRange}</dd></div>
                 </dl>
             )}
         </div>
@@ -86,7 +74,7 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
                     data-photo-src={entry.data.cover.src}
                     data-photo-alt={entry.data.coverAlt}
                     data-photo-caption={entry.data.coverAlt}
-                    aria-label={'Inspect cover photo in fullscreen: ' + entry.data.coverAlt}
+                    aria-label={`${t.enlargePhoto}: ${entry.data.coverAlt}`}
                 >
                     <Image src={entry.data.cover} alt={entry.data.coverAlt} widths={[640, 1080, 1600]} sizes="100vw" fetchpriority="high" />
                     <span class="photo-glare" aria-hidden="true"></span>
@@ -95,15 +83,15 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
             <figcaption>
                 {entry.data.coverAlt}
                 {entry.data.coverCredit && <> · {entry.data.coverCredit}</>}
-                {entry.data.coverSource && <> · <a href={entry.data.coverSource} target="_blank" rel="noopener noreferrer">Photo source ↗</a></>}
+                {entry.data.coverSource && <> · <a href={entry.data.coverSource} target="_blank" rel="noopener noreferrer">{t.photoSource} ↗</a></>}
             </figcaption>
         </figure>
         <article class="story-body"><slot /></article>
         {gallery.length > 0 && (
-            <section class="story-gallery" aria-label="Photo gallery">
+            <section class="story-gallery" aria-label={t.galleryAria}>
                 <div class="gallery-heading">
-                    <span>Gallery</span>
-                    <strong>{String(gallery.length).padStart(2, '0')} frames</strong>
+                    <span>{t.galleryHeading}</span>
+                    <strong>{String(gallery.length).padStart(2, '0')} {t.galleryFrames}</strong>
                 </div>
                 <div class="gallery-images">
                     {gallery.map((photo, index) => (
@@ -115,7 +103,7 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
                                     data-photo-src={photo.src.src}
                                     data-photo-alt={photo.alt}
                                     data-photo-caption={photo.caption || photo.alt}
-                                    aria-label={'Enlarge photo: ' + photo.alt}
+                                    aria-label={`${t.enlargePhoto}: ${photo.alt}`}
                                 >
                                     <Image
                                         src={photo.src}
@@ -131,7 +119,7 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
                                 <span>{String(index + 1).padStart(2, '0')} / {photo.caption || photo.alt}</span>
                                 {photo.source && (
                                     <a href={photo.source} target="_blank" rel="noopener noreferrer">
-                                        {photo.credit || 'Photo source'} ↗
+                                        {photo.credit || t.photoSource} ↗
                                     </a>
                                 )}
                             </figcaption>
@@ -140,24 +128,24 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
                 </div>
             </section>
         )}
-        <div class="story-end"><span>{nav.endText}</span><a href={nav.endHref}>{nav.endLabel}</a></div>
+        <div class="story-end"><span>{navBase.endText}</span><a href={backHref}>{navBase.endLabel}</a></div>
     </main>
-    <dialog class="photo-dialog" aria-label="Immersive photo viewer">
+    <dialog class="photo-dialog" aria-label={t.lightboxAria} data-zoom-prefix={lang === 'vi' ? 'Phóng' : 'Zoom'}>
         <div class="photo-dialog-bg" aria-hidden="true"></div>
         <div class="photo-dialog-bar">
             <span class="photo-counter" aria-live="polite"></span>
             <div class="photo-dialog-actions">
-                <button type="button" class="photo-zoom" aria-label="Toggle zoom">Zoom 1×</button>
-                <button type="button" class="photo-prev" aria-label="Previous photo">←</button>
-                <button type="button" class="photo-next" aria-label="Next photo">→</button>
-                <button type="button" class="photo-close" aria-label="Close photo">Close ×</button>
+                <button type="button" class="photo-zoom" aria-label={t.lightboxZoomAria}>{t.lightboxZoom}</button>
+                <button type="button" class="photo-prev" aria-label={t.lightboxPrevAria}>←</button>
+                <button type="button" class="photo-next" aria-label={t.lightboxNextAria}>→</button>
+                <button type="button" class="photo-close" aria-label={t.lightboxCloseAria}>{t.lightboxClose}</button>
             </div>
         </div>
         <div class="photo-stage">
             <img class="photo-dialog-img" alt="" draggable="false" />
         </div>
         <p class="photo-dialog-caption"></p>
-        <div class="photo-thumbs" role="list" aria-label="Jump to photo"></div>
+        <div class="photo-thumbs" role="list" aria-label={t.lightboxJumpAria}></div>
     </dialog>
     <script>
         import { initStoryExperience } from '../journey/StoryAtmosphere3D.ts';
@@ -175,6 +163,7 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
         const imgEl = dialog?.querySelector<HTMLImageElement>('.photo-dialog-img');
         const captionEl = dialog?.querySelector<HTMLElement>('.photo-dialog-caption');
         const thumbsEl = dialog?.querySelector<HTMLElement>('.photo-thumbs');
+        const zoomPrefix = dialog?.dataset.zoomPrefix || 'Zoom';
 
         let active = 0;
         let zoom = 1;
@@ -188,7 +177,7 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
         const applyTransform = () => {
             if (!imgEl || !zoomBtn || !stage) return;
             imgEl.style.transform = `translate3d(${panX.toFixed(1)}px, ${panY.toFixed(1)}px, 0) scale(${zoom.toFixed(2)})`;
-            zoomBtn.textContent = zoom > 1.05 ? `Zoom ${zoom.toFixed(1)}×` : 'Zoom 1×';
+            zoomBtn.textContent = zoom > 1.05 ? `${zoomPrefix} ${zoom.toFixed(1)}×` : `${zoomPrefix} 1×`;
             stage.classList.toggle('is-zoomed', zoom > 1.05);
         };
 
@@ -205,7 +194,7 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'photo-thumb';
-                btn.setAttribute('aria-label', `Jump to photo ${idx + 1}`);
+                btn.setAttribute('aria-label', `${idx + 1}`);
                 const thumbImg = document.createElement('img');
                 thumbImg.src = trigger.querySelector('img')?.currentSrc || trigger.dataset.photoSrc || '';
                 thumbImg.alt = '';

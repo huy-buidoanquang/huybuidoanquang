@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { getLangFromPath, ui } from '../../i18n/ui.js';
 
 interface StripPhoto {
     src: ImageMetadata;
@@ -8,17 +9,19 @@ interface StripPhoto {
     caption: string;
 }
 
-const { photos, label = 'Field Reel' } = Astro.props as {
+const lang = getLangFromPath(Astro.url.pathname);
+const t = ui[lang];
+const { photos, label = lang === 'vi' ? 'Cuộn phim hành trình' : 'Field Reel' } = Astro.props as {
     photos: StripPhoto[];
     label?: string;
 };
 ---
 <section class="photo-strip" aria-label={label}>
     <div class="strip-header">
-        <span class="strip-label">{label} · {String(photos.length).padStart(2, '0')} frames</span>
+        <span class="strip-label">{label} · {String(photos.length).padStart(2, '0')} {t.stripFrames}</span>
         <div class="strip-controls">
-            <button type="button" class="strip-prev" aria-label="Scroll filmstrip left">←</button>
-            <button type="button" class="strip-next" aria-label="Scroll filmstrip right">→</button>
+            <button type="button" class="strip-prev" aria-label={t.lightboxPrevAria}>←</button>
+            <button type="button" class="strip-next" aria-label={t.lightboxNextAria}>→</button>
         </div>
     </div>
     <div class="strip-track">
@@ -30,7 +33,7 @@ const { photos, label = 'Field Reel' } = Astro.props as {
                     data-photo-src={photo.src.src}
                     data-photo-alt={photo.alt}
                     data-photo-caption={photo.caption}
-                    aria-label={`Enlarge reel frame ${index + 1}: ${photo.alt}`}
+                    aria-label={`${t.enlargePhoto} ${index + 1}: ${photo.alt}`}
                 >
                     <Image
                         src={photo.src}

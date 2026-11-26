@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import profile from '../../data/profile.json';
+import { isViId, localizePath, stripEntryLang, ui, type Lang } from '../../i18n/ui.js';
+import '../../styles/experience.css';
+
+const { lang = 'en' } = Astro.props as { lang?: Lang };
+const t = ui[lang];
+const wantVi = lang === 'vi';
+
+const projects = (await getCollection('projects')).filter((e) => isViId(e.id) === wantVi);
+const destinations = (await getCollection('destinations'))
+    .filter((e) => isViId(e.id) === wantVi)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = (await getCollection('posts'))
+    .filter((e) => isViId(e.id) === wantVi)
+    .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.date.valueOf() - a.data.date.valueOf());
+
+const displayName = profile.shortName === 'YOUR NAME' ? 'HELLO.' : profile.shortName;
+const [firstName, ...restParts] = displayName.trim().split(/\s+/);
+const restName = restParts.join(' ');
+const introText = wantVi ? profile.introVi : profile.intro;
+const locationText = wantVi ? profile.locationVi : profile.location;
+const portraitAlt = wantVi ? profile.portraitAltVi : profile.portraitAlt;
+---
+<BaseLayout title={t.homeTitle} description={introText} lang={lang}>
+    <main id="main" class="home">
+        <div class="journey-backdrop" aria-hidden="true">
+            <div class="cosmos-layer"></div>
+            <div class="nature-layer"></div>
+            <div class="paper-layer"></div>
+            <canvas class="stage-3d"></canvas>
+        </div>
+        <aside class="compass-hud" aria-label={t.compassAria}>
+            <div class="compass-rail" aria-hidden="true"><span class="compass-progress"></span></div>
+            <nav>
+                <a href="#person" class="is-active" aria-label={t.compassChapters[0]}>01</a>
+                <a href="#about" aria-label={t.compassChapters[1]}>02</a>
+                <a href="#projects" aria-label={t.compassChapters[2]}>03</a>
+                <a href="#journeys" aria-label={t.compassChapters[3]}>04</a>
+                <a href="#journal" aria-label={t.compassChapters[4]}>05</a>
+            </nav>
+        </aside>
+        <section id="person" class="chapter hero-chapter" aria-labelledby="hero-title">
+            {profile.portrait && <picture class="hero-portrait">
+                <source media="(max-aspect-ratio: 3 / 4)" srcset={profile.portraitMobile} />
+                <source media="(max-aspect-ratio: 3 / 2)" srcset={profile.portraitTablet} />
+                <source media="(min-aspect-ratio: 2 / 1)" srcset={profile.portraitUltrawide} />
+                <source media="(min-aspect-ratio: 3 / 2)" srcset={profile.portraitWide} />
+                <img src={profile.portrait} alt={portraitAlt} fetchpriority="high" decoding="async" />
+            </picture>}
+            <div class="chapter-inner hero-inner">
+                <div class="hero-topline"><span>{t.heroToplineLeft}</span><span>{locationText} {t.heroToplineSuffix}</span></div>
+                <p class="hero-kicker">{t.heroKickerLine1}<br />{t.heroKickerLine2}</p>
+                <h1 id="hero-title">
+                    <span class="hero-name-first">{firstName}</span>
+                    {restName && <span class="hero-name-rest">{restName}</span>}
+                </h1>
+                <div class="hero-bottomline"><p>{introText}</p><a href="#projects" class="scroll-arrow" aria-label={t.heroScrollAria}>↓</a><span>{t.heroHintLine1}<br />{t.heroHintLine2}</span></div>
+            </div>
+        </section>
+        <section id="about" class="chapter about-chapter" aria-labelledby="about-title">
+            <div class="chapter-inner about-inner"><span class="section-number">{t.aboutNumber}</span><h2 id="about-title">{t.aboutHeading1}<br /><em>{t.aboutHeading2}</em></h2><p>{t.aboutBody}</p></div>
+        </section>
+        <section id="projects" class="chapter projects-chapter" aria-labelledby="projects-title">
+            <div class="chapter-inner"><div class="chapter-heading"><span class="section-number">{t.projectsNumber}</span><h2 id="projects-title">{t.projectsHeading1}<br /><em>{t.projectsHeading2}</em></h2></div>
+                <div class="project-list">{projects.map((project, index) => <a class="project-row" href={localizePath(`/projects/${stripEntryLang(project.id)}/`, lang)}><span class="project-order">0{index + 1}</span><strong>{project.data.title}</strong><span class="project-summary">{project.data.summary}</span><span class="project-arrow">↗</span><Image class="project-preview" src={project.data.cover} alt={project.data.coverAlt} widths={[480, 960]} sizes="(max-width: 800px) 100vw, 35vw" loading="lazy" /></a>)}</div>
+            </div>
+        </section>
+        <section id="journeys" class="chapter journeys-chapter" aria-labelledby="journeys-title">
+            <div class="chapter-inner"><span class="section-number">{t.journeysNumber}</span><h2 id="journeys-title">{t.journeysHeading1}<br /><em>{t.journeysHeading2}</em></h2><p>{t.journeysBody}</p>
+                <div class="destination-list">{destinations.map((place, index) => (
+                    <a href={localizePath(`/places/${stripEntryLang(place.id)}/`, lang)} class:list={['destination-link', 'dest-theme-' + place.data.storyStyle]}>
+                        <div class="destination-media">
+                            <Image src={place.data.cover} alt={place.data.coverAlt} widths={[640, 1080, 1440]} sizes="(max-width: 800px) 100vw, 76vw" loading="lazy" />
+                            <span class="card-glare" aria-hidden="true"></span>
+                        </div>
+                        <span class="destination-meta-top">
+                            <em>{place.data.coordinates}</em>
+                            {place.data.elevation && <em>{place.data.elevation}</em>}
+                        </span>
+                        <span class="destination-overlay">
+                            <small>{String(index + 1).padStart(2, '0')} · {place.data.region} · {place.data.dateRange}</small>
+                            <strong>{place.data.title}</strong>
+                            <b>{t.stepInside}</b>
+                        </span>
+                    </a>
+                ))}</div>
+            </div>
+        </section>
+        <section id="journal" class="chapter journal-chapter" aria-labelledby="journal-title">
+            <div class="chapter-inner"><span class="section-number">{t.journalNumber}</span><h2 id="journal-title">{t.journalHeading1}<br /><em>{t.journalHeading2}</em></h2><div class="journal-list">{posts.slice(0, 4).map((post, index) => <a href={localizePath(`/journal/${stripEntryLang(post.id)}/`, lang)}><span>0{index + 1}</span><strong>{post.data.title}</strong><span>{t.categories[post.data.category]} · {post.data.date.getUTCFullYear()}</span><b>↗</b></a>)}</div><a class="text-link" href={localizePath('/journal/', lang)}>{t.browseAll}</a></div>
+        </section>
+    </main>
+    <script>
+        import { getNatureBlend } from '../../journey/scrollProgress.js';
+        import { initJourneyStage3D } from '../../journey/JourneyStage3D.ts';
+
+        const home = document.querySelector<HTMLElement>('.home');
+        const portrait = document.querySelector<HTMLElement>('.hero-portrait');
+        const cosmos = document.querySelector<HTMLElement>('.cosmos-layer');
+        const nature = document.querySelector<HTMLElement>('.nature-layer');
+        const paper = document.querySelector<HTMLElement>('.paper-layer');
+        const about = document.querySelector<HTMLElement>('.about-chapter');
+        const journeys = document.querySelector<HTMLElement>('#journeys');
+        const journal = document.querySelector<HTMLElement>('#journal');
+        let blend = 0;
+        let scheduled = false;
+        const update = () => {
+            scheduled = false;
+            if (!home || !cosmos || !nature || !paper || !about || !journeys || !journal) return;
+            const portraitBlend = portrait
+                ? getNatureBlend(about.getBoundingClientRect().top, innerHeight)
+                : 1;
+            blend = getNatureBlend(journeys.getBoundingClientRect().top, innerHeight);
+            const paperBlend = getNatureBlend(journal.getBoundingClientRect().top, innerHeight);
+            if (portrait) {
+                portrait.style.opacity = String((1 - portraitBlend) * (1 - paperBlend));
+            }
+            cosmos.style.opacity = String(portraitBlend * (1 - blend) * (1 - paperBlend));
+            nature.style.opacity = String(blend * (1 - paperBlend));
+            paper.style.opacity = String(paperBlend);
+            if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                cosmos.style.transform = `scale(1.12) translate3d(0,${Math.min(scrollY * -0.035, 0)}px,0)`;
+                nature.style.transform = `scale(1.08) translate3d(0,${Math.max(-90, (journeys.getBoundingClientRect().top - innerHeight) * 0.035)}px,0)`;
+            }
+        };
+        const queueUpdate = () => {
+            if (scheduled) return;
+            scheduled = true;
+            requestAnimationFrame(update);
+        };
+        home?.classList.add('journey-active');
+        addEventListener('scroll', queueUpdate, { passive: true });
+        addEventListener('resize', queueUpdate, { passive: true });
+        addEventListener('pageshow', queueUpdate);
+        update();
+        initJourneyStage3D();
+    </script>
+</BaseLayout>

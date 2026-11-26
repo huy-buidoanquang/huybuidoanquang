@@ -2,7 +2,9 @@
     "name": "Huy Bui Doan Quang",
     "shortName": "HUY BUI DOAN QUANG",
     "intro": "Where's Huy? Right here — building software, exploring new places, and keeping field notes along the way.",
+    "introVi": "Huy Bùi Đâu, Huy Bùi Đây — viết phần mềm, đi qua những vùng đất mới và giữ lại nhật ký hành trình.",
     "location": "Vietnam",
+    "locationVi": "Việt Nam",
     "email": "buiquanghuyss21@gmail.com",
     "portrait": "/portrait.webp",
     "portraitWide": "/portrait-wide.webp",
@@ -10,6 +12,7 @@
     "portraitTablet": "/portrait-tablet.webp",
     "portraitMobile": "/portrait-mobile.webp",
     "portraitAlt": "Impressionist portrait of Huy Bui Doan Quang at an airport",
+    "portraitAltVi": "Chân dung phong cách impressionist của Huy Bui Doan Quang tại sân bay",
     "socials": [
         { "label": "GitHub", "url": "https://github.com/huy-buidoanquang" },
         { "label": "Facebook", "url": "https://www.facebook.com/huy.buidoanquang.21/" },

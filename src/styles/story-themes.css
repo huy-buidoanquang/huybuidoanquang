@@ -5,7 +5,7 @@
 .story-page {
     position: relative;
     overflow-x: clip;
-    font-family: 'Space Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'Be Vietnam Pro', 'Space Grotesk', Arial, Helvetica, sans-serif;
 }
 
 .story-atmosphere {
@@ -569,11 +569,11 @@ html[data-theme=night] .story-lantern {
 }
 
 .story-lantern .story-lead h1 {
-    font-family: 'Syne', Arial, sans-serif;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
     text-transform: uppercase;
-    font-size: clamp(64px, 10vw, 188px);
-    font-weight: 800;
-    letter-spacing: -.05em;
+    font-size: clamp(60px, 9.5vw, 176px);
+    font-weight: 900;
+    letter-spacing: -.04em;
     color: #f2ae6e;
 }
 
@@ -667,11 +667,11 @@ html[data-theme=night] .story-coastal {
 }
 
 .story-coastal .story-lead h1 {
-    font-family: 'Syne', Arial, sans-serif;
-    font-size: clamp(58px, 10vw, 174px);
-    font-weight: 800;
-    letter-spacing: -.05em;
-    line-height: .9;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+    font-size: clamp(58px, 9.8vw, 168px);
+    font-weight: 900;
+    letter-spacing: -.045em;
+    line-height: .95;
     background: linear-gradient(120deg, #fff6ec 20%, #ff9b63 72%, #68d6d8 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -702,9 +702,10 @@ html[data-theme=night] .story-coastal .story-cover img {
 }
 
 .story-coastal .story-body h2 {
-    font-family: 'Syne', Arial, sans-serif;
-    font-size: clamp(32px, 4.4vw, 56px);
-    letter-spacing: -.04em;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(30px, 4.2vw, 54px);
+    letter-spacing: -.035em;
     color: #ff9c66;
     border-top: 1px solid #68d6d844;
     padding-top: .55em;
@@ -892,11 +893,11 @@ html[data-theme=night] .story-karst-emerald {
 }
 
 .story-karst-emerald .story-lead h1 {
-    font-family: 'Syne', Arial, sans-serif;
-    font-weight: 800;
-    font-size: clamp(60px, 10.2vw, 178px);
-    line-height: .88;
-    letter-spacing: -.05em;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(58px, 9.8vw, 172px);
+    line-height: .94;
+    letter-spacing: -.045em;
     color: #f4f7f5;
 }
 
@@ -923,9 +924,10 @@ html[data-theme=night] .story-karst-emerald .story-cover img {
 }
 
 .story-karst-emerald .story-body h2 {
-    font-family: 'Syne', Arial, sans-serif;
-    font-size: clamp(32px, 4.3vw, 56px);
-    letter-spacing: -.04em;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(30px, 4.1vw, 54px);
+    letter-spacing: -.035em;
     color: #f0c45c;
     border-top: 1px solid #e6453877;
     padding-top: .55em;

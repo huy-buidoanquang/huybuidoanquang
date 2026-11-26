@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { isViId, localizePath, stripEntryLang, ui, type Lang } from '../../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props as { lang?: Lang };
+const t = ui[lang];
+const wantVi = lang === 'vi';
+
+const posts = (await getCollection('posts')).filter((e) => isViId(e.id) === wantVi);
+const destinations = (await getCollection('destinations')).filter((e) => isViId(e.id) === wantVi);
+
+interface ArchiveItem {
+    href: string;
+    title: string;
+    tag: string;
+    group: 'journeys' | 'milestones' | 'engineering';
+    date: Date;
+    featured: boolean;
+}
+
+const items: ArchiveItem[] = [
+    ...posts.map((post) => ({
+        href: localizePath(`/journal/${stripEntryLang(post.id)}/`, lang),
+        title: post.data.title,
+        tag: `${t.categories[post.data.category]} · ${post.data.date.getUTCFullYear()}`,
+        group: (post.data.category === 'milestone' ? 'milestones' : post.data.category === 'engineering' ? 'engineering' : 'journeys') as ArchiveItem['group'],
+        date: post.data.date,
+        featured: post.data.featured,
+    })),
+    ...destinations.map((place) => ({
+        href: localizePath(`/places/${stripEntryLang(place.id)}/`, lang),
+        title: `${place.data.title} — ${place.data.region}`,
+        tag: `${t.journeyTag} · ${place.data.dateRange}`,
+        group: 'journeys' as const,
+        date: place.data.date,
+        featured: false,
+    })),
+].sort((a, b) => Number(b.featured) - Number(a.featured) || b.date.valueOf() - a.date.valueOf());
+---
+<BaseLayout title={t.archiveTitle} theme="sand" lang={lang}>
+    <main id="main" class="archive-page">
+        <div class="archive-intro">
+            <span class="section-number">{t.archiveKicker}</span>
+            <h1>{t.archiveHeading1}<br /><em>{t.archiveHeading2}</em></h1>
+            <p>{t.archiveIntro}</p>
+            <div class="archive-filters" role="tablist" aria-label={t.filterAria}>
+                <button type="button" class="filter-pill is-active" data-filter="all" role="tab" aria-selected="true">{t.filterAll} ({items.length})</button>
+                <button type="button" class="filter-pill" data-filter="journeys" role="tab" aria-selected="false">{t.filterJourneys} ({items.filter((i) => i.group === 'journeys').length})</button>
+                <button type="button" class="filter-pill" data-filter="milestones" role="tab" aria-selected="false">{t.filterMilestones} ({items.filter((i) => i.group === 'milestones').length})</button>
+                <button type="button" class="filter-pill" data-filter="engineering" role="tab" aria-selected="false">{t.filterEngineering} ({items.filter((i) => i.group === 'engineering').length})</button>
+            </div>
+        </div>
+        <div class="archive-list">
+            {items.map((item, index) => (
+                <a href={item.href} data-group={item.group}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{item.title}</strong>
+                    <span>{item.tag}</span>
+                    <b>↗</b>
+                </a>
+            ))}
+        </div>
+    </main>
+    <script>
+        const pills = [...document.querySelectorAll<HTMLButtonElement>('.filter-pill')];
+        const rows = [...document.querySelectorAll<HTMLAnchorElement>('.archive-list a')];
+        pills.forEach((pill) => {
+            pill.addEventListener('click', () => {
+                const target = pill.dataset.filter || 'all';
+                pills.forEach((p) => {
+                    const active = p === pill;
+                    p.classList.toggle('is-active', active);
+                    p.setAttribute('aria-selected', String(active));
+                });
+                let shown = 0;
+                rows.forEach((row) => {
+                    const visible = target === 'all' || row.dataset.group === target;
+                    row.hidden = !visible;
+                    if (visible) {
+                        shown += 1;
+                        const num = row.querySelector('span');
+                        if (num) num.textContent = String(shown).padStart(2, '0');
+                    }
+                });
+            });
+        });
+    </script>
+</BaseLayout>
