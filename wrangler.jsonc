@@ -1,6 +1,13 @@
 {
     "name": "huybuidoanquang",
     "compatibility_date": "2026-11-24",
+    "workers_dev": false,
+    "routes": [
+        {
+            "pattern": "huybuidoanquang.com",
+            "custom_domain": true
+        }
+    ],
     "assets": {
         "directory": "./dist",
         "html_handling": "auto-trailing-slash",
