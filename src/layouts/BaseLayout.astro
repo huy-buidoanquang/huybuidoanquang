@@ -2,7 +2,28 @@
 import '../styles/global.css';
 import '../styles/transitions.css';
 import profile from '../data/profile.json';
-const { title, description = profile.intro, theme = 'night' } = Astro.props;
+
+interface Props {
+    title: string;
+    description?: string;
+    theme?: 'night' | 'sand' | 'forest';
+    ogImage?: string;
+    ogType?: 'website' | 'article';
+    noIndex?: boolean;
+}
+
+const {
+    title,
+    description = profile.intro,
+    theme = 'night',
+    ogImage = profile.portraitWide || profile.portrait,
+    ogType = 'website',
+    noIndex = false,
+} = Astro.props;
+
+const pageTitle = `${title} · ${profile.name}`;
+const canonicalUrl = !noIndex && Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const ogImageUrl = ogImage && Astro.site ? new URL(ogImage, Astro.site).toString() : ogImage;
 ---
 <!doctype html>
 <html lang="vi" data-theme={theme}>
@@ -11,7 +32,20 @@ const { title, description = profile.intro, theme = 'night' } = Astro.props;
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="description" content={description} />
         <meta name="theme-color" content="#111725" />
-        <title>{title} · {profile.name}</title>
+        {noIndex && <meta name="robots" content="noindex" />}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        <meta property="og:site_name" content={profile.name} />
+        <meta property="og:type" content={ogType} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={description} />
+        {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+        {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={description} />
+        {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+        <title>{pageTitle}</title>
     </head>
     <body>
         <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
@@ -29,11 +63,15 @@ const { title, description = profile.intro, theme = 'night' } = Astro.props;
         <footer class="site-footer">
             <p>Một câu chuyện vẫn đang tiếp tục.</p>
             <a class="footer-mail" href={'mailto:' + profile.email}>Let's talk ↗</a>
-        <div class="footer-bottom">
-            <span>© {new Date().getFullYear()} {profile.name}</span>
-            <div class="footer-socials">{profile.socials.map((social) => <a href={social.url}>{social.label} ↗</a>)}</div>
-            <a href="/">Về đầu trang ↑</a>
-        </div>
+            <div class="footer-bottom">
+                <span>© {new Date().getFullYear()} {profile.name}</span>
+                <div class="footer-socials">
+                    {profile.socials.map((social) => (
+                        <a href={social.url} target="_blank" rel="noopener noreferrer">{social.label} ↗</a>
+                    ))}
+                </div>
+                <a href="/">Về đầu trang ↑</a>
+            </div>
         </footer>
         <script is:inline>
             (() => {

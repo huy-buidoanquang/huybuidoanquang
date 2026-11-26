@@ -1,5 +1,7 @@
 # Portfolio × Journal Preview Implementation Plan
 
+> **Status (2026-11-26):** Initial preview completed on `portfolio-preview`. During iteration (`df3d928`, `881203a`), the home scroll journey replaced Three.js (`JourneyCanvas.ts`) with painted WebP background layers + CSS transforms driven by `src/journey/scrollProgress.js` (see updated `docs/superpowers/specs/2026-11-14-portfolio-blog-design.md` and `README.md`). Kept below as historical implementation reference.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build a working personal portfolio preview with a guided 3D scroll journey, editable sample stories, and a GitHub publishing guide.

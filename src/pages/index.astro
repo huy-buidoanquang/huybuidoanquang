@@ -13,7 +13,6 @@ const displayName = profile.shortName === 'YOUR NAME' ? 'HELLO.' : profile.short
     <main id="main" class="home">
         <div class="journey-backdrop" aria-hidden="true"><div class="cosmos-layer"></div><div class="nature-layer"></div><div class="paper-layer"></div></div>
         <section id="person" class="chapter hero-chapter" aria-labelledby="hero-title">
-            {profile.portrait && <div class="hero-ambient" aria-hidden="true"><img src={profile.portrait} alt="" /></div>}
             {profile.portrait && <picture class="hero-portrait">
                 <source media="(max-aspect-ratio: 3 / 4)" srcset={profile.portraitMobile} />
                 <source media="(max-aspect-ratio: 3 / 2)" srcset={profile.portraitTablet} />
@@ -61,11 +60,15 @@ const displayName = profile.shortName === 'YOUR NAME' ? 'HELLO.' : profile.short
         let scheduled = false;
         const update = () => {
             scheduled = false;
-            if (!home || !portrait || !cosmos || !nature || !paper || !about || !journeys || !journal) return;
-            const portraitBlend = getNatureBlend(about.getBoundingClientRect().top, innerHeight);
+            if (!home || !cosmos || !nature || !paper || !about || !journeys || !journal) return;
+            const portraitBlend = portrait
+                ? getNatureBlend(about.getBoundingClientRect().top, innerHeight)
+                : 1;
             blend = getNatureBlend(journeys.getBoundingClientRect().top, innerHeight);
             const paperBlend = getNatureBlend(journal.getBoundingClientRect().top, innerHeight);
-            portrait.style.opacity = String((1 - portraitBlend) * (1 - paperBlend));
+            if (portrait) {
+                portrait.style.opacity = String((1 - portraitBlend) * (1 - paperBlend));
+            }
             cosmos.style.opacity = String(portraitBlend * (1 - blend) * (1 - paperBlend));
             nature.style.opacity = String(blend * (1 - paperBlend));
             paper.style.opacity = String(paperBlend);

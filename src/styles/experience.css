@@ -41,7 +41,11 @@
     isolation: isolate;
     align-items: stretch;
     overflow: hidden;
-    background: #6b6b67;
+    background: #1b2232;
+}
+
+.journey-active .hero-chapter {
+    background: transparent;
 }
 
 .hero-inner {
@@ -53,28 +57,12 @@
     min-height: calc(100svh - 120px - 8vh);
 }
 
-.hero-ambient {
-    position: absolute;
-    z-index: 0;
-    inset: -8%;
-    overflow: hidden;
-    opacity: .72;
-    filter: blur(34px) brightness(.52) saturate(.82);
-    transform: scale(1.08);
-}
-
-.hero-ambient img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .hero-portrait {
     position: absolute;
     z-index: 1;
     inset: 0;
     display: block;
-    width: 100vw;
+    width: 100%;
     height: 100svh;
     overflow: hidden;
 }
@@ -353,7 +341,7 @@
     }
 
     .hero-portrait {
-        width: 100vw;
+        width: 100%;
         height: 100svh;
     }
 

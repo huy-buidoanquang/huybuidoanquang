@@ -15,6 +15,6 @@ npm run dev
 
 ## Cloudflare Pages
 
-Kết nối repository GitHub với Cloudflare Pages. Chọn nhánh chính, lệnh build `npm run build` và thư mục output `dist`. Pull request tạo bản preview để duyệt trước khi merge. Sau khi duyệt bản preview, thêm tên miền có sẵn trong phần Custom domains của Pages và đổi `site` trong `astro.config.mjs` từ `https://example.com` sang URL thật.
+Kết nối repository GitHub (`huy-buidoanquang/huybuidoanquang`) với Cloudflare Pages. Chọn nhánh chính, lệnh build `npm run build` và thư mục output `dist`. Pull request tạo bản preview để duyệt trước khi merge. Sau khi duyệt bản preview, thêm tên miền `huybuidoanquang.com` trong phần Custom domains của Pages (`site` trong `astro.config.mjs` đã đặt là `https://huybuidoanquang.com`).
 
 Trang chủ giữ nội dung và liên kết khi giảm chuyển động; ảnh ở dưới màn hình được tải khi cần.

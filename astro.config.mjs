@@ -3,6 +3,6 @@ import mdx from '@astrojs/mdx';
 
 export default defineConfig({
     output: 'static',
-    site: 'https://example.com',
+    site: 'https://huybuidoanquang.com',
     integrations: [mdx()],
 });

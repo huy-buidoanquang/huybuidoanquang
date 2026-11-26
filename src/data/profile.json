@@ -1,9 +1,9 @@
 {
     "name": "Huy Bui Doan Quang",
     "shortName": "HUY BUI DOAN QUANG",
-    "intro": "Tôi tạo ra những điều mới, đi đến những nơi lạ và kể lại những gì mình học được.",
+    "intro": "Huy Bùi Đâu, Huy Bùi Đây",
     "location": "Việt Nam",
-    "email": "hello@example.com",
+    "email": "buiquanghuyss21@gmail.com",
     "portrait": "/portrait.webp",
     "portraitWide": "/portrait-wide.webp",
     "portraitUltrawide": "/portrait-ultrawide.webp",
@@ -11,6 +11,8 @@
     "portraitMobile": "/portrait-mobile.webp",
     "portraitAlt": "Chân dung impressionist của Huy Bui Doan Quang tại sân bay",
     "socials": [
-        { "label": "GitHub", "url": "https://github.com/" }
+        { "label": "GitHub", "url": "https://github.com/huy-buidoanquang" },
+        { "label": "Facebook", "url": "https://www.facebook.com/huy.buidoanquang.21/" },
+        { "label": "LinkedIn", "url": "https://www.linkedin.com/in/huy-buidoanquang/" }
     ]
 }
