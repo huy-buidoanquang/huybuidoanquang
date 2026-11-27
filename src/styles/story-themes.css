@@ -675,32 +675,20 @@ html[data-theme=night] .story-night .story-cover img {
     transform: none;
 }
 
-/* Full-bleed MDX body container rule for all rich photo-story themes */
-.story-mist .story-body,
-.story-lantern .story-body,
-.story-commencement .story-body,
-.story-coastal .story-body,
-.story-cloudsea .story-body,
-.story-highland-winter .story-body,
-.story-autumn-ridge .story-body,
-.story-karst-emerald .story-body,
-.story-moss-summit .story-body {
+/* Full-bleed MDX body container rule for all story themes (including future ones) */
+.story-page .story-body {
     max-width: none;
     padding: 7vh 0 13vh;
 }
 
-.story-mist .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip),
-.story-lantern .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip),
-.story-commencement .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip),
-.story-coastal .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip),
-.story-cloudsea .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip),
-.story-highland-winter .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip),
-.story-autumn-ridge .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip),
-.story-karst-emerald .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip),
-.story-moss-summit .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip) {
+.story-page .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip) {
     max-width: 740px;
     margin: 0 auto 1.7em;
     padding-inline: 24px;
+}
+
+.story-studio .story-body > :not(.story-photo, .photo-pair, .photo-showcase-3d, .photo-deck-3d, .photo-strip) {
+    max-width: 820px;
 }
 
 /* ==========================================================================
@@ -783,10 +771,10 @@ html[data-theme=sand] .story-commencement {
 }
 
 .story-commencement .story-lead h1 {
-    font-size: clamp(64px, 10.5vw, 178px);
+    font-size: clamp(56px, 10vw, 174px);
     font-weight: 700;
-    line-height: .9;
-    letter-spacing: -.04em;
+    line-height: 1.04;
+    letter-spacing: -.03em;
     color: #162033;
 }
 
@@ -960,9 +948,9 @@ html[data-theme=sand] .story-highland-winter {
 .story-highland-winter .story-lead h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 700;
-    font-size: clamp(58px, 9.8vw, 168px);
-    line-height: .9;
-    letter-spacing: -.04em;
+    font-size: clamp(54px, 9.6vw, 164px);
+    line-height: 1.04;
+    letter-spacing: -.03em;
     color: #21342b;
 }
 
@@ -1013,9 +1001,9 @@ html[data-theme=sand] .story-autumn-ridge {
 .story-autumn-ridge .story-lead h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
-    font-size: clamp(64px, 10.5vw, 178px);
-    line-height: .88;
-    letter-spacing: -.04em;
+    font-size: clamp(56px, 10vw, 172px);
+    line-height: 1.04;
+    letter-spacing: -.03em;
     color: #233c59;
 }
 
@@ -1122,9 +1110,9 @@ html[data-theme=night] .story-moss-summit {
 .story-moss-summit .story-lead h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
-    font-size: clamp(64px, 10.8vw, 186px);
-    line-height: .88;
-    letter-spacing: -.035em;
+    font-size: clamp(58px, 10.2vw, 180px);
+    line-height: 1.04;
+    letter-spacing: -.03em;
     color: #f4f0e4;
 }
 

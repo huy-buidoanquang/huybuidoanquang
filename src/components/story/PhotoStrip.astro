@@ -11,7 +11,7 @@ interface StripPhoto {
 
 const lang = getLangFromPath(Astro.url.pathname);
 const t = ui[lang];
-const { photos, label = lang === 'vi' ? 'Cuộn phim hành trình' : 'Field Reel' } = Astro.props as {
+const { photos, label = lang === 'vi' ? 'Dải ảnh' : 'Photo Reel' } = Astro.props as {
     photos: StripPhoto[];
     label?: string;
 };

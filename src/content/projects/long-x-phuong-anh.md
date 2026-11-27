@@ -12,12 +12,12 @@ role: "Creative Development & 3D Web"
 order: 3
 ---
 
-Instead of sending a static PDF or a generic template link, **Long × Phuong Anh** was crafted as a bespoke interactive 3D web invitation using **Three.js** and **HTML5 Canvas**.
+Instead of sending a static image or a generic template link, I built **Long × Phuong Anh** as a custom 3D web wedding invitation using **Three.js** and **HTML5 Canvas**.
 
-## Atmosphere in the browser
+## Tuned for phones first
 
-Opening the invitation unfolds a custom scene with depth, gentle particle motion, and celebratory typography — engineered to load smoothly on mobile phones where most wedding guests open shared links.
+Most guests open wedding links straight from chat apps on their phones, so the 3D scene, drifting particles, and typography were kept light enough to load fast and stay smooth on mobile screens.
 
-## Craft for personal moments
+## Code for real moments
 
-Creative coding shines brightest when it serves real people and real memories. Building a dedicated 3D space for close friends proved how rewarding it is to blend real-time graphics with warmth and restraint.
+Some of the most fun side projects are small personal ones built for close friends — pairing real-time graphics with enough restraint to leave a keepsake people actually enjoy opening.

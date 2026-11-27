@@ -1,6 +1,6 @@
 ---
 title: "Mezon Factory"
-summary: "Mô phỏng trực quan tương tác minh họa cơ chế cộng sinh của hệ sinh thái Mezon theo tư duy dây chuyền lắp ráp."
+summary: "Mô phỏng tương tác minh họa cách các thành phần trong hệ sinh thái Mezon phối hợp với nhau theo hình ảnh một dây chuyền lắp ráp."
 cover: "../../../assets/projects/mezon-factory.svg"
 coverAlt: "Sơ đồ hệ thống dây chuyền tương tác kết nối sự kiện đầu vào, lõi cộng sinh, trạm lắp ráp và cộng đồng"
 theme: "night"
@@ -12,12 +12,12 @@ role: "Ý tưởng & Đồ họa tương tác"
 order: 2
 ---
 
-Những hệ sinh thái kỹ thuật nhiều thành phần thường rất khó giải thích trọn vẹn chỉ bằng slide tĩnh. **Mezon Factory** biến mối quan hệ cộng sinh giữa ứng dụng client, bot, channel-app và cộng đồng thành một **dây chuyền lắp ráp tương tác sống động**.
+Những hệ sinh thái có nhiều lớp như client, bot, channel-app và cộng đồng rất khó hình dung trọn vẹn nếu chỉ đọc tài liệu hay slide tĩnh. **Mezon Factory** thử kể lại bức tranh đó bằng một **dây chuyền lắp ráp tương tác** chạy trực tiếp trên trình duyệt.
 
-## Kể chuyện kiến trúc bằng chuyển động
+## Nhìn luồng chảy thay vì đọc gạch đầu dòng
 
-Thay vì liệt kê tính năng rời rạc, mỗi mảnh ghép trong nền tảng đóng vai trò như một trạm xử lý trên cùng một luồng chảy — cho thấy rõ dữ liệu đi vào, kích hoạt tự động hóa và quay lại phục vụ người dùng theo thời gian thực như thế nào.
+Mỗi thành phần trong nền tảng tương ứng với một trạm trên dây chuyền — nhìn vào có thể thấy ngay tín hiệu đi vào từ đâu, bot hay ứng dụng xử lý ở bước nào và giá trị quay lại với người dùng theo thời gian thực ra sao.
 
-## Trực quan để ai cũng hiểu ngay
+## Mục tiêu đơn giản: nhìn vài giây là hiểu
 
-Dự án tập trung tối đa vào độ dễ hiểu về mặt thị giác: biến các khái niệm backend trừu tượng thành một bức tranh chuyển động mà cả kỹ sư lẫn người ngoài ngành đều nắm bắt được chỉ sau vài giây quan sát.
+Điều mình ưu tiên nhất ở dự án này là tính trực quan: biến những mối liên kết backend vốn khá khô khan thành một mô hình chuyển động mà cả kỹ sư lẫn người không chuyên đều nắm được ngay.

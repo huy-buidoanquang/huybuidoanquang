@@ -12,12 +12,12 @@ role: "Concept & Interactive Visuals"
 order: 2
 ---
 
-Complex developer ecosystems are notoriously hard to explain with static slide decks. **Mezon Factory** reframes how clients, bots, channel apps, and community workflows reinforce each other by turning the architecture into a living **interactive assembly line**.
+Complex ecosystems with clients, bots, channel apps, and community workflows are tough to explain with static slides. **Mezon Factory** turns that architecture into a live **interactive assembly line** right in the browser.
 
-## Explaining systems through motion
+## Follow the flow instead of bullet lists
 
-Rather than listing platform features in isolated bullets, each piece of the ecosystem acts as a visible station along a shared production flow — showing how inputs enter the network, trigger automated tools, and feed value back to users in real time.
+Each part of the platform runs as a station along one connected line — so you can see where events enter, how bots and apps process them, and how value loops back to users in real time.
 
-## Built for curiosity
+## Built to click in seconds
 
-The project focuses on visual clarity: turning abstract backend relationships into something anyone — technical or non-technical — can grasp within seconds of watching the line move.
+The goal is simple: take backend mechanics that usually stay dry on paper and make them obvious after watching the line run for a few seconds.

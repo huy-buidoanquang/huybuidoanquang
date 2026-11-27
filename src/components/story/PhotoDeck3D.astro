@@ -11,7 +11,7 @@ interface DeckPhoto {
 
 const lang = getLangFromPath(Astro.url.pathname);
 const t = ui[lang];
-const { photos, title = lang === 'vi' ? 'Xấp ảnh 3D tương tác' : 'Interactive 3D Stack' } = Astro.props as {
+const { photos, title = lang === 'vi' ? 'Bộ thẻ ảnh 3D' : 'Interactive Photo Stack' } = Astro.props as {
     photos: DeckPhoto[];
     title?: string;
 };

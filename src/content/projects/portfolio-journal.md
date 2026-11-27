@@ -13,12 +13,12 @@ role: "Design, Engineering & Photography"
 order: 4
 ---
 
-This site started with a simple goal: build a personal home on the web that feels as authored and atmospheric as a printed photo book while staying lightweight, static, and fast.
+I wanted a personal corner of the web that could hold software projects and trip photo essays with the care of a printed photobook — while staying static, lightweight, and fast to open.
 
-## Custom 3D atmospheres without heavy frameworks
+## Custom 3D canvas without heavy dependencies
 
-Instead of pulling in bloated runtime dependencies for simple pages, the homepage's 3D topographic terrain and every destination's bespoke atmosphere (coastal light, drifting cloud seas, falling March peach blossoms, glowing alpine spores) are rendered on lightweight vanilla TypeScript `<canvas>` engines that pause automatically in background tabs and honor `prefers-reduced-motion`.
+Rather than shipping a giant 3D library for simple pages, the homepage terrain mesh and each trip's subtle background atmosphere (coastal light, drifting clouds, March peach petals, forest spores) run on small vanilla TypeScript `<canvas>` engines that pause in background tabs and respect `prefers-reduced-motion`.
 
-## Bilingual, schema-validated, and built to grow
+## Bilingual, typed, and easy to add to
 
-Every story and project lives as plain Markdown/MDX validated at build time by strict Zod schemas, compiled into mirrored English (`/`) and Vietnamese (`/vi/`) static HTML pages with responsive WebP photo sets and deployed directly to **Cloudflare Workers Static Assets**.
+Every story and project is a plain Markdown/MDX file checked by Zod schemas at build time, compiled into mirrored English (`/`) and Vietnamese (`/vi/`) static pages with optimized WebP photos and deployed on **Cloudflare Workers Static Assets**.

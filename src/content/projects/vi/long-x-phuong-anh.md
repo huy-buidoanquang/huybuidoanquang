@@ -1,6 +1,6 @@
 ---
 title: "Long × Phương Anh"
-summary: "Thiệp cưới trực tuyến 3D được thiết kế riêng với Three.js và HTML5 Canvas — biến một ngày trọng đại thành món quà tương tác ngay trên trình duyệt."
+summary: "Thiệp cưới trực tuyến 3D làm riêng bằng Three.js và HTML5 Canvas — một món quà nhỏ để bạn bè mở xem ngay trên điện thoại."
 cover: "../../../assets/projects/long-x-phuong-anh.svg"
 coverAlt: "Các vòng quỹ đạo 3D màu vàng champagne và hồng phấn xoay quanh tiêu đề Long và Phương Anh trên nền đêm"
 theme: "night"
@@ -12,12 +12,12 @@ role: "Lập trình sáng tạo & Web 3D"
 order: 3
 ---
 
-Thay vì một tấm thiệp ảnh tĩnh hay đường link mẫu có sẵn, **Long × Phương Anh** được làm riêng như một trải nghiệm thiệp cưới 3D tương tác bằng **Three.js** và **HTML5 Canvas**.
+Thay vì gửi ảnh thiệp tĩnh hay dùng mẫu có sẵn, **Long × Phương Anh** được làm riêng như một trang thiệp cưới 3D tương tác viết bằng **Three.js** và **HTML5 Canvas**.
 
-## Không gian cảm xúc ngay trên trình duyệt
+## Tối ưu để mở mượt ngay trên điện thoại
 
-Khi mở đường dẫn, khách mời bước vào một khung cảnh có chiều sâu, chuyển động hạt nhẹ nhàng và bố cục chữ tinh tế — được tối ưu để chạy mượt ngay trên điện thoại, nơi phần lớn mọi người mở thiệp mời.
+Khách mời mở link chủ yếu từ tin nhắn điện thoại, nên toàn bộ phần cảnh 3D, hạt ánh sáng và bố cục chữ đều được giữ đủ nhẹ để tải nhanh, mượt và vẫn có chiều sâu thị giác.
 
-## Công nghệ dành cho những khoảnh khắc thật
+## Viết code cho kỷ niệm thật của bạn bè
 
-Lập trình sáng tạo luôn đáng giá nhất khi được dùng để lưu giữ kỷ niệm cho những người thân thiết — kết hợp đồ họa thời gian thực với sự ấm áp và tiết chế vừa đủ.
+Đôi khi mấy dự án vui nhất lại là mấy món nhỏ làm riêng cho bạn thân — kết hợp chút đồ họa thời gian thực với sự chỉn chu để ngày vui có thêm một kỷ vật đáng nhớ.

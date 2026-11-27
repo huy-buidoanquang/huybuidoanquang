@@ -1,6 +1,6 @@
 ---
-title: "Ghi Chép Về Việc Xây Những Thứ Nhỏ Mà Bền"
-summary: "Vì sao bắt đầu từ một câu hỏi nhỏ và mạnh tay lược bỏ sự phức tạp thường dẫn tới kết quả tốt hơn."
+title: "Ghi Chép Về Việc Làm Những Thứ Nhỏ Mà Bền"
+summary: "Vì sao bắt đầu từ một bài toán nhỏ và mạnh tay cắt bớt phần thừa thường ra kết quả tốt hơn."
 date: 2026-11-10
 category: "engineering"
 cover: "../../../assets/project.svg"
@@ -9,14 +9,14 @@ theme: "night"
 storyStyle: "studio"
 ---
 
-Phần lớn những dự án tôi nhớ lâu nhất đều bắt đầu từ một sự tò mò nhỏ và lì lợm, thay vì một bản kế hoạch khổng lồ.
+Phần lớn những dự án mình nhớ lâu nhất đều bắt đầu từ một câu hỏi nhỏ muốn tự tay thử cho rõ, chứ không phải từ một bản kế hoạch đồ sộ.
 
-## Bắt đầu từ thứ chạy được thật
+## Làm sớm một bản chạy được thật
 
-Một ý tưởng luôn còn mờ nhạt cho tới khi nó chạm vào trình duyệt, terminal hoặc một người dùng thực sự. Đưa một lát cắt nhỏ hoạt động sớm lên màn hình sẽ lập tức phơi bày điều gì thực sự quan trọng — thường ít thành phần hơn rất nhiều so với bản phác thảo ban đầu.
+Ý tưởng trên giấy lúc nào cũng có vẻ gọn gàng cho tới khi nó chạy thử trên trình duyệt, terminal hoặc qua tay một người dùng thật. Dựng sớm một phần nhỏ nhưng dùng được ngay luôn chỉ ra rất nhanh thứ gì thực sự cần thiết — và thường nó đơn giản hơn nhiều so với bản vẽ ban đầu.
 
-## Sự rõ ràng thắng sự cầu kỳ
+## Rõ ràng hơn là cầu kỳ
 
-Rất dễ bị cuốn theo việc chồng chất framework, hiệu ứng và lớp trừu tượng chỉ vì chúng có sẵn. Trên thực tế, sản phẩm tốt nhất tạo cảm giác tự nhiên: mã nguồn dễ đọc, tải nhanh, chữ nghĩa ngay ngắn và đủ thoáng để lớn lên mà không kéo theo gánh nặng thừa thãi.
+Khi làm kỹ thuật, rất dễ bị cuốn vào việc thêm framework, hiệu ứng hay mấy lớp trừu tượng chỉ vì thấy hay. Nhưng dùng lâu mới thấy thứ bền nhất vẫn là sự gọn gàng: code dễ đọc, trang tải nhanh, chữ nghĩa dễ nhìn và đủ thoáng để về sau sửa tiếp không bị ngợp.
 
-Giữ lại những ghi chép này là một phần của thói quen đó — lưu lại không chỉ thứ đã hoàn thành, mà cả lý do vì sao con đường đơn giản hơn lại thắng.
+Viết lại vài dòng này cũng chỉ để tự nhắc mình — nhớ lại không chỉ thứ đã làm xong, mà cả lý do vì sao cách đơn giản hơn lại hiệu quả hơn.

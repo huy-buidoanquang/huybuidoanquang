@@ -19,11 +19,12 @@ const t = ui[lang];
 const style = 'storyStyle' in entry.data ? entry.data.storyStyle : entry.data.theme;
 const gallery = 'gallery' in entry.data ? entry.data.gallery : [];
 const atmosphere = entry.data.atmosphere || 'none';
-const dateLocale = lang === 'vi' ? 'vi-VN' : 'en-US';
 const formattedDate = 'dateRange' in entry.data
     ? entry.data.dateRange
     : 'date' in entry.data
-        ? new Intl.DateTimeFormat(dateLocale, { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(entry.data.date)
+        ? (lang === 'vi'
+            ? `${String(entry.data.date.getUTCDate()).padStart(2, '0')}/${String(entry.data.date.getUTCMonth() + 1).padStart(2, '0')}/${entry.data.date.getUTCFullYear()}`
+            : new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(entry.data.date))
         : 'year' in entry.data && entry.data.year
             ? entry.data.year
             : undefined;
@@ -253,7 +254,7 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
             </div>
         </div>
     </main>
-    <dialog class="photo-dialog" aria-label={t.lightboxAria} data-zoom-prefix={lang === 'vi' ? 'Phóng' : 'Zoom'}>
+    <dialog class="photo-dialog" aria-label={t.lightboxAria} data-zoom-prefix="Zoom">
         <div class="photo-dialog-bg" aria-hidden="true"></div>
         <div class="photo-dialog-bar">
             <span class="photo-counter" aria-live="polite"></span>
@@ -265,7 +266,12 @@ const pageTheme = darkStyles.has(style) ? 'night' : entry.data.theme;
             </div>
         </div>
         <div class="photo-stage">
-            <img class="photo-dialog-img" alt="" draggable="false" />
+            <img
+                class="photo-dialog-img"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                alt=""
+                draggable="false"
+            />
         </div>
         <p class="photo-dialog-caption"></p>
         <div class="photo-thumbs" role="list" aria-label={t.lightboxJumpAria}></div>
